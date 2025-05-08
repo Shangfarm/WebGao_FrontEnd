@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GẠO VIỆT</title>
+    <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+    crossorigin="anonymous"
+    />
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="style.css" />
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link
+    href="https://fonts.googleapis.com/css2?family=Volkhov&display=swap"
+    rel="stylesheet"
+    />
+    <link
+    href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap"
+    rel="stylesheet"
+    />
+</head>
+<body>
+    <header class="main-header fixed-top">
+        <div class="container logo">
+            <nav class="navbar navbar-expand-lg stroke">
+            <h1>
+            <a class="navbar-brand index-responsive-color d-flex align-items-center"
+                href="http://127.0.0.1:5501/pages/TrangChu/home.html"
+                >
+                FamRice
+                <i class="fa fa-leaf" aria-hidden="true"></i>
+            </a>
+            </h1>
+            <div class="navbar-right ml-lg-auto">
+                <div class="search-bar d-lg-flex">
+                    <button class="search-btn">
+                        <span class="fa fa-search search__icon"></span>
+                    </button>
+                </div>
+                <div class="menu light-dark">
+                    <button class="btn-theme">
+                        <i class="fa-regular fa-moon"></i>
+                    </button>
+                </div>
+                <div class="dropdown">  
+                    <input type="checkbox" id="dropdown-toggle" />
+                    <label for="dropdown-toggle" class="dropbtn">
+                        <i class="fa fa-bars"></i>
+                    </label>
+                    <div class="dropdown-content">
+                        <a href="/pages/TrangChu/home.html">TRANG CHỦ</a>
+                        <a href="/pages/GioiThieu/GioiwThieu.html">GIỚI THIỆU</a>
+                        <a href="/pages/SanPham/SanPham.html">SẢN PHẨM</a>
+                        <a href="/pages/ThongTin/ThongTin.html">THÔNG TIN</a>
+                        <a href="/pages/LienHe/LienHe.html">LIÊN HỆ</a>
+                        <a href="/pages/HoSo/HoSo.html">HỒ SƠ</a>
+                        <a href="/pages/GioHang/GioHang.html">GIỎ HÀNG</a>
+                        <a href="#">THỐNG KÊ</a>
+                        <a href="/pages/DangNhap/DangNhap.html" id="login-link">ĐĂNG NHẬP/ĐĂNG KÝ</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <section class="banner">
+        <div class="container-fluid">
+            <div class="d-flex align-items-center justify-content-end">
+                <div class="banner-left col-md-5 col-sm-12 col-lg-5">
+                    <div class="banner-left-content">
+                        <h2 class="farm-text">FamRice</h2>
+                        <div class="ban-content">
+                            <h3 class="mb-sm-4 mb-2 uu">
+                                Chào mừng đến với FamRice
+                                <br />
+                                nơi mà những hạt gạo được sinh ra!
+                            </h3>
+                            <p class="banner-text">
+                                "Gạo chất lượng, cam kết không lỗi, không khiếu nại."
+                            </p>
+                            <a class="btn btn-learnmore btn-style mt-sm-5 mt-4" href="/pages/ThongTin/ThongTin.html">Thông tin</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Chia bố cục 7/12 trên màn hình lớn -->
+                <div class="col-md-7 col-lg-7 col banner-right p-0 ml-auto">
+                    <!-- Banner Slider -->
+                    <div id="homepage-slider"
+                        class="carousel slide position-relative"
+                        data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <!-- Slide 1 -->
+                            <div class="carousel-item active">
+                                <div class="banner-1 d-flex images">
+                                    <style>
+                                        .banner-1 {
+                                            background-image: url(https://cdn.pixabay.com/photo/2016/11/14/03/50/farmer-1822530_1280.jpg);
+                                        }
+                                    </style>
+                                    <div class="wrapper text-white">
+                                        <div class="slider-num d-grid">
+                                            <h4>01<span>/03</span></h4>
+                                            <p>Agriculture</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <!-- Slide 2 -->
+                            <div class="carousel-item">
+                                <div class="banner-2 d-flex images">
+                                    <style>
+                                        .banner-2 {
+                                            background-image: url(https://wp.w3layouts.com/farmstead/wp-content/themes/farmstead/assets/images/b8.jpg);
+                                        }
+                                    </style>
+                                    <div class="wrapper text-white">
+                                        <div class="slider-num d-grid">
+                                            <h4>02<span>/03</span></h4>
+                                            <p>Farm Field</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <!-- Slide 3 -->
+                            <div class="carousel-item">
+                                <div class="banner-3 d-flex images">
+                                    <style>
+                                        .banner-3 {
+                                            background-image: url(https://wp.w3layouts.com/farmstead/wp-content/themes/farmstead/assets/images/b4.jpg);
+                                        }
+                                    </style>
+                                    <div class="wrapper text-white">
+                                        <div class="slider-num d-grid">
+                                            <h4>03<span>/03</span></h4>
+                                            <p>Organic Farm</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <!-- Carousel Indicators -->
+                        <div class="carousel-indicators">
+                            <button type="button"
+                                    data-bs-target="#homepage-slider"
+                                    data-bs-slide-to="0"
+                                    class="active"></button>
+                            <button type="button"
+                                    data-bs-target="#homepage-slider"
+                                    data-bs-slide-to="1"></button>
+                            <button type="button"
+                                    data-bs-target="#homepage-slider"
+                                    data-bs-slide-to="2"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="features py-5">
+        <div class="container py-md-5 py-4 HomePage">
+            <div class="row main-cont-wthree-2 align-items-center">
+                <div class="col-lg-6 col-12 feature-grid-left pr-lg-5 d-flex flex-column">
+                    <h5 class="small-title">Đảm Bảo Phát Tự Nhiên</h5>
+                    <h2 class="title-style mb-md-3 mb-2">Đi đầu trong lĩnh vực xuất khẩu gạo</h2>
+                    <p>
+                        Chúng tôi cam kết đưa ra được sản phẩm với chất lượng cao. Đi đôi với chất lượng về sản phẩm thì FamRice chúng tôi cũng sẽ cung cấp các dịch vụ vô cùng tốt như giao hàng tận nơi , cung cấp giấy tờ chứng từ của sản phẩm, nguồn gạo sạch và nhiều hơn thế nữa
+                    </p>
+                </div>
+                <div class="col-lg-6 feature-grid-right mt-lg-0 mt-5">
+                    <div class="call-grids d-grid">
+                        <div class="grid1">
+                            <div class="icon">
+                                <img src="https://wp.w3layouts.com/farmstead/wp-content/themes/farmstead/assets/images/img4.png"
+                                    alt
+                                    class="img-fluid" />
+                            </div>
+                            <h4>
+                                <a href="about" class="title-head"> Sản Phẩm Xanh  </a>
+                            </h4>
+                        </div>
+                        <div class="grid1">
+                            <div class="icon">
+                                <img src="https://wp.w3layouts.com/farmstead/wp-content/themes/farmstead/assets/images/img2.png"
+                                    alt
+                                    class="img-fluid" />
+                            </div>
+                            <h4>
+                                <a href="about" class="title-head"> Lúa Mì Sạch  </a>
+                            </h4>
+                        </div>
+                        <div class="grid1">
+                            <div class="icon">
+                                <img src="https://wp.w3layouts.com/farmstead/wp-content/themes/farmstead/assets/images/img1.png"
+                                    alt
+                                    class="img-fluid" />
+                            </div>
+                            <h4>
+                                <a href="about" class="title-head"> Vận Chuyển Tận Nơi   </a>
+                            </h4>
+                        </div>
+                        <div class="grid1">
+                            <div class="icon">
+                                <img src="https://wp.w3layouts.com/farmstead/wp-content/themes/farmstead/assets/images/img3.png"
+                                    alt
+                                    class="img-fluid" />
+                            </div>
+                            <h4>
+                                <a href="about" class="title-head"> Sản Phẩm CHất Lượng </a>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section>
+        <div class="service-section py-5">
+            <div class="container py-md-5 py-4 HomePageImageServices">
+                <div class="title-style-main position-relative mb-sm-5 mb-4 pb-xl-4">
+                    <div class="row align-items-center align-items-center">
+                        <div class="col-md-6 section-heading">
+                            <h5 class="small-title mb-md-2 text-white">Tạo sao lại chọn FamRice?</h5>
+                            <h3 class="title-style text-white">
+                                Bạn nên chọn thực phẩm hữu cơ tươi của chúng tôi
+                            </h3>
+                        </div>
+                        <div class="col-md-6 section-heading mt-md-0 mt-2">
+                            <p class="lead text-white">
+                                Những sản phẩm của chúng tôi được chăm sóc và trồng trên những cánh đồng của chúng tôi, chúng tôi cam kết sẽ mang đến cho bạn những sản phẩm tốt nhất
+                            </p>
+                        </div>
+                    </div>
+                    <h4 class="title-bg-content">FamRice</h4>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-4 col-md-6 item">
+                        <div class="card">
+                            <div class="card-header p-0 position-relative border-0">
+                                <a href="services">
+                                    <img class="d-block img-responsive"
+                                        src="https://wp.w3layouts.com/farmstead/wp-content/themes/farmstead/assets/images/service1.jpg"
+                                        alt="card-image" />
+                                </a>
+                            </div>
+                            <div class="card-body service-details">
+                                <span class="label-style">Tự Nhiên</span>
+                                <a href="services" class="service-heading">Sản Phẩm Nông Nghiệp</a>
+                                <p>
+                                    Chúng tôi sẽ khảo sát dựa trên thị trường và thông qua quy trình sản xuất nghiêm ngặt của chúng tôi để có thể đưa ra sản phẩm tốt nhất
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mt-md-0 mt-4">
+                        <div class="card">
+                            <div class="card-header p-0 position-relative border-0">
+                                <a href="services">
+                                    <img class="d-block img-responsive"
+                                        src="https://wp.w3layouts.com/farmstead/wp-content/themes/farmstead/assets/images/service2.jpg"
+                                        alt="card-image" />
+                                </a>
+                            </div>
+                            <div class="card-body service-details">
+                                <span class="label-style">Nông Nghiệp</span>
+                                <a href="services" class="service-heading"> Rau Tươi </a>
+                                <p>
+                                    Ngoài ra chúng tôi còn có chuỗi nông trại rau sạch để có thể mở rộng thị trường và đồng phân phối các sản phẩm sạch và rẻ
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mt-lg-0 mt-4">
+                        <div class="card">
+                            <div class="card-header p-0 position-relative border-0">
+                                <a href="services">
+                                    <img class="d-block img-responsive"
+                                        src="https://wp.w3layouts.com/farmstead/wp-content/themes/farmstead/assets/images/service3.jpg"
+                                        alt="card-image" />
+                                </a>
+                            </div>
+                            <div class="card-body service-details">
+                                <span class="label-style">Farm</span>
+                                <a href="services" class="service-heading">Sản phẩm hữu cơ</a>
+                                <p>
+                                    Chung quy , từ hạt gạo chất lượng cao của chúng tôi, sau đó cũng quy trình đó , chúng tôi sẽ tạo nên 1 loạt các sản phẩm nông nghiệp chất lượng
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="servicesblock py-5" id="expect">
+        <div class="container py-md-5 py-4 HomePageFWP">
+            <div class="row">
+                <div class="col-lg-6 about-right-faq align-self justify-content-start">
+                    <h5 class="small-title">FamRice</h5>
+                    <h3 class="title-style">
+                        Loại gạo chất lượng là điều quan trọng nhất trong cuộc sống của chúng ta
+                    </h3>
+                    <p class="mt-3">
+                        "Gạo ngon – Chất lượng cao, mềm dẻo, thơm tự nhiên. Cam kết mang đến sự hài lòng cho bạn!"
+                    </p>
+    
+                    <div class="row two-grids mt-sm-5 mt-4 pt-lg-4">
+                        <div class="col-sm-6 grids_info d-flex">
+                            <span class="fa fa-users"></span>
+                            <div class="detail ml-2">
+                                <h4>Đội ngủ nhân viên trình độ cao</h4>
+                                <p>Chuyên gia am hiểu về gạo, tận tâm phục vụ khách hàng.</p>
+                            </div>
+                        </div>
+    
+                        <div class="col-sm-6 grids_info d-flex mt-sm-0 mt-4">
+                            <span class="fa fa-life-ring"></span>
+                            <div class="detail ml-2">
+                                <h4>Dịch vụ 5 sao</h4>
+                                <p>Cam kết mang đến trải nghiệm mua gạo tuyệt vời, nhanh chóng và chất lượng.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 offset-lg-1 left-wthree-img mt-lg-0 mt-sm-5 mt-4 position-relative">
+                    <img src="https://images.pexels.com/photos/14348416/pexels-photo-14348416.jpeg?auto=compress&cs=tinysrgb&w=600.jpg"
+                        alt="" class="img-fluid radius-image" />
+                    <div class="imginfo__box">
+                        <h6 class="imginfo__title">26+</h6>
+                        <p>Năm kinh nghiệm</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="index-block4">
+        <div style="    background: #009f4d; padding: 40px; text-align: center; color: white;">
+            <h2>CHÚNG TÔI CAM KẾT</h2>
+    
+            <div style="display: flex; justify-content: center; align-items: center; gap: 50px; margin-top: 20px;">
+                <div style="flex: 1;">
+                    <img alt="Gạo sạch" src="https://gaogiasi.com.vn/uploads/images/dcan(5).png" style="width: 100px; height: 100px;" title="Gaọ sạch"><br>
+                    <span style="color:#ffffff;">
+                        <span style="font-size:20px;">
+                            <b>GẠO SẠCH CHẤT LƯỢNG CAO</b>
+                        </span>
+                    </span>
+                </div>
+    
+                <div style="flex: 1;">
+                    <img src="https://gaogiasi.com.vn/uploads/images/d%E1%BB%8Bch%20v%E1%BB%A5%20t%E1%BB%91t%20nh%E1%BA%A5t.png" style="width: 100px; height: 100px;" title="Dịch vụ tốt nhất"><br>
+                    <span style="color:#ffffff;">
+                        <span style="font-size:20px;">
+                            <b>DỊCH VỤ TỐT NHẤT</b>
+                        </span>
+                    </span>
+                </div>
+    
+                <div style="flex: 1;">
+                    <img src="https://gaogiasi.com.vn/uploads/images/uy-tin(1).png" style="width: 100px; height: 100px;" title="Uy tín tận tâm"><br>
+                    <span style="color:#ffffff;">
+                        <span style="font-size:20px;">
+                            <b>UY TÍN - TẬN TÂM</b>
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    </section>
+    <section class="testimonials py-5" style="
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        background-size: cover;
+    ">
+        <style>
+            .testimonials {
+                background: url(https://wp.w3layouts.com/farmstead/wp-content/themes/farmstead/assets/images/bg1.jpg);
+            }
+        </style>
+        <section class="testimonial py-5">
+            <div class="container py-lg-5 py-md-3">
+                <div id="testimonialCarousel" class="carousel slide text-center py-5">
+                    <div class="carousel-inner">
+                        <!-- Testimonial 1 -->
+                        <div class="carousel-item active">
+                            <div class="testimonial">
+                                <div class="owl-item active">
+                                    <div class="item">
+                                        <div class="testimonial-content">
+                                            <div class="row testimonial align-items-center">
+                                                <div class="col-md-3 testi-des">
+                                                    <a href="#url" class="testi-img">
+                                                        <img src="https://wp.w3layouts.com/farmstead/wp-content/themes/farmstead/assets/images/testi1.jpg"
+                                                            alt="" class="radius-image img-fluid" />
+                                                    </a>
+                                                    <div class="peopl align-self">
+                                                        <h3>Thanh Trúc</h3>
+                                                        <p class="identity">Khách hàng</p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-9 pl-lg-5 mt-md-0 mt-4 text-md-left text-center testi-des-1">
+                                                    <span class="fa fa-quote-left"></span>
+                                                    <blockquote>
+                                                        <q class="pra">
+                                                            🌾 Chất lượng gạo ở đây thật tuyệt vời! Gạo được chọn lọc kỹ càng từ những nguồn uy tín,
+                                                            luôn tươi ngon và an toàn. Dịch vụ rất nhanh chóng và tiện lợi,tôi luôn hài lòng mỗi khi mua hàng.
+                                                            Gạo ở đây mang đến cho gia đình tôi những bữa ăn ngon và bổ dưỡng mỗi ngày. Tôi sẽ tiếp tục ủng hộ!
+                                                        </q>
+                                                    </blockquote>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Testimonial 2 -->
+                        <div class="carousel-item">
+                            <div class="testimonial">
+                                <div class="owl-item active">
+                                    <div class="item">
+                                        <div class="testimonial-content">
+                                            <div class="row testimonial align-items-center">
+                                                <div class="col-md-3 testi-des">
+                                                    <a href="#url" class="testi-img">
+                                                        <img src="https://wp.w3layouts.com/farmstead/wp-content/themes/farmstead/assets/images/testi2.jpg"
+                                                            alt="" class="radius-image img-fluid" />
+                                                    </a>
+                                                    <div class="peopl align-self">
+                                                        <h3>Ngô Hoàng Thiên Phúc</h3>
+                                                        <p class="identity">Khách hàng</p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-9 pl-lg-5 mt-md-0 mt-4 text-md-left text-center testi-des-1">
+                                                    <span class="fa fa-quote-left"></span>
+                                                    <blockquote>
+                                                        <q class="pra">
+                                                            🌾 Chất lượng gạo ở đây thật tuyệt vời! Gạo luôn mới, thơm và dẻo, phù hợp với mọi món ăn.
+                                                            Dịch vụ giao hàng nhanh chóng, tôi rất hài lòng với cách phục vụ chuyên nghiệp.
+                                                            Sẽ tiếp tục mua gạo từ đây vì sự an tâm và chất lượng mà tôi nhận được mỗi lần đặt hàng. Gạo tươi, ngon, và an toàn tuyệt đối!
+                                                        </q>
+                                                    </blockquote>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Testimonial 3 -->
+                        <div class="carousel-item">
+                            <div class="testimonial">
+                                <div class="owl-item active">
+                                    <div class="item">
+                                        <div class="testimonial-content">
+                                            <div class="row testimonial align-items-center">
+                                                <div class="col-md-3 testi-des">
+                                                    <a href="#url" class="testi-img">
+                                                        <img src="https://wp.w3layouts.com/farmstead/wp-content/themes/farmstead/assets/images/testi3.jpg"
+                                                            alt="" class="radius-image img-fluid" />
+                                                    </a>
+                                                    <div class="peopl align-self">
+                                                        <h3>Dennis wilson</h3>
+                                                        <p class="identity">Customer</p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-9 pl-lg-5 mt-md-0 mt-4 text-md-left text-center testi-des-1">
+                                                    <span class="fa fa-quote-left"></span>
+                                                    <blockquote>
+                                                        <q class="pra">
+                                                            🌾 Your rice-selling website looks promising! The layout is clean, the features are user-friendly, and the product presentation is inviting. With a solid foundation like this, you're well on your way to creating a platform that both customers and admins will enjoy using. Keep it up!
+                                                        </q>
+                                                    </blockquote>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Carousel Indicators -->
+                    <div class="carousel-indicators">
+                        <button type="button"
+                                data-bs-target="#testimonialCarousel"
+                                data-bs-slide-to="0"
+                                class="active"></button>
+                        <button type="button"
+                                data-bs-target="#testimonialCarousel"
+                                data-bs-slide-to="1"></button>
+                        <button type="button"
+                                data-bs-target="#testimonialCarousel"
+                                data-bs-slide-to="2"></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+    <footer>
+        <section class="footer-16">
+            <div class="footer-16-main py-5">
+                <div class="container py-4">
+                    <div class="row footer-p">
+                        <div class="col-lg-4 order-lg-1 order-3 mt-lg-0 mt-5 FooterFarm">
+                            <h4 class="FooterLogo">
+                                <a class="Logo" asp-controller="Home" asp-action="Index" style="color: orange; font-size: 32px">
+                                    FamRice
+                                    <i class="fa fa-leaf" aria-hidden="true"></i></a>
+                            </h4>
+                            <p class="mt-4">
+                                Chúng tôi cung cấp gạo chất lượng cao, được chọn lọc kỹ càng,
+                                đảm bảo phù hợp với mọi nhu cầu của khách hàng.
+                            </p>
+    
+                            <!-- copyright -->
+                            <p class="copy-text mt-5 CopyRights">
+                                © 2025 FamRice. All Rights Reserved | WordPress Theme by
+                                <a href="https://w3layouts.com/">FamRice. </a>
+                            </p>
+                            <!-- //copyright -->
+                        </div>
+    
+                        <div class="col-lg-4 pl-lg-5 FooterContact">
+                            <h3>Liên hệ</h3>
+                            <div class="column-2">
+                                <p>
+                                    Địa chỉ: 34 đường số 14, phường Bình Hưng Hòa A, quận Bình Tân, thành phố Hồ Chí Minh.
+                                </p>
+    
+                                <p class="mt-3">
+                                    Phone: <a href="tel:+84 904522077">+84 904522077</a>
+                                </p>
+    
+                                <p class="mt-3">
+                                    Email:
+                                    <a href="mailto:nguyenthanhsang@gmail.com">nguyenthanhsang22012004@gmail.com</a>
+                                </p>
+    
+                                <p class="mt-3">
+                                    Fax: <a href="tel:+84 793939399">+84 793939399</a>
+                                </p>
+                            </div>
+                        </div>
+    
+                        <div class="col-lg-4 col-md-7 order-lg-3 order-1 column mt-lg-0 mt-5">
+                            <h3>Tin mới</h3>
+                            <div class="end-column FooterSubscribe">
+                                <p>
+                                    Đăng ký nhận bản tin của chúng tôi và nhận cập nhật mới nhất vào hộp thư email của bạn.
+                                </p>
+                                <form action class="subscribe d-flex mt-3" method="post">
+                                    <input type="email"
+                                            name="Email"
+                                            placeholder="Email Address"
+                                            required=""
+                                            fdprocessedid="9yn9sd" />
+                                    <button fdprocessedid="19z1h">
+                                        <span class="fa fa-paper-plane" aria-hidden="true"></span>
+                                    </button>
+                                </form>
+                            </div>
+    
+                            <ul class="social mt-4 pt-2 FooterSocial">
+                                <li>
+                                    <a href="https://www.facebook.com/share/1BobmyTQUj/?mibextid=wwXIfr">
+                                        <span class="fab fa-facebook-f" aria-hidden="true"></span>
+                                    </a>
+                                </li>
+    
+                                <li>
+                                    <a href="https://in.linkedin.com/company/w3layouts">
+                                        <span class="fab fa-linkedin-in" aria-hidden="true"></span>
+                                    </a>
+                                </li>
+    
+                                <li>
+                                    <a href="https://twitter.com/W3layouts">
+                                        <span class="fab fa-twitter" aria-hidden="true"></span>
+                                    </a>
+                                </li>
+    
+                                <li>
+                                    <a href="https://w3layouts.com/tag/email-templates/">
+                                        <span class="fab fa-google" aria-hidden="true"></span>
+                                    </a>
+                                </li>
+    
+                                <li>
+                                    <a href="https://github.com/Shangfarm">
+                                        <span class="fab fa-github" aria-hidden="true"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </footer>
+    <main></main>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+        src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+        crossorigin="anonymous"
+    ></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"
+    ></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"
+    ></script>
+    <script src="TrangChu.js" defer></script>
+</body>
+</html>

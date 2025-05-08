@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cảm ơn bạn đã mua hàng | FamRice</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background: url('https://cdn.pixabay.com/photo/2016/08/18/01/41/rice-1601136_1280.jpg') no-repeat center center;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .thank-you-box {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 1rem;
+      padding: 3rem;
+      max-width: 600px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .thank-you-box h1 {
+      font-size: 2.5rem;
+      color: #28a745;
+    }
+
+    .thank-you-box p {
+      font-size: 1.1rem;
+      color: #333;
+    }
+
+    .thank-you-box a.btn {
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+    }
+  </style>
+  <script>
+    // ⏳ Tự động chuyển hướng sau 8 giây
+    setTimeout(() => {
+      window.location.href = "/pages/SanPham/SanPham.html";
+    }, 8000);
+  </script>
+</head>
+<body>
+  <div class="thank-you-box">
+    <h1>🎉 Cảm ơn bạn đã đặt hàng!</h1>
+    <p>Đơn hàng của bạn đang được xử lý. FamRice sẽ liên hệ sớm để xác nhận và giao hàng tận nơi.</p>
+    <p class="text-muted">Bạn sẽ được chuyển về trang sản phẩm sau vài giây...</p>
+    <a href="/pages/SanPham/SanPham.html" class="btn btn-warning fw-bold mt-4">
+      <i class="fas fa-arrow-left me-2"></i> Trở về ngay
+    </a>
+  </div>
+</body>
+</html>

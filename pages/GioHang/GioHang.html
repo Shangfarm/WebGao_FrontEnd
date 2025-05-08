@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>GẠO VIỆT</title>
+        <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+        crossorigin="anonymous"
+        />
+    
+        <!-- CSS here -->
+        <link rel="stylesheet" href="style.css" />
+        <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        />
+        <link
+        href="https://fonts.googleapis.com/css2?family=Volkhov&display=swap"
+        rel="stylesheet"
+        />
+        <link
+        href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap"
+        rel="stylesheet"
+        />
+    </head>
+    <body>
+        <!-- HEADER -->
+        <header class="main-header fixed-top">
+            <div class="container logo">
+                <nav class="navbar navbar-expand-lg stroke">
+                    <h1>
+                        <a class="navbar-brand index-responsive-color d-flex align-items-center" href="/pages/TrangChu/home.html">
+                            FamRice
+                            <i class="fa fa-leaf" aria-hidden="true"></i>
+                        </a>
+                    </h1>
+                    <div class="navbar-right ml-lg-auto">
+                        <div class="search-bar d-lg-flex">
+                            <button class="search-btn">
+                                <span class="fa fa-search search__icon"></span>
+                            </button>
+                        </div>
+                        <div class="menu light-dark">
+                            <button class="btn-theme">
+                                <i class="fa-regular fa-moon"></i>
+                            </button>
+                        </div>
+                        <div class="dropdown">
+                            <input type="checkbox" id="dropdown-toggle" />
+                            <label for="dropdown-toggle" class="dropbtn">
+                                <i class="fa fa-bars"></i>
+                            </label>
+                            <div class="dropdown-content">
+                                <a href="/pages/TrangChu/home.html">TRANG CHỦ</a>
+                                <a href="/pages/GioiThieu/GioiwThieu.html">GIỚI THIỆU</a>
+                                <a href="/pages/SanPham/SanPham.html">SẢN PHẨM</a>
+                                <a href="/pages/ThongTin/ThongTin.html">THÔNG TIN</a>
+                                <a href="/pages/LienHe/LienHe.html">LIÊN HỆ</a>
+                                <a href="/pages/HoSo/HoSo.html">HỒ SƠ</a>
+                                <a href="/pages/GioHang/GioHang.html">GIỎ HÀNG</a>
+                                <a href="#">THỐNG KÊ</a>
+                                <a href="/pages/DangNhap/DangNhap.html" id="login-link">ĐĂNG NHẬP/ĐĂNG KÝ</a>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+    <!-- CART SECTION -->
+    <section class="cart-section" style="padding: 120px; background-image: url(https://png.pngtree.com/background/20210716/original/pngtree-plant-simple-rice-white-background-picture-image_1342001.jpg); background-size: cover;">
+        <div class="container">
+            <h2 class="text-center fw-bold mb-4">
+                <i class="fas fa-shopping-cart me-2 text-warning"></i> GIỎ HÀNG
+            </h2>              
+            <div class="row g-4">
+                <div class="col-lg-8">
+                    <div class="bg-white rounded shadow-sm p-4">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                <th>SẢN PHẨM</th>
+                                <th>ĐƠN GIÁ</th>
+                                <th>GIẢM GIÁ</th>
+                                <th>SỐ LƯỢNG</th>
+                                <th>TỔNG GIÁ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cart-items">
+                                <tr><td colspan="4">Đang tải...</td></tr>
+                            </tbody>
+                        </table>
+                        <div class="d-flex justify-content-between mt-3">
+                            <a href="/pages/SanPham/SanPham.html" class="btn btn-warning fw-bold">
+                                <i class="fas fa-arrow-left me-2"></i> TIẾP TỤC MUA HÀNG
+                            </a>
+                            <button id="clear-cart-btn" class="btn btn-danger fw-bold">
+                                🗑️ Xóa Tất Cả
+                            </button>
+                        </div>                                                   
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="bg-white rounded shadow-sm p-4">
+                        <h5 class="bg-success text-white p-2 rounded">THÀNH TIỀN</h5>
+                        <p><strong>Phí vận chuyển tùy theo khu vực số lượng hàng mà có thể thay đổi.
+                            Gạo Việt cam kết thời gian giao hàng 30 phút được tính từ lúc nhân viên Chăm sóc khách hàng (CSKH) xác nhận đơn hàng thành công. Được áp dụng trong khu vực nội thành TP. HCM</strong> ➜ TÍNH TOÁN</p>
+                        <hr />
+                        <div class="d-flex justify-content-between fw-bold">
+                            <span>Tổng chi phí</span>
+                            <span id="cart-total">0 đ</span>
+                        </div>
+                        <div class="mt-3">
+                            <label for="discount">Giảm giá(%):</label>
+                            <input type="number" id="discount" class="form-control" value="0" min="0" max="100" />
+                        </div>                        
+                        <button class="btn btn-success w-100 mt-3 fw-bold">
+                            TIẾN HÀNH THANH TOÁN
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+        <!-- FOOTER -->
+        <section class="footer-16">
+            <div class="footer-16-main py-5">
+                <div class="container py-4">
+                <div class="row footer-p">
+                    <div class="col-lg-4 FooterContact">
+                    <h3>Liên hệ</h3>
+                    <div class="column-2">
+                        <p>
+                        Địa chỉ: 34 đường số 14, phường Bình Hưng Hòa A, quận Bình
+                        Tân, thành phố Hồ Chí Minh.
+                        </p>
+                        <p class="mt-3">
+                        Phone: <a href="tel:+84 904522077">+84 904522077</a>
+                        </p>
+                        <p class="mt-3">
+                        Email:
+                        <a href="mailto:nguyenthanhsang@gmail.com"
+                            >nguyenthanhsang22012004@gmail.com</a
+                        >
+                        </p>
+                        <p class="mt-3">
+                        Fax: <a href="tel:+84 793939399">+84 793939399</a>
+                        </p>
+                    </div>
+                    </div>
+                    <div class="col-lg-4 FooterFarm">
+                    <h4 class="FooterLogo">
+                        <a
+                        class="Logo"
+                        style="color: orange; font-size: 32px"
+                        href="#"
+                        >
+                        FamRice <i class="fa fa-leaf" aria-hidden="true"></i>
+                        </a>
+                    </h4>
+                    <p class="mt-4">
+                        Chúng tôi cung cấp gạo chất lượng cao, được chọn lọc kỹ càng,
+                        đảm bảo phù hợp với mọi nhu cầu của khách hàng.
+                    </p>
+                    <p class="copy-text mt-5 CopyRights">
+                        © 2025 FamRice. All Rights Reserved | WordPress Theme by
+                        <a href="https://w3layouts.com/">FamRice. </a>
+                    </p>
+                    </div>
+                    <div class="col-lg-4 FooterSubscribe">
+                    <h3>Tin mới</h3>
+                    <div class="end-column">
+                        <p>
+                        Đăng ký nhận bản tin của chúng tôi và nhận cập nhật mới nhất
+                        vào hộp thư email của bạn.
+                        </p>
+                        <form action class="subscribe d-flex mt-3" method="post">
+                        <input
+                            type="email"
+                            name="Email"
+                            placeholder="Email Address"
+                            required=""
+                        />
+                        <button>
+                            <span class="fa fa-paper-plane" aria-hidden="true"></span>
+                        </button>
+                        </form>
+                    </div>
+                    <ul class="social mt-4 pt-2">
+                        <li>
+                        <a href="#"><span class="fab fa-facebook-f"></span></a>
+                        </li>
+                        <li>
+                        <a href="#"><span class="fab fa-linkedin-in"></span></a>
+                        </li>
+                        <li>
+                        <a href="#"><span class="fab fa-twitter"></span></a>
+                        </li>
+                        <li>
+                        <a href="#"><span class="fab fa-google"></span></a>
+                        </li>
+                        <li>
+                        <a href="#"><span class="fab fa-github"></span></a>
+                        </li>
+                    </ul>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </section>
+        <script src="Giohang.js"></script>
+    </body>
+</html>
