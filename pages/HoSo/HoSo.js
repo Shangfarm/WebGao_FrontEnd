@@ -7,8 +7,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (!token) {
         alert("Bạn chưa đăng nhập!");
+        window.location.href = "/pages/DangNhap/DangNhap.html"; // ✅ thêm dòng này
         return;
     }
+
 
     try {
         const res = await fetch("http://localhost:3001/api/users/me", {
