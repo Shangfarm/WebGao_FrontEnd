@@ -33,7 +33,11 @@ function renderProducts(products) {
                 ${isOutOfStock ? `<div class="product-out-of-stock badge bg-secondary position-absolute top-0 end-0 m-2">Hết hàng</div>` : ''}
                 <img src="${product.image}" alt="${product.name}" />
                 <div class="product-actions mt-2">
+<<<<<<< HEAD
+                    <button class="btn-cart btn btn-danger btn-sm w-100 " ${isOutOfStock ? 'disabled title="Sản phẩm đã hết hàng"' : ''}>Thêm Vào Giỏ Hàng</button>
+=======
                     <button class="btn-cart btn btn-danger btn-sm w-100 mb-1" ${isOutOfStock ? 'disabled title="Sản phẩm đã hết hàng"' : ''}>Thêm Vào Giỏ Hàng</button>
+>>>>>>> origin/main
                     <button class="btn btn-success btn-sm w-100" ${isOutOfStock ? 'disabled' : ''}>Mua Ngay</button>
                 </div>
             </div>
@@ -171,12 +175,11 @@ function loadCategoriesToSidebar() {
         });
 }
 
-// ----------------- Sự kiện trang -----------------
+// ----------------- Sự kiện khi DOM sẵn sàng -----------------
 document.addEventListener("DOMContentLoaded", () => {
     updateCartCount();
     loadCategoriesToSidebar();
     fetchAndRender();
-
     const searchToggle = document.querySelector(".search-toggle");
     const searchBox = document.getElementById("search-box");
 
@@ -191,6 +194,39 @@ document.addEventListener("DOMContentLoaded", () => {
                 searchBox.classList.add("d-none");
             }
         });
+    }
+        // --------- Ẩn menu và admin buttons nếu không phải admin ---------
+    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("role");
+
+    console.log("Token:", token);
+    console.log("Role:", role);
+
+    // Xử lý hiển thị các nút admin trong dropdown
+    const adminOnlyMenus = [
+        "menu-discount",
+        "menu-stats",
+        "menu-shipping",
+        "menu-user",
+        "menu-order"
+    ];
+    if (!token || role !== "admin") {
+        adminOnlyMenus.forEach(id => {
+            const item = document.getElementById(id);
+            if (item) item.style.display = "none";
+        });
+    }
+
+    // Xử lý ẩn/hiện adminButtons
+    const adminButtons = document.getElementById("adminButtons");
+    if (adminButtons) {
+        if (token && role === "admin") {
+            adminButtons.style.display = "flex";
+            console.log("✅ Hiện adminButtons vì là admin");
+        } else {
+            adminButtons.style.display = "none";
+            console.log("❌ Ẩn adminButtons vì chưa đăng nhập hoặc không phải admin");
+        }
     }
 });
 

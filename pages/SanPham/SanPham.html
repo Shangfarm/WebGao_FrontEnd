@@ -74,11 +74,12 @@
                             <a href="/pages/LienHe/LienHe.html">LIÊN HỆ</a>
                             <a href="/pages/HoSo/HoSo.html">HỒ SƠ</a>
                             <a href="/pages/GioHang/GioHang.html">GIỎ HÀNG</a>
-                            <a href="/pages/CTGiamGia/CTGiamGia.html">CHƯƠNG TRÌNH GIẢM GIÁ</a>
-                            <a href="#">THỐNG KÊ</a>
-                            <a href="/pages/PTVanChuyen/PTVanChuyen.html">PHƯƠNG THỨC VẬN CHUYỂN</a>
-                            <a href= "#">QUẢN LÝ NGƯỜI DÙNG</a>
-                            <a href="#">QUẢN LÝ ĐƠN HÀNG</a>
+                            <!--Các nút sẽ ẩn khi chưa đăng nhập hoặc không phải admin-->
+                            <li id="menu-discount"><a href="/pages/CTGiamGia/CTGiamGia.html">CHƯƠNG TRÌNH GIẢM GIÁ</a></li>
+                            <li id="menu-stats"><a href="#">THỐNG KÊ</a></li>
+                            <li id="menu-shipping"><a href="/pages/PTVanChuyen/PTVanChuyen.html">PHƯƠNG THỨC VẬN CHUYỂN</a></li>
+                            <li id="menu-user"><a href="#">QUẢN LÝ NGƯỜI DÙNG</a></li>
+                            <li id="menu-order"><a href="#">QUẢN LÝ ĐƠN HÀNG</a></li>
                             <a href="/pages/DangNhap/DangNhap.html" id="login-link">ĐĂNG NHẬP/ĐĂNG KÝ</a>
                         </div>
                     </div>
@@ -86,32 +87,31 @@
             </nav>
         </div>
     </header>
-    <body>
-        <main class="container" style="margin-top: 120px;">
-            <div class="row">
-                <!-- Sidebar danh mục -->
-                <aside class="col-md-3">
-                    <div class="category-sidebar p-3 border rounded">
-                        <h4 class="fw-bold text-uppercase">Danh Mục</h4>
-                        <ul id="category-sidebar" class="list-unstyled mt-3"></ul>
-                    </div>
-                    <a href="QLDanhMuc.html" class="btn btn-primary mt-3">Quản Lý danh mục</a>
-                    <a href="/pages/SanPham/QLSanPham.html" class="btn btn-primary mt-3">Quản Lý sản phẩm</a>
-                </aside>
-        
-                <!-- Danh sách sản phẩm -->
-                <section class="col-md-9">
-                    <h1 id="page-title" class="text-center text-success fw-bold mb-5">SẢN PHẨM</h1>
-                    <div id="product-list" class="product-list"></div>  
-                    <!-- Phân trang -->
-                    <nav class="d-flex justify-content-center mt-4">
-                        <ul class="pagination" id="pagination"></ul>
-                    </nav>
-                </section>
-            </div>
-        </main>       
-        <script src="SanPham.js" defer></script>
-    </body>
+    <main  style="margin-top: 110px;">
+        <div class="row">
+            <!-- Sidebar danh mục -->
+            <aside class="col-md-3">
+                <div class="category-sidebar p-3 border rounded">
+                    <h4 class="fw-bold text-uppercase">Danh Mục</h4>
+                    <ul id="category-sidebar" class="list-unstyled mt-3"></ul>
+                </div>
+                <!-- Nên đặt TRƯỚC THẺ SCRIPT -->
+                <div id="adminButtons" style="display: none;" class="d-flex gap-2 mt-3">
+                    <a href="QLDanhMuc.html" class="btn btn-primary">Quản Lý danh mục</a>
+                    <a href="/pages/SanPham/QLSanPham.html" class="btn btn-primary">Quản Lý sản phẩm</a>
+                </div>
+            </aside>    
+            <!-- Danh sách sản phẩm -->
+            <section class="col-md-9">
+                <h1 id="page-title" class="text-center text-success fw-bold mb-5">SẢN PHẨM</h1>
+                <div id="product-list" class="product-list"></div>  
+                <!-- Phân trang -->
+                <nav class="d-flex justify-content-center mt-4">
+                    <ul class="pagination" id="pagination"></ul>
+                </nav>
+            </section>
+        </div>
+    </main>       
     <footer>
         <section class="footer-16">
             <div class="footer-16-main py-5">
@@ -213,5 +213,6 @@
             </div>
         </section>
     </footer>
+    <script src="SanPham.js" defer></script>
 </body>
 </html>

@@ -83,3 +83,24 @@ document.getElementById("search-form").addEventListener("submit", function (e) {
         window.location.href = `/pages/SanPham/SanPham.html?search=${encodeURIComponent(keyword)}`;
     }
 });
+//--------Ẩn khi chưa dang nhập hoặc không phải admin-----
+document.addEventListener("DOMContentLoaded", () => {
+    const role = localStorage.getItem("role");
+    const token = localStorage.getItem("token");
+
+    const adminOnlyMenus = [
+        "menu-discount",
+        "menu-stats",
+        "menu-shipping",
+        "menu-user",
+        "menu-order"
+    ];
+
+    // Ẩn nếu chưa đăng nhập hoặc không phải admin
+    if (!token || role !== "admin") {
+        adminOnlyMenus.forEach(id => {
+        const item = document.getElementById(id);
+        if (item) item.style.display = "none";
+        });
+    }
+});
