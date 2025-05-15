@@ -36,6 +36,13 @@
                             </button>
                         </form>
                     </div>
+                    <!-- Tìm kiếm nâng cao (thêm vào cuối navbar-right) -->
+                    <div id="search-box" class="d-none">
+                        <form id="search-form">
+                            <input id="search-input" type="text" placeholder="Tìm kiếm..." required />
+                            <button type="submit">Tìm</button>
+                        </form>
+                    </div>
                     <!-- Giỏ hàng -->
                     <div class="cart-icon position-relative">
                         <a href="/pages/GioHang/GioHang.html">
@@ -65,12 +72,20 @@
                             <a href="/pages/LienHe/LienHe.html">LIÊN HỆ</a>
                             <a href="/pages/HoSo/HoSo.html">HỒ SƠ</a>
                             <a href="/pages/GioHang/GioHang.html">GIỎ HÀNG</a>
+<<<<<<< HEAD
                             <!--Các nút sẽ ẩn khi chưa đăng nhập hoặc không phải admin-->
                             <li id="menu-discount"><a href="/pages/CTGiamGia/CTGiamGia.html">CHƯƠNG TRÌNH GIẢM GIÁ</a></li>
                             <li id="menu-stats"><a href="#">THỐNG KÊ</a></li>
                             <li id="menu-shipping"><a href="/pages/PTVanChuyen/PTVanChuyen.html">PHƯƠNG THỨC VẬN CHUYỂN</a></li>
                             <li id="menu-user"><a href="#">QUẢN LÝ NGƯỜI DÙNG</a></li>
                             <li id="menu-order"><a href="#">QUẢN LÝ ĐƠN HÀNG</a></li>
+=======
+                            <a href="/pages/CTGiamGia/CTGiamGia.html">CHƯƠNG TRÌNH GIẢM GIÁ</a>
+                            <a href="#">THỐNG KÊ</a>
+                            <a href="/pages/PTVanChuyen/PTVanChuyen.html">PHƯƠNG THỨC VẬN CHUYỂN</a>
+                            <a href= "#">QUẢN LÝ NGƯỜI DÙNG</a>
+                            <a href="#">QUẢN LÝ ĐƠN HÀNG</a>
+>>>>>>> origin/main
                             <a href="/pages/DangNhap/DangNhap.html" id="login-link">ĐĂNG NHẬP/ĐĂNG KÝ</a>
                         </div>
                     </div>
@@ -90,24 +105,24 @@
             <h2>FAQ</h2>
             <p>Vui lòng xem thông tin trước khi gửi mail liên hệ</p>
         </section>
-        <section class="contact-form">
-            <h2>EMAIL LIÊN HỆ</h2>
-            <form>
-                <label>Họ & Tên (*):</label>
-                <input type="text" required />
-                
-                <label>Email (*):</label>
-                <input type="email" required />
-                
-                <label>Điện thoại (*):</label>
-                <input type="text" required />
-                
-                <label>Nội dung (*):</label>
-                <textarea rows="5" required></textarea>
-                
-                <button type="submit">Gửi</button>
-            </form>
-        </section>
+            <section class="contact-form">
+                <h2>EMAIL LIÊN HỆ</h2>
+                <form id="contact-form">
+                    <label>Họ & Tên (*):</label>
+                    <input type="text" id="fullName" required />
+                    
+                    <label>Email (*):</label>
+                    <input type="email" id="email" required />
+                    
+                    <label>Điện thoại (*):</label>
+                    <input type="text" id="phoneNumber" required />
+                    
+                    <label>Nội dung (*):</label>
+                    <textarea id="message" rows="5" required></textarea>
+                    
+                    <button type="submit">Gửi</button>
+                </form>
+            </section>
     </main>
     <footer>
         <section class="footer-16">
@@ -211,5 +226,6 @@
         </section>
     </footer>
     <script src="LienHe.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

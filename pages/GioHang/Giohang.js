@@ -303,6 +303,14 @@ document.getElementById("search-form").addEventListener("submit", function (e) {
     window.location.href = `/pages/SanPham/SanPham.html?search=${encodeURIComponent(keyword)}`;
   }
 });
+
+document.getElementById("search-form").addEventListener("submit", function (e) {
+  e.preventDefault();
+  const keyword = document.getElementById("search-input").value.trim();
+  if (keyword) {
+    window.location.href = `/pages/SanPham/SanPham.html?search=${encodeURIComponent(keyword)}`;
+  }
+});
 //--------Ẩn khi chưa dang nhập hoặc không phải admin-----
 document.addEventListener("DOMContentLoaded", () => {
     const role = localStorage.getItem("role");

@@ -33,7 +33,11 @@ function renderProducts(products) {
                 ${isOutOfStock ? `<div class="product-out-of-stock badge bg-secondary position-absolute top-0 end-0 m-2">Hết hàng</div>` : ''}
                 <img src="${product.image}" alt="${product.name}" />
                 <div class="product-actions mt-2">
+<<<<<<< HEAD
                     <button class="btn-cart btn btn-danger btn-sm w-100 " ${isOutOfStock ? 'disabled title="Sản phẩm đã hết hàng"' : ''}>Thêm Vào Giỏ Hàng</button>
+=======
+                    <button class="btn-cart btn btn-danger btn-sm w-100 mb-1" ${isOutOfStock ? 'disabled title="Sản phẩm đã hết hàng"' : ''}>Thêm Vào Giỏ Hàng</button>
+>>>>>>> origin/main
                     <button class="btn btn-success btn-sm w-100" ${isOutOfStock ? 'disabled' : ''}>Mua Ngay</button>
                 </div>
             </div>
@@ -176,8 +180,6 @@ document.addEventListener("DOMContentLoaded", () => {
     updateCartCount();
     loadCategoriesToSidebar();
     fetchAndRender();
-
-    // --------- Toggle khung tìm kiếm ---------
     const searchToggle = document.querySelector(".search-toggle");
     const searchBox = document.getElementById("search-box");
 
@@ -193,7 +195,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
-
         // --------- Ẩn menu và admin buttons nếu không phải admin ---------
     const token = localStorage.getItem("token");
     const role = localStorage.getItem("role");
@@ -227,7 +228,6 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log("❌ Ẩn adminButtons vì chưa đăng nhập hoặc không phải admin");
         }
     }
-
 });
 
 // ----------------- Cập nhật giỏ hàng -----------------
