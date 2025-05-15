@@ -27,50 +27,66 @@
         />
     </head>
     <body>
-        <!-- HEADER -->
-        <header class="main-header fixed-top">
-            <div class="container logo">
-                <nav class="navbar navbar-expand-lg stroke">
-                    <h1>
-                        <a class="navbar-brand index-responsive-color d-flex align-items-center" href="/pages/TrangChu/home.html">
-                            FamRice
-                            <i class="fa fa-leaf" aria-hidden="true"></i>
+    <header class="main-header fixed-top">
+        <div class="container logo">
+            <nav class="navbar navbar-expand-lg stroke">
+                <h1>
+                    <a class="navbar-brand index-responsive-color d-flex align-items-center" href="/pages/TrangChu/home.html">
+                    FamRice
+                    <i class="fa fa-leaf" aria-hidden="true"></i>
+                    </a>
+                </h1>
+                <div class="navbar-right ms-auto d-flex align-items-center gap-3">
+                    <!-- Ô tìm kiếm -->
+                    <div class="search-box-container">
+                        <form id="search-form" class="search-box-form d-flex align-items-center shadow-sm rounded-pill px-2" style="background: #fff;">
+                            <input id="search-input" type="text" class="form-control border-0 rounded-pill" placeholder="Tìm kiếm..." style="width: 160px; outline: none; box-shadow: none;" />
+                            <button type="submit" class="btn search-button d-flex align-items-center justify-content-center rounded-pill">
+                                <i class="fa fa-search text-white"></i>
+                            </button>
+                        </form>
+                    </div>
+                    <!-- Giỏ hàng -->
+                    <div class="cart-icon position-relative">
+                        <a href="/pages/GioHang/GioHang.html">
+                            <i class="fa fa-shopping-cart fa-lg icon-colored"></i>
+                            <span id="cart-count"
+                            class="badge bg-danger rounded-pill position-absolute top-0 start-100 translate-middle"
+                            style="font-size: 12px; display: none;">
+                            0
+                            </span>
                         </a>
-                    </h1>
-                    <div class="navbar-right ml-lg-auto">
-                        <div class="search-bar d-lg-flex">
-                            <button class="search-btn">
-                                <span class="fa fa-search search__icon"></span>
-                            </button>
-                        </div>
-                        <div class="menu light-dark">
-                            <button class="btn-theme">
-                                <i class="fa-regular fa-moon"></i>
-                            </button>
-                        </div>
-                        <div class="dropdown">
-                            <input type="checkbox" id="dropdown-toggle" />
+                    </div>
+                    <!-- Dark Mode -->
+                    <button class="btn-theme bg-transparent border-0">
+                        <i class="fa-regular fa-moon fa-lg icon-colored"></i>
+                    </button>
+                    <!-- Menu -->
+                    <div class="dropdown">
+                        <input type="checkbox" id="dropdown-toggle" hidden />
                             <label for="dropdown-toggle" class="dropbtn">
-                                <i class="fa fa-bars"></i>
+                                <i class="fa fa-bars fa-lg icon-colored"></i>
                             </label>
-                            <div class="dropdown-content">
-                                <a href="/pages/TrangChu/home.html">TRANG CHỦ</a>
-                                <a href="/pages/GioiThieu/GioiwThieu.html">GIỚI THIỆU</a>
-                                <a href="/pages/SanPham/SanPham.html">SẢN PHẨM</a>
-                                <a href="/pages/ThongTin/ThongTin.html">THÔNG TIN</a>
-                                <a href="/pages/LienHe/LienHe.html">LIÊN HỆ</a>
-                                <a href="/pages/HoSo/HoSo.html">HỒ SƠ</a>
-                                <a href="/pages/GioHang/GioHang.html">GIỎ HÀNG</a>
-                                <a href="/pages/CTGiamGia/CTGiamGia.html">CHƯƠNG TRÌNH GIẢM GIÁ</a>
-                                <a href="#">THỐNG KÊ</a>
-                                <a href="/pages/DangNhap/DangNhap.html" id="login-link">ĐĂNG NHẬP/ĐĂNG KÝ</a>
-                            </div>
+                        <div class="dropdown-content">
+                            <a href="/pages/TrangChu/home.html">TRANG CHỦ</a>
+                            <a href="/pages/GioiThieu/GioiwThieu.html">GIỚI THIỆU</a>
+                            <a href="/pages/SanPham/SanPham.html">SẢN PHẨM</a>
+                            <a href="/pages/ThongTin/ThongTin.html">THÔNG TIN</a>
+                            <a href="/pages/LienHe/LienHe.html">LIÊN HỆ</a>
+                            <a href="/pages/HoSo/HoSo.html">HỒ SƠ</a>
+                            <a href="/pages/GioHang/GioHang.html">GIỎ HÀNG</a>
+                            <a href="/pages/CTGiamGia/CTGiamGia.html">CHƯƠNG TRÌNH GIẢM GIÁ</a>
+                            <a href="#">THỐNG KÊ</a>
+                            <a href="/pages/PTVanChuyen/PTVanChuyen.html">PHƯƠNG THỨC VẬN CHUYỂN</a>
+                            <a href= "#">QUẢN LÝ NGƯỜI DÙNG</a>
+                            <a href="#">QUẢN LÝ ĐƠN HÀNG</a>
+                            <a href="/pages/DangNhap/DangNhap.html" id="login-link">ĐĂNG NHẬP/ĐĂNG KÝ</a>
                         </div>
                     </div>
-                </nav>
-            </div>
-        </header>
-
+                </div>
+            </nav>
+        </div>
+    </header>
     <!-- CART SECTION -->
     <section class="cart-section" style="padding: 120px; background-image: url(https://png.pngtree.com/background/20210716/original/pngtree-plant-simple-rice-white-background-picture-image_1342001.jpg); background-size: cover;">
         <div class="container">
@@ -115,12 +131,17 @@
                             <span>Tổng chi phí</span>
                             <span id="cart-total">0 đ</span>
                         </div>
-                        <div class="mt-3">
-                            <label for="discount">Giảm giá(%):</label>
-                            <input type="number" id="discount" class="form-control" value="0" min="0" max="100" />
-                        </div>                        
+                        <!-- ✅ Thêm dòng này để hiển thị khuyến mãi -->
+                        <p id="promotion-note" class="text-success mt-2 fw-bold"></p>
+                        <div class="mb-3">
+                        <label for="promotionSelect" class="form-label">Chọn chương trình khuyến mãi:</label>
+                        <select id="promotionSelect" class="form-select">
+                            <option value="">-- Không áp dụng khuyến mãi --</option>
+                        </select>
+                        <small id="promotion-note" class="form-text text-muted"></small>
+                        </div>                      
                         <button class="btn btn-success w-100 mt-3 fw-bold">
-                            TIẾN HÀNH THANH TOÁN
+                            TIẾN HÀNH ĐẶT HÀNG
                         </button>
                     </div>
                 </div>

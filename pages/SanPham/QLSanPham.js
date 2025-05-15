@@ -13,17 +13,105 @@ if (!token) {
 
 function hideAdminButtonsIfNeeded() {
     if (role !== "admin") {
-      ["add-btn", "edit-btn", "delete-btn"].forEach((id) => {
-        const btn = document.getElementById(id);
-        if (btn) btn.style.display = "none";
-      });
+        ["add-btn", "edit-btn", "delete-btn"].forEach((id) => {
+            const btn = document.getElementById(id);
+            if (btn) btn.style.display = "none";
+        });
+        }
     }
-  }
-  
-  document.addEventListener("DOMContentLoaded", () => {
-    hideAdminButtonsIfNeeded();
-    loadCategoriesAndProducts();
-  });
+    
+    document.addEventListener("DOMContentLoaded", () => {
+        hideAdminButtonsIfNeeded();
+        loadCategoriesAndProducts();
+});
+
+// *** THÊM HÀM XỬ LÝ HÌNH ẢNH VÀO ĐÂY ***
+// Hàm xử lý upload ảnh từ máy tính
+function setupImageUploadListener() {
+    const imageUploadInput = document.getElementById('image-upload');
+    const imageUrlInput = document.getElementById('image'); // Input text để chứa URL/DataURL
+    const imagePreview = document.getElementById('image-preview');
+
+    if (imageUploadInput && imageUrlInput && imagePreview) {
+        imageUploadInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];  // Lấy file ảnh từ máy tính
+            if (file) {
+                // Hiển thị ảnh preview trước khi gửi lên server
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    const imageUrl = e.target.result;  // Đây là Data URL
+                    imageUrlInput.value = imageUrl;   // Hiển thị Data URL vào input text
+                    imagePreview.src = imageUrl;      // Hiển thị ảnh lên trang
+                    imagePreview.style.display = 'block'; // Hiện ảnh preview
+                };
+
+                reader.onerror = function(error) {
+                    console.error("Lỗi FileReader: ", error);
+                    alert("Có lỗi xảy ra khi đọc file ảnh.");
+                    // Reset nếu có lỗi
+                    imageUrlInput.value = '';
+                    imagePreview.src = '#';
+                    imagePreview.style.display = 'none';
+                };
+
+                reader.readAsDataURL(file);  // Đọc ảnh dưới dạng DataURL
+            }
+        });
+    }
+}
+
+// Hàm xử lý URL ảnh từ input
+function setupImageUrlListener() {
+    const imageUrlInput = document.getElementById('image'); // Trường nhập liệu URL
+    const imagePreview = document.getElementById('image-preview');
+
+    if (imageUrlInput && imagePreview) {
+        imageUrlInput.addEventListener('input', function(event) {
+            const imageUrl = event.target.value.trim();  // Lấy URL ảnh dán vào
+            if (imageUrl) {
+                // Kiểm tra xem URL có hợp lệ không
+                const urlPattern = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
+                if (urlPattern.test(imageUrl)) {
+                    imagePreview.src = imageUrl;  // Hiển thị ảnh từ URL
+                    imagePreview.style.display = 'block';  // Hiện ảnh xem trước
+                } else {
+                    imagePreview.src = '';  // Không hiển thị nếu URL không hợp lệ
+                    imagePreview.style.display = 'none';
+                }
+            }
+        });
+    }
+}
+
+// Gọi các hàm khi trang được tải
+document.addEventListener("DOMContentLoaded", function() {
+    setupImageUploadListener(); // Lắng nghe sự kiện upload ảnh
+    setupImageUrlListener();    // Lắng nghe sự kiện nhập URL ảnh
+});
+
+function setupImageUrlListener() {
+    const imageUrlInput = document.getElementById('image'); // Trường nhập liệu URL
+    const imagePreview = document.getElementById('image-preview');
+
+    if (imageUrlInput && imagePreview) {
+        imageUrlInput.addEventListener('input', function(event) {
+            const imageUrl = event.target.value.trim();
+            
+            // Kiểm tra xem URL có hợp lệ không
+            const urlPattern = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
+            if (urlPattern.test(imageUrl)) {
+                imagePreview.src = imageUrl;  // Hiển thị ảnh từ URL
+                imagePreview.style.display = 'block';
+            } else {
+                imagePreview.src = '';  // Không hiển thị nếu URL không hợp lệ
+                imagePreview.style.display = 'none';
+            }
+        });
+    }
+}
+
+
 
 // Load danh mục và sản phẩm
 async function loadCategoriesAndProducts() {
@@ -63,6 +151,7 @@ function renderProducts(products) {
 
     products.forEach(prod => {
         const row = document.createElement("tr")
+        const imageUrl = prod.image ? prod.image : 'placeholder.png';
         row.innerHTML = `
         <td>${prod.name}</td>
         <td><img src="${prod.image}" width="40" height="40"/></td>
@@ -93,32 +182,54 @@ function getFormData() {
     if (isNaN(rawDiscount)) rawDiscount = 0;
     if (rawDiscount < 0) rawDiscount = 0;
     if (rawDiscount > 100) rawDiscount = 100;
-  
+
+    let imageUrl = document.getElementById("image").value.trim();
+
+    // Nếu không có URL ảnh, dùng ảnh từ máy tính
+    if (!imageUrl) {
+        const imagePreview = document.getElementById("image-preview");
+        if (imagePreview && imagePreview.src) {
+            imageUrl = imagePreview.src;  // Lấy URL ảnh preview
+        }
+    }
+
     return {
-      name: document.getElementById("name").value.trim(),
-      description: document.getElementById("description").value.trim(),
-      image: document.getElementById("image").value.trim(),
-      price: Number(document.getElementById("price").value),
-      stock: Number(document.getElementById("stock").value),
-      categoryId: document.getElementById("categoryId").value,
-      discount: rawDiscount,
-      status: document.getElementById("status").checked
+        name: document.getElementById("name").value.trim(),
+        description: document.getElementById("description").value.trim(),
+        image: imageUrl,
+        price: Number(document.getElementById("price").value),
+        stock: Number(document.getElementById("stock").value),
+        categoryId: document.getElementById("categoryId").value,
+        discount: rawDiscount,
+        status: document.getElementById("status").checked
     };
 }
 
 
 // Clear form
 function clearForm() {
-    document.getElementById("product-id").value = ""
-    document.getElementById("name").value = ""
-    document.getElementById("description").value = ""
-    document.getElementById("image").value = ""
-    document.getElementById("price").value = ""
-    document.getElementById("stock").value = ""
-    document.getElementById("categoryId").value = ""
-    document.getElementById("discount").value = ""
-    document.getElementById("status").checked = true
+    document.getElementById("product-id").value = "";
+    document.getElementById("name").value = "";
+    document.getElementById("description").value = "";
+    document.getElementById("image").value = "";
+    document.getElementById("price").value = "";
+    document.getElementById("stock").value = "";
+    document.getElementById("categoryId").value = "";
+    document.getElementById("discount").value = "";
+    document.getElementById("status").checked = true;
+    
+    // Reset image upload và preview
+    const imageUploadInput = document.getElementById('image-upload');
+    if (imageUploadInput) {
+        imageUploadInput.value = null;  // Quan trọng để có thể chọn lại cùng 1 file
+    }
+    const imagePreview = document.getElementById('image-preview');
+    if (imagePreview) {
+        imagePreview.src = '#';
+        imagePreview.style.display = 'none';
+    }
 }
+
 
 // Thêm sản phẩm
 document.getElementById("add-btn").addEventListener("click", async () => {

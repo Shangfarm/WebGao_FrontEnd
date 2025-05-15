@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trang Thanh Toán</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+
+    .checkout-container {
+      max-width: 600px;
+      margin: auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    form input, form select {
+      display: block;
+      margin-bottom: 10px;
+      width: 100%;
+      padding: 8px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    fieldset {
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #2e8b57;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .item {
+      background: #f1f1f1;
+      padding: 10px;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="checkout-container">
+    <h1>Thanh Toán Đơn Hàng</h1>
+    <form id="checkout-form">
+      <!-- User -->
+      <input type="hidden" name="userId" value="665cb1f1f1a2345678901234" />
+      <label>Họ tên người nhận</label>
+      <input type="text" name="userName" required />
+
+      <!-- Địa chỉ -->
+      <fieldset>
+        <legend>Địa chỉ giao hàng</legend>
+        <input type="text" name="shippingAddress.houseNumber" placeholder="Số nhà" required />
+        <input type="text" name="shippingAddress.ward" placeholder="Phường" required />
+        <input type="text" name="shippingAddress.district" placeholder="Quận" required />
+        <input type="text" name="shippingAddress.city" placeholder="Thành phố" required />
+        <input type="text" name="shippingAddress.phoneNumber" placeholder="Số điện thoại" required />
+      </fieldset>
+
+      <!-- Vận chuyển & thanh toán -->
+      <label>Phương thức vận chuyển</label>
+      <select name="shippingMethodId" required>
+        <option value="">-- Chọn --</option>
+        <option value="method1">Giao nhanh</option>
+        <option value="method2">Giao tiết kiệm</option>
+      </select>
+
+      <label>Phương thức thanh toán</label>
+      <select name="paymentMethod" required>
+        <option value="COD">COD</option>
+        <option value="MOMO">MoMo</option>
+      </select>
+
+      <!-- Mã giảm giá -->
+      <label>Mã giảm giá (nếu có)</label>
+      <input type="text" name="couponId" />
+
+      <!-- Sản phẩm -->
+      <h3>Sản phẩm</h3>
+      <div id="items-container"></div>
+
+      <!-- Tổng tiền -->
+      <h3 id="total-amount">Tổng tiền: 0đ</h3>
+
+      <button type="submit">Đặt hàng</button>
+    </form>
+  </div>
+
+  <script>
+    const cartItems = [
+      { productId: 'prod1', name: 'Gạo ST25', quantity: 2, price: 25000 },
+      { productId: 'prod2', name: 'Gạo lứt', quantity: 1, price: 30000 }
+    ];
+
+    const itemsContainer = document.getElementById('items-container');
+    const totalAmountEl = document.getElementById('total-amount');
+    const form = document.getElementById('checkout-form');
+
+    let totalAmount = 0;
+
+    // Hiển thị giỏ hàng
+    cartItems.forEach(item => {
+      const div = document.createElement('div');
+      const itemTotal = item.quantity * item.price;
+      totalAmount += itemTotal;
+
+      div.className = 'item';
+      div.innerHTML = `
+        <strong>${item.name}</strong> - SL: ${item.quantity} - Đơn giá: ${item.price}đ - Thành tiền: ${itemTotal}đ
+        <input type="hidden" name="items[]" value='${JSON.stringify(item)}' />
+      `;
+      itemsContainer.appendChild(div);
+    });
+
+    totalAmountEl.innerText = `Tổng tiền: ${totalAmount.toLocaleString()}đ`;
+
+    // Gửi đơn hàng
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+
+      const order = {
+        userId: formData.get('userId'),
+        userName: formData.get('userName'),
+        shippingAddress: {
+          houseNumber: formData.get('shippingAddress.houseNumber'),
+          ward: formData.get('shippingAddress.ward'),
+          district: formData.get('shippingAddress.district'),
+          city: formData.get('shippingAddress.city'),
+          phoneNumber: formData.get('shippingAddress.phoneNumber'),
+        },
+        shippingMethodId: formData.get('shippingMethodId'),
+        paymentMethod: formData.get('paymentMethod'),
+        couponId: formData.get('couponId') || null,
+        items: cartItems,
+      };
+
+      // Gửi về server (giả lập)
+      const response = await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(order)
+      });
+
+      const result = await response.json();
+      alert(result.message || "Đặt hàng thành công");
+    });
+  </script>
+</body>
+</html>

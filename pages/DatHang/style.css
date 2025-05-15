@@ -122,7 +122,7 @@ button {
 .dropdown-content a {
     color: black;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 15.5px;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
@@ -583,107 +583,11 @@ li {
     }
 }
 
-
-/* --- PHẦN BREADCRUMB VÀ TIÊU ĐỀ GIỚI THIỆU --- */
-.main-breadc {
-    padding: 150px 0;
-    color: white;
-    text-align: center;
-    position: relative;
-    background-position: center center !important;
-    background-size: cover !important;
-    background-attachment: fixed;
-}
-.main-breadc .tit-page {
-    font-size: 52px;
-    font-weight: 900;
-    margin-bottom: 15px;
-    text-transform: uppercase;
-    color: #ffffff;
-    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.7);
-    letter-spacing: 1.5px;
-}
-.breadc {
-    font-size: 20px;
-    color: #ffffff;
-    font-weight: 600;
-    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
-}
-
-.breadc a {
-    color: #0cb100; /* màu xám */
-    font-weight: bold; /* in đậm */
-    text-decoration: underline;
-}
-
-.breadc a:hover {
-    color: #ffffff;
-}
-
-/* --- NỘI DUNG GIỚI THIỆU --- */
-.main-wraper {
-    padding: 60px 0;
-    background-color: #fdfdfd;
-}
-.main-wraper .editer {
-    font-size: 17px;
-    line-height: 1.8;
-    color: #333;
-}
-.main-wraper .center {
-    text-align: center;
-}
-.clear40, .clear20, .clear60 {
-    height: 40px;
-}
-.clear20 {
-    height: 20px;
-}
-.clear60 {
-    height: 60px;
-}
-
-/* --- GIỚI THIỆU QUI TRÌNH --- */
-.main-intro-2 {
-    background-color: #fff9f0;
-    padding: 60px 0;
-}
-.main-intro-2 .tit-intro-page {
-    font-size: 28px;
-    font-weight: 600;
-    margin-bottom: 40px;
-}
-.pic-intro-page-2 img,
-.pic-intro-page-3 img {
-    width: 100%;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-/* --- GIỚI THIỆU ĐẶC TÍNH GẠO CÒN CÁM --- */
-.main-intro-3 {
-    background-color: #eef6f0;
-    padding: 60px 0;
-}
-.main-intro-3 .tit-intro-page {
-    font-size: 28px;
-    font-weight: 600;
-    margin-bottom: 40px;
-}
-
-/* --- RESPONSIVE --- */
-@media (max-width: 767px) {
-    .show767 {
-        display: block;
-    }
-    .fullwidth {
-        width: 100%;
-    }
-}
-@media (min-width: 768px) {
-    .show767 {
-        display: none;
-    }
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
 }
 .cart-icon {
     cursor: pointer;
@@ -731,4 +635,29 @@ li {
 
 .search-button:hover {
     background-color: #009f4d;
+}
+main {
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+#checkout-form {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+#checkout-form input,
+#checkout-form select {
+    margin-bottom: 10px;
+}
+
+#items-container > div {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+}
+.title-green {
+    color: green;
 }

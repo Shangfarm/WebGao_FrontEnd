@@ -21,18 +21,50 @@
         <div class="container logo">
             <nav class="navbar navbar-expand-lg stroke">
                 <h1>
-                    <a class="navbar-brand index-responsive-color d-flex align-items-center"
-                        href="/pages/TrangChu/home.html">
-                        FamRice
-                        <i class="fa fa-leaf" aria-hidden="true"></i>
+                    <a class="navbar-brand index-responsive-color d-flex align-items-center" href="/pages/TrangChu/home.html">
+                    FamRice
+                    <i class="fa fa-leaf" aria-hidden="true"></i>
                     </a>
                 </h1>
-                <div class="navbar-right ml-lg-auto">
+                <div class="navbar-right ms-auto d-flex align-items-center gap-3">
+                    <!-- Ô tìm kiếm -->
+                    <div class="search-box-container">
+                        <form id="search-form" class="search-box-form d-flex align-items-center shadow-sm rounded-pill px-2" style="background: #fff;">
+                            <input id="search-input" type="text" class="form-control border-0 rounded-pill" placeholder="Tìm kiếm..." style="width: 160px; outline: none; box-shadow: none;" />
+                            <button type="submit" class="btn search-button d-flex align-items-center justify-content-center rounded-pill">
+                                <i class="fa fa-search text-white"></i>
+                            </button>
+                        </form>
+                    </div>
+                    <!-- Tìm kiếm nâng cao (thêm vào cuối navbar-right) -->
+                    <div id="search-box" class="d-none">
+                        <form id="search-form">
+                            <input id="search-input" type="text" placeholder="Tìm kiếm..." required />
+                            <button type="submit">Tìm</button>
+                        </form>
+                    </div>
+                    <button class="search-toggle">Toggle Search</button>
+                    <!-- Giỏ hàng -->
+                    <div class="cart-icon position-relative">
+                        <a href="/pages/GioHang/GioHang.html">
+                            <i class="fa fa-shopping-cart fa-lg icon-colored"></i>
+                            <span id="cart-count"
+                            class="badge bg-danger rounded-pill position-absolute top-0 start-100 translate-middle"
+                            style="font-size: 12px; display: none;">
+                            0
+                            </span>
+                        </a>
+                    </div>
+                    <!-- Dark Mode -->
+                    <button class="btn-theme bg-transparent border-0">
+                        <i class="fa-regular fa-moon fa-lg icon-colored"></i>
+                    </button>
+                    <!-- Menu -->
                     <div class="dropdown">
-                        <input type="checkbox" id="dropdown-toggle" />
-                        <label for="dropdown-toggle" class="dropbtn">
-                            <i class="fa fa-bars"></i>
-                        </label>
+                        <input type="checkbox" id="dropdown-toggle" hidden />
+                            <label for="dropdown-toggle" class="dropbtn">
+                                <i class="fa fa-bars fa-lg icon-colored"></i>
+                            </label>
                         <div class="dropdown-content">
                             <a href="/pages/TrangChu/home.html">TRANG CHỦ</a>
                             <a href="/pages/GioiThieu/GioiwThieu.html">GIỚI THIỆU</a>
@@ -43,6 +75,9 @@
                             <a href="/pages/GioHang/GioHang.html">GIỎ HÀNG</a>
                             <a href="/pages/CTGiamGia/CTGiamGia.html">CHƯƠNG TRÌNH GIẢM GIÁ</a>
                             <a href="#">THỐNG KÊ</a>
+                            <a href="/pages/PTVanChuyen/PTVanChuyen.html">PHƯƠNG THỨC VẬN CHUYỂN</a>
+                            <a href= "#">QUẢN LÝ NGƯỜI DÙNG</a>
+                            <a href="#">QUẢN LÝ ĐƠN HÀNG</a>
                             <a href="/pages/DangNhap/DangNhap.html" id="login-link">ĐĂNG NHẬP/ĐĂNG KÝ</a>
                         </div>
                     </div>
@@ -62,24 +97,24 @@
             <h2>FAQ</h2>
             <p>Vui lòng xem thông tin trước khi gửi mail liên hệ</p>
         </section>
-        <section class="contact-form">
-            <h2>EMAIL LIÊN HỆ</h2>
-            <form>
-                <label>Họ & Tên (*):</label>
-                <input type="text" required />
-                
-                <label>Email (*):</label>
-                <input type="email" required />
-                
-                <label>Điện thoại (*):</label>
-                <input type="text" required />
-                
-                <label>Nội dung (*):</label>
-                <textarea rows="5" required></textarea>
-                
-                <button type="submit">Gửi</button>
-            </form>
-        </section>
+            <section class="contact-form">
+                <h2>EMAIL LIÊN HỆ</h2>
+                <form id="contact-form">
+                    <label>Họ & Tên (*):</label>
+                    <input type="text" id="fullName" required />
+                    
+                    <label>Email (*):</label>
+                    <input type="email" id="email" required />
+                    
+                    <label>Điện thoại (*):</label>
+                    <input type="text" id="phoneNumber" required />
+                    
+                    <label>Nội dung (*):</label>
+                    <textarea id="message" rows="5" required></textarea>
+                    
+                    <button type="submit">Gửi</button>
+                </form>
+            </section>
     </main>
     <footer>
         <section class="footer-16">
@@ -183,5 +218,6 @@
         </section>
     </footer>
     <script src="LienHe.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

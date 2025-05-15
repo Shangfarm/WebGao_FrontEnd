@@ -21,9 +21,11 @@
         <div class="col-md-4">
             <input id="description" type="text" class="form-control" placeholder="Mô tả" />
         </div>
-            <div class="col-md-4">
-                <input id="image" type="text" class="form-control" placeholder="URL hình ảnh" />
-            </div>
+        <div class="col-md-4">
+            <input type="file" id="image-upload" class="form-control mb-2" accept="image/*" />
+            <input id="image" type="text" class="form-control" placeholder="Hoặc dán URL hình ảnh" /> 
+            <img id="image-preview" src="#" alt="Xem trước ảnh" style="display: none; max-width: 100%; height: auto; margin-top: 10px; border: 1px solid #ddd; padding: 5px;" />
+        </div>
         <div class="col-md-3">
             <input id="price" type="number" class="form-control" placeholder="Giá (VND)" min="0" />
         </div>
