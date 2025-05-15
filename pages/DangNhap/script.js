@@ -93,8 +93,18 @@ document.getElementById("auth-form").addEventListener("submit", async function (
         if (!res.ok) throw new Error(data.message || "Đăng nhập thất bại");
 
         alert("Đăng nhập thành công!");
-        localStorage.setItem("token", data.token);//---------------------
-        localStorage.setItem("role", data.user.role);//-------------------
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("userId", data.user._id);
+        localStorage.setItem("role", data.user.role);
+
+        localStorage.removeItem("cart");
+
+        // ✅ Gán cart mới tạm thời từ cart_userId nếu có
+        const userCartKey = `cart_${data.user._id}`;
+        const newCart = localStorage.getItem(userCartKey);
+        if (newCart) {
+            localStorage.setItem("cart", newCart);
+        }
         window.location.href = "/pages/TrangChu/home.html";
         } catch (err) {
         alert("Lỗi: " + err.message);

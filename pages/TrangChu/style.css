@@ -1181,3 +1181,53 @@ li {
     margin: 0px;
     }
 }
+
+
+.cart-icon {
+    cursor: pointer;
+}
+
+#cart-count {
+    min-width: 18px;
+    padding: 2px 6px;
+}
+
+/* Wrapper luôn nằm ngang */
+.search-wrapper {
+    position: relative;
+}
+
+/* Hộp tìm kiếm ẩn ban đầu, có hiệu ứng mở rộng */
+.search-box-container {
+    display: flex;
+    align-items: center;
+}
+
+.search-box-form {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 999px;
+    padding: 3px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.08);
+}
+
+.search-input {
+    border: none;
+    outline: none;
+    padding: 6px 10px;
+    width: 160px;
+    border-radius: 999px 0 0 999px;
+}
+
+.search-button {
+    background-color: #009f4d;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 0 999px 999px 0;
+}
+
+.search-button:hover {
+    background-color: #009f4d;
+}
+
