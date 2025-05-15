@@ -33,11 +33,7 @@ function renderProducts(products) {
                 ${isOutOfStock ? `<div class="product-out-of-stock badge bg-secondary position-absolute top-0 end-0 m-2">Hết hàng</div>` : ''}
                 <img src="${product.image}" alt="${product.name}" />
                 <div class="product-actions mt-2">
-<<<<<<< HEAD
                     <button class="btn-cart btn btn-danger btn-sm w-100 " ${isOutOfStock ? 'disabled title="Sản phẩm đã hết hàng"' : ''}>Thêm Vào Giỏ Hàng</button>
-=======
-                    <button class="btn-cart btn btn-danger btn-sm w-100 mb-1" ${isOutOfStock ? 'disabled title="Sản phẩm đã hết hàng"' : ''}>Thêm Vào Giỏ Hàng</button>
->>>>>>> origin/main
                     <button class="btn btn-success btn-sm w-100" ${isOutOfStock ? 'disabled' : ''}>Mua Ngay</button>
                 </div>
             </div>

@@ -986,7 +986,7 @@ main {
 /* Giao diện sản phẩm */
 .product-list {
     display: grid;
-    grid-template-columns: repeat(4, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 16px;
     padding: 20px;
     margin-top: 20px;
@@ -1001,9 +1001,6 @@ main {
     display: flex;
     flex-direction: column;
     transition: all 0.3s ease;
-    min-height: 400px;   /* tăng chiều cao để thành hình chữ nhật đứng */
-    width: 280px;        /* đặt chiều rộng cố định (có thể thay đổi) */
-    margin: 0 auto;  
 }
 
 .product:hover {
@@ -1024,7 +1021,6 @@ main {
 .product-img-container {
     position: relative;
     overflow: hidden;
-    flex-grow: 8; /* Cho phép hình ảnh mở rộng để chiếm không gian còn lại */
 }
 
 .product-img-container img {
