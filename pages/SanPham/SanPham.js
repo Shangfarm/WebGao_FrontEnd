@@ -31,13 +31,19 @@ function renderProducts(products) {
             <div class="product-img-container position-relative">
                 ${hasDiscount ? `<div class="product-discount badge bg-danger position-absolute top-0 start-0 m-2">-${product.discount}%</div>` : ''}
                 ${isOutOfStock ? `<div class="product-out-of-stock badge bg-secondary position-absolute top-0 end-0 m-2">Hết hàng</div>` : ''}
-                <img src="${product.image}" alt="${product.name}" />
+                <a href="/pages/TTSanPham/TTSanPham.html?id=${product._id}">
+                    <img src="${product.image}" alt="${product.name}" class="product-img clickable" />
+                </a>
                 <div class="product-actions mt-2">
                     <button class="btn-cart btn btn-danger btn-sm w-100 " ${isOutOfStock ? 'disabled title="Sản phẩm đã hết hàng"' : ''}>Thêm Vào Giỏ Hàng</button>
                     <button class="btn btn-success btn-sm w-100" ${isOutOfStock ? 'disabled' : ''}>Mua Ngay</button>
                 </div>
             </div>
-            <h3 class="text-center mt-2">${product.name}</h3>
+            <h3 class="text-center mt-2">
+                <a href="/pages/TTSanPham/TTSanPham.html?id=${product._id}" class="text-decoration-none text-dark">
+                    ${product.name}
+                </a>
+            </h3>
             <p class="price text-center">
                 <span class="text-danger fw-bold">${discountedPrice.toLocaleString()} VND</span>
                 ${hasDiscount ? `<small class="text-muted text-decoration-line-through ms-2">${product.price.toLocaleString()} VND</small>` : ''}
