@@ -168,15 +168,11 @@
                                 <p>
                                     Đăng ký nhận bản tin của chúng tôi và nhận cập nhật mới nhất vào hộp thư email của bạn.
                                 </p>
-                                <form action class="subscribe d-flex mt-3" method="post">
-                                    <input type="email"
-                                            name="Email"
-                                            placeholder="Email Address"
-                                            required=""
-                                            fdprocessedid="9yn9sd" />
-                                    <button fdprocessedid="19z1h">
-                                        <span class="fa fa-paper-plane" aria-hidden="true"></span>
-                                    </button>
+                                <form id="form-dang-ky-tin-tuc" class="subscribe d-flex mt-3">
+                                    <input type="email" id="email-dang-ky" placeholder="Email Address" required />
+                                        <button type="submit">
+                                            <span class="fa fa-paper-plane" aria-hidden="true"></span>
+                                        </button>
                                 </form>
                             </div>
     
@@ -218,6 +214,7 @@
         </section>
     </footer>
     <script src="LienHe.js" defer></script>
+    <script src="/js/DangKyTinTuc.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
