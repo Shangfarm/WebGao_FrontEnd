@@ -1222,3 +1222,8 @@ main {
 .product-img.clickable:hover {
     transform: scale(1.03);
 }
+
+/* Căn chỉnh dọc hàng tìm kiếm nếu muốn giữa */
+.row.align-items-center {
+    margin-top: 1rem;
+}

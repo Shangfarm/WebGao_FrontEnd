@@ -14,11 +14,17 @@
             background-position: center;
         }
     </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
 <body class="bg-light">
     <div class="container mt-5">
         <h1 class="text-center mb-4">🗂️ Quản Lý Danh Mục</h1>
-
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="btn-group" role="group" aria-label="Filter options">
+                <button id="btn-view-active" class="btn btn-outline-primary active">Xem chưa xoá</button>
+                <button id="btn-view-deleted" class="btn btn-outline-dark">Xem đã xoá</button>
+            </div>
+        </div>
         <div class="card p-4">
             <div class="row mb-3">
                 <input type="hidden" id="category-id" />
@@ -50,7 +56,7 @@
                         <th>Mô tả</th>
                         <th>Trạng thái</th>
                         <th>Ngày tạo</th>
-                        <th>Chọn</th>
+                        <th class="text-center">Chọn</th>
                     </tr>
                 </thead>
                 <tbody id="category-table-body">
@@ -66,5 +72,8 @@
         </div>      
     </div>
     <script src="QLDanhMuc.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js" defer></script>
     </body>
 </html>

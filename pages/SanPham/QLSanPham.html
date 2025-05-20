@@ -15,6 +15,7 @@
             background-position: center;        
         }
     </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
 <body class="bg-light">
     <div class="container py-5">
@@ -36,7 +37,7 @@
             <img id="image-preview" src="#" alt="Xem trước ảnh" style="display: none; max-width: 100%; height: auto; margin-top: 10px; border: 1px solid #ddd; padding: 5px;" />
         </div>
         <div class="col-md-3">
-            <input id="price" type="number" class="form-control" placeholder="Giá (VND)" min="0" />
+            <input id="price" type="number" class="form-control" placeholder="Giá (VND)" min="0" max="1000000" />
         </div>
         <div class="col-md-2">
             <input id="stock" type="number" class="form-control" placeholder="Số lượng kho" min="1" max="1000" />
@@ -63,28 +64,60 @@
             <button id="edit-btn" class="btn btn-warning">Sửa</button>
             <button id="delete-btn" class="btn btn-danger">Xóa</button>
         </div>
+        <!-- Nút Quay lại -->
         <div class="mt-4 text-end">
-            <a href="./SanPham.html" class="btn btn-primary btn-lg mt-3">
-                <i class="fa fa-arrow-left me-2"></i> Quay lại
-            </a>
-        </div>  
+        <a href="./SanPham.html" class="btn btn-primary btn-lg mt-3">
+            <i class="fa fa-arrow-left me-2"></i> Quay lại
+        </a>
+        </div>
 
+        <!-- Hàng lọc/tìm kiếm (đặt sau Quay lại) -->
+        <div class="mt-4 row align-items-center gx-2 gy-2">
+        <div class="col-auto">
+            <button id="btn-view-active" class="btn btn-outline-primary active">Xem chưa xoá</button>
+            <button id="btn-view-deleted" class="btn btn-outline-secondary">Xem đã xoá</button>
+        </div>
+
+        <div class="col-auto">
+        <div class="input-group" style="width: 250px;"> <!-- 👈 chỉnh tại đây -->
+            <span class="input-group-text"><i class="fa fa-search"></i></span>
+            <input id="search-input" type="text" class="form-control" placeholder="Tìm theo tên..." />
+        </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6">
+            <select id="filter-category" class="form-select">
+            <option value="">-- Lọc theo danh mục --</option>
+            </select>
+        </div>
+
+        <div class="col-auto">
+            <button class="btn btn-secondary me-1" onclick="applyFilter()">
+            <i class="fa fa-filter me-1"></i> Lọc
+            </button>
+            <button class="btn btn-outline-secondary" onclick="resetFilter()">
+            <i class="fa fa-rotate-left me-1"></i> Xoá lọc
+            </button>
+        </div>
+        </div>
         <table class="table table-bordered table-hover mt-4">
-        <thead class="table-secondary">
-            <tr>
-            <th>Tên</th>
-            <th>Hình ảnh</th>
-            <th>Giá</th>
-            <th>Kho</th>
-            <th>Danh mục</th>
-            <th>Giảm</th>
-            <th>Trạng thái</th>
-            <th>Chọn</th>
-            </tr>
-        </thead>
+            <thead class="table-secondary">
+                <tr>
+                <th>Tên</th>
+                <th>Hình ảnh</th>   
+                <th>Giá</th>
+                <th>Kho</th>
+                <th>Danh mục</th>
+                <th>Giảm</th>
+                <th>Trạng thái</th>
+                <th class="text-center">Chọn</th>
+                </tr>
+            </thead>
         <tbody id="product-table-body"></tbody>
         </table>
     </div>
     <script src="QLSanPham.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 </body>
 </html>
