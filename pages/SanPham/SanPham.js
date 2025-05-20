@@ -36,7 +36,6 @@ function renderProducts(products) {
                 </a>
                 <div class="product-actions mt-2">
                     <button class="btn-cart btn btn-danger btn-sm w-100 " ${isOutOfStock ? 'disabled title="Sản phẩm đã hết hàng"' : ''}>Thêm Vào Giỏ Hàng</button>
-                    <button class="btn btn-success btn-sm w-100" ${isOutOfStock ? 'disabled' : ''}>Mua Ngay</button>
                 </div>
             </div>
             <h3 class="text-center mt-2">

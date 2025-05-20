@@ -582,74 +582,6 @@ li {
     margin: 0px;
     }
 }
-
-
-.product-detail {
-    margin-top: 120px;
-}
-.price-old {
-    text-decoration: line-through;
-    color: #999;
-    margin-right: 8px;
-}
-.price-new {
-    color: red;
-    font-size: 32px;
-    font-weight: bold;
-}
-.product-description {
-    color: #198754;
-    margin-top: 5px;
-    font-size: 18px;
-    line-height: 1.6;
-}
-/* Gốc */
-.btn-buy {
-    background-color: green !important;
-    color: white !important;
-    font-weight: bold;
-    transition: opacity 0.3s ease;
-}
-
-.btn-cart {
-    background-color: rgb(255, 0, 0) !important;
-    color: white !important;
-    font-weight: bold;
-    transition: opacity 0.3s ease;
-}
-
-/* Hover: mờ nhẹ khi di chuột */
-.btn.btn-buy:hover,
-.btn.btn-cart:hover {
-    filter: brightness(80%);
-    cursor: pointer;
-}
-
-.discount-circle {
-    background-color: rgb(255, 0, 0);
-    color: white;
-    font-weight: bold;
-    border-radius: 60%;
-    padding: 4px 10px;
-    position: absolute;
-    top: 4px;
-    right: 16px;
-    font-size: 20px;
-}
-.badge-sale {
-    background-color: orange;
-    color: white;
-    padding: 4px 8px;
-    font-size: 12px;
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-.product-meta {
-    font-size: 14px;
-    color: gray;
-}
-
 .cart-icon {
     cursor: pointer;
 }
@@ -670,6 +602,15 @@ li {
     align-items: center;
 }
 
+.search-box-form {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 999px;
+    padding: 3px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.08);
+}
+
 .search-input {
     border: none;
     outline: none;
@@ -684,58 +625,156 @@ li {
     padding: 6px 12px;
     border-radius: 0 999px 999px 0;
 }
-.review-options {
-    background-color: #1f1f1f;
-    border-radius: 8px;
+
+.search-button:hover {
+    background-color: #009f4d;
+}
+
+
+
+
+/* Danh sách */
+.wishlist-card {
+    border: 1px solid #eee;
+    border-radius: 10px;
     overflow: hidden;
-    min-width: 120px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: all 0.3s ease-in-out;
+    background: #fff;
 }
-
-.review-options .dropdown-item {
-    color: white;
-    padding: 8px 12px;
-    font-size: 14px;
-    border-bottom: 1px solid #333;
+.wishlist-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
-
-.review-options .dropdown-item:last-child {
-    border-bottom: none;
+.wishlist-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 6px;
 }
-
-.review-options .dropdown-item:hover {
-    background-color: #333;
-    cursor: pointer;
+.wishlist-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 10px 0 5px 0;
+    color: #333;
 }
-.review-action {
-    position: relative;
-    float: right;
+.wishlist-price {
+    color: #d0021b;
+    font-weight: bold;
 }
-
-.review-action .dropdown {
-    position: absolute;
-    right: 0;
-    top: 0;
-    z-index: 2;
-}
-.review-action .dropdown-menu {
-    min-width: 120px;
-    font-size: 14px;
-    right: 0;
-    left: auto;
-}
-.review-action .btn-light {
-    background: transparent;
+.wishlist-remove {
+    background: #ff4d4f;
     border: none;
-    box-shadow: none;
+    color: white;
+    padding: 5px 10px;
+    font-size: 14px;
+    border-radius: 6px;
+    margin-top: 10px;
+    transition: 0.3s;
 }
-/* Ẩn mũi tên mặc định của Bootstrap khi dùng btn.dropdown-toggle */
-.review-action .btn.dropdown-toggle::after {
-    display: none !important;
+.wishlist-remove:hover {
+    background: #d9363e;
+}
+.card-title {
+    font-weight: 600;
+    font-size: 18px;
+}
+.card-text {
+    font-size: 16px;
+}
+.product-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
+    padding: 20px;
+    margin-top: 20px;
 }
 
-/* Nút gọn nhẹ */
-.review-action .btn {
-    padding: 0;
-    color: #444;
+.product {
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 15px;
+    background-color: #fff;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
 }
 
+.product:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.product h3 {
+    font-size: 23px;
+    color: #fb811e;
+    margin: 12px 0 8px 0;
+}
+
+.product p {
+    margin: 4px 0;
+    color: #333;
+}
+.product-img-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.product-img-container img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 10px;
+    max-height: 220px;
+    object-fit: cover;
+    margin-bottom: 12px;
+}
+
+.product-actions {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+    opacity: 0;
+    transition: 0.3s ease;
+}
+
+.product-actions button {
+    flex: 1;
+    margin: 0 5px;
+    white-space: nowrap;
+}
+
+.product:hover .product-actions {
+    opacity: 1;
+}
+.discount-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background-color: red;
+  color: white;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+.card-product {
+  border: 1px solid #eee;
+  border-radius: 12px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  background: #fff;
+}
+.btn-delete-heart {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  font-size: 18px;
+}
