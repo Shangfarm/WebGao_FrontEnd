@@ -586,6 +586,7 @@ li {
 
 .product-detail {
     margin-top: 120px;
+    overflow-x: hidden;
 }
 .price-old {
     text-decoration: line-through;
@@ -598,10 +599,50 @@ li {
     font-weight: bold;
 }
 .product-description {
+    /* giữ nguyên các thuộc tính hiện có */
     color: #198754;
     margin-top: 5px;
     font-size: 18px;
     line-height: 1.6;
+
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+
+    /* thêm 2 dòng sau để giới hạn không vượt container */
+    max-width: 100%;
+    overflow-x: hidden;
+}
+/* Giới hạn phần chứa mô tả */
+#tab-description {
+    overflow-x: hidden;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Giới hạn phần text mô tả chi tiết */
+#product-full-desc {
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    overflow-x: hidden;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+#product-img {
+    width: 100%;          /* full chiều rộng khung chứa */
+    height: 350px;        /* chiều cao cố định, có thể điều chỉnh */
+    object-fit: contain;  /* ảnh vừa vặn trong khung, không bị cắt hoặc kéo dãn */
+    background-color: #fff; /* nền trắng hoặc màu khác cho khung ảnh */
+    display: block;       /* tránh khoảng cách thừa */
+    border-radius: 4px;   /* bo nhẹ cho đẹp, tùy chọn */
+}
+
+
+.col-md-7 {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    overflow-x: hidden; 
 }
 /* Gốc */
 .btn-buy {

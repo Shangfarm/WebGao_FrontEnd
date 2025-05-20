@@ -220,13 +220,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Xử lý ẩn/hiện adminButtons
     const adminButtons = document.getElementById("adminButtons");
+    const overlayLogin = document.getElementById("adminButtonsLoginOverlay");
     if (adminButtons) {
         if (token && role === "admin") {
             adminButtons.style.display = "flex";
             console.log("✅ Hiện adminButtons vì là admin");
+            overlayLogin.style.display = "none";
         } else {
             adminButtons.style.display = "none";
             console.log("❌ Ẩn adminButtons vì chưa đăng nhập hoặc không phải admin");
+            overlayLogin.style.display = "block";
         }
     }
 });
@@ -255,6 +258,7 @@ if (loginLink) {
         loginLink.addEventListener("click", function (e) {
             e.preventDefault();
             localStorage.removeItem("token");
+            localStorage.removeItem("role");
             alert("Bạn đã đăng xuất thành công!");
             location.reload();
         });
