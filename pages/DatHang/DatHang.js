@@ -189,6 +189,8 @@ form.addEventListener("submit", async (e) => {
         localStorage.removeItem("cart");
         updateCartCount();
         renderCart();
+        //Xoá cart theo ID
+        localStorage.removeItem(`cart_${localStorage.getItem("userId")}`);
 
         window.location.href = "/pages/MyLearning/ThankYou.html";  
     } catch (error) {
