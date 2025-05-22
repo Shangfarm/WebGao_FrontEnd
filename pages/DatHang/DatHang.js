@@ -222,6 +222,12 @@ document.addEventListener("DOMContentLoaded", () => {
     updateCartCount();
     loadShippingMethods();
     setupSearchToggle();
+
+    const promoName = localStorage.getItem("selectedPromotionName");
+    if (promoName) {
+    const promoTextEl = document.getElementById("promotion-applied");
+    promoTextEl.textContent = `Đã áp dụng khuyến mãi: ${promoName}`;
+    }
 });
 
 const loginLink = document.getElementById("login-link");

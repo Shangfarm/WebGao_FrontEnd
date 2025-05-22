@@ -135,36 +135,14 @@ async function updateTotalWithPromotion() {
   // Cập nhật tổng chi phí sau khi áp dụng khuyến mãi
   totalEl.innerText = finalTotal.toLocaleString() + " đ";
   localStorage.setItem("finalTotal", finalTotal);
-}
-
-
-async function updateTotalWithPromotion() {
-  const selectedPromoId = document.getElementById("promotionSelect")?.value;
-  const promoNote = document.getElementById("promotion-note");
-  const cart = getCart();
-  const totalEl = document.getElementById("cart-total");
-
-  const promotions = await fetchPromotions();
-  const selectedPromo = promotions.find(p => p._id === selectedPromoId);
-
-  let subtotal = 0;
-  let promoDiscount = 0;
-
-  cart.forEach(item => {
-    const discount = item.discount || 0;
-    subtotal += item.price * item.quantity * (1 - discount / 100);
-  });
 
   if (selectedPromo) {
-    promoDiscount = calculatePromotionDiscount(selectedPromo, cart);
+    localStorage.setItem("selectedPromotionName", selectedPromo.name);
+  } else {
+    localStorage.removeItem("selectedPromotionName");
   }
-
-  const finalTotal = Math.max(0, subtotal - promoDiscount);
-
-  promoNote.textContent = selectedPromo ? `Đã áp dụng: ${selectedPromo.name}` : "Không có chương trình khuyến mãi nào được chọn.";
-  totalEl.innerText = finalTotal.toLocaleString() + " đ";
-  localStorage.setItem("finalTotal", finalTotal);
 }
+
 
 function changeQuantity(index, delta) {
   const cart = getCart();
@@ -227,7 +205,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     } else {
       localStorage.removeItem("selectedPromotionId");
     }
-
+    const promo = promotions.find(p => p._id === selectedPromoId);
+    if (promo) {
+      localStorage.setItem("selectedPromotionName", promo.name);
+    } else {
+      localStorage.removeItem("selectedPromotionName");
+    }
     window.location.href = "/pages/DatHang/DatHang.html";
   });
 });

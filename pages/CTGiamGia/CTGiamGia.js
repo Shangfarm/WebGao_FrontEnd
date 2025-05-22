@@ -1,5 +1,4 @@
 const API_BASE = "http://localhost:3001/api/promotions";
-const categoryMap = {};
 let currentPage = 1;
 let currentLimit = 5;
 let showDeletedOnly = false;
@@ -8,21 +7,6 @@ const token = localStorage.getItem("token");
 if (!token) {
   alert("Vui lòng đăng nhập trước khi truy cập trang này!");
   window.location.href = "/pages/DangNhap/DangNhap.html";
-}
-
-async function loadCategories() {
-  const res = await fetch("http://localhost:3001/api/categories");
-  const data = await res.json();
-  const select = document.getElementById("applicableCategory");
-  select.innerHTML = '<option value="">-- Áp dụng cho tất cả danh mục --</option>';
-  data.data.forEach((cat) => {
-    const option = document.createElement("option");
-    option.value = cat._id;
-    option.textContent = cat.name;
-    select.appendChild(option);
-     // ✅ Lưu vào map để hiển thị
-    categoryMap[cat._id] = cat.name;
-  });
 }
 
 async function loadPromotions(page = 1) {
@@ -54,11 +38,6 @@ async function loadPromotions(page = 1) {
   <td>${promo.name}</td>
   <td>${promo.discountType === "percentage" ? promo.discountValue + "%" : promo.discountValue.toLocaleString() + " đ"}</td>
   <td>${new Date(promo.startDate).toLocaleDateString()} - ${new Date(promo.endDate).toLocaleDateString()}</td>
-  <td>${
-    !promo.applicableCategories || promo.applicableCategories.length === 0
-      ? "Toàn bộ danh mục"
-      : promo.applicableCategories.map(cat => categoryMap[cat] || "Không rõ").join(", ")
-  }</td>
   <td>${promo.status ? "Đang hoạt động" : "Không hoạt động"}</td>
   <td>
     ${
@@ -122,13 +101,11 @@ window.showCreateForm = function () {
   document.getElementById("description").value = "";
   document.getElementById("discountType").value = "percentage";
   document.getElementById("discountValue").value = "";
-  document.getElementById("applicableCategory").value = "";
   document.getElementById("startDate").value = "";
   document.getElementById("endDate").value = "";
   document.getElementById("status").value = "true";
   document.getElementById("promotionForm").style.display = "block";
   document.getElementById("discountType").dispatchEvent(new Event("change"));
-  loadCategories();
 
     // ✅ Ràng buộc ngày bắt đầu từ hôm nay trở đi
   const today = new Date().toISOString().split('T')[0];
@@ -147,13 +124,11 @@ window.editPromotion = function (promo) {
   document.getElementById("description").value = promo.description || "";
   document.getElementById("discountType").value = promo.discountType;
   document.getElementById("discountValue").value = promo.discountValue;
-  document.getElementById("applicableCategory").value = promo.applicableCategories[0] || "";
   document.getElementById("startDate").value = promo.startDate.split("T")[0];
   document.getElementById("endDate").value = promo.endDate.split("T")[0];
   document.getElementById("status").value = promo.status ? "true" : "false";
   document.getElementById("promotionForm").style.display = "block";
-    document.getElementById("discountType").dispatchEvent(new Event("change"));
-  loadCategories();
+  document.getElementById("discountType").dispatchEvent(new Event("change"));
 
     const today = new Date().toISOString().split('T')[0];
   document.getElementById("startDate").min = today;
@@ -186,9 +161,6 @@ window.submitForm = async function () {
     description: document.getElementById("description").value,
     discountType,
     discountValue,
-    applicableCategories: document.getElementById("applicableCategory").value
-      ? [document.getElementById("applicableCategory").value]
-      : [],
     startDate: document.getElementById("startDate").value,
     endDate: document.getElementById("endDate").value,
     status: document.getElementById("status").value === "true"
@@ -274,20 +246,17 @@ window.deletePermanently = async function (id) {
 document.getElementById("showDeletedBtn").addEventListener("click", () => {
   showDeletedOnly = true;
   loadPromotions(1);
-  loadCategories();
 });
 
 // Nút xem chưa xóa (nếu bạn muốn thêm)
 document.getElementById("showNotDeletedBtn")?.addEventListener("click", () => {
   showDeletedOnly = false;
   loadPromotions(1);
-  loadCategories();
 });
 
 // Mặc định tải chưa xóa
 window.onload = () => {
   showDeletedOnly = false;
-  loadCategories(); // load category map trước
   loadPromotions(); // sau đó mới render bảng
 
 };
@@ -300,6 +269,10 @@ window.onSearchClick = () => {
 function updateCartCount() {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
     const cartCountEl = document.getElementById("cart-count");
+
+    // ✅ Nếu phần tử không tồn tại thì thoát ra, không làm gì cả
+    if (!cartCountEl) return;
+
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
     if (totalItems > 0) {
@@ -309,6 +282,7 @@ function updateCartCount() {
         cartCountEl.style.display = "none";
     }
 }
+
 
 // ---------------- Tìm kiếm -----------------------
 // Gọi khi DOM sẵn sàng
