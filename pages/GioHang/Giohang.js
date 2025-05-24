@@ -227,9 +227,21 @@ function updateCartCount() {
 
 document.getElementById("promotionSelect").addEventListener("change", function () {
   const selectedId = this.value;
-  localStorage.setItem("selectedPromotionId", selectedId);
+
+  if (!selectedId) {
+    // Không chọn khuyến mãi -> xoá localStorage
+    localStorage.removeItem("selectedPromotionId");
+    localStorage.removeItem("selectedPromotionName");
+  } else {
+    // Có chọn -> lưu lại
+    const selectedText = this.options[this.selectedIndex].text;
+    localStorage.setItem("selectedPromotionId", selectedId);
+    localStorage.setItem("selectedPromotionName", selectedText);
+  }
+
   updateTotalWithPromotion();
 });
+
 
 window.onload = async function () {
   const promotions = await fetchPromotions();

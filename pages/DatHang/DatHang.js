@@ -3,7 +3,6 @@ const totalAmountEl = document.getElementById("total-amount");
 const form = document.getElementById("checkout-form");
 
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
 function renderCart() {
     itemsContainer.innerHTML = "";
     let totalAmount = 0;
@@ -147,6 +146,13 @@ form.addEventListener("submit", async (e) => {
     const formData = new FormData(form);
     const token = localStorage.getItem("token");
 
+    let promotionId = localStorage.getItem("selectedPromotionId");
+    if (!promotionId || promotionId === "null" || promotionId === "" || promotionId === undefined) {
+    promotionId = null;
+    localStorage.removeItem("selectedPromotionId");
+    localStorage.removeItem("selectedPromotionName");
+}
+
     const order = {
         userId: formData.get("userId"),
         userName: formData.get("userName"),
@@ -160,8 +166,17 @@ form.addEventListener("submit", async (e) => {
         shippingMethodId: formData.get("shippingMethodId"),
         paymentMethod: formData.get("paymentMethod"),
         couponId: formData.get("couponId") || null,
-        totalAmount: parseInt(localStorage.getItem("final_total_with_shipping")) || 0 // Tổng số tiền sau khi cộng phí vận chuyển
+        //promotionId: promotionId,
+        totalAmount: parseInt(localStorage.getItem("final_total_with_shipping")) || 0, // Tổng số tiền sau khi cộng phí vận chuyển
+        items: cart.map(item => ({
+        productId: item.id || item.productId,
+        quantity: item.quantity,
+        price: item.price
+    }))
     };
+    if (promotionId) {
+    order.promotionId = promotionId;
+}
 
     try {
         // Đồng bộ giỏ hàng với backend
@@ -187,12 +202,14 @@ form.addEventListener("submit", async (e) => {
         alert(result.message || "Đặt hàng thành công");
 
         localStorage.removeItem("cart");
+        localStorage.removeItem("selectedPromotionId");        // ← thêm dòng này
+        localStorage.removeItem("selectedPromotionName"); 
         updateCartCount();
         renderCart();
         //Xoá cart theo ID
         localStorage.removeItem(`cart_${localStorage.getItem("userId")}`);
 
-        window.location.href = "/pages/MyLearning/ThankYou.html";  
+        window.location.href = `/pages/ThanhToan/ThanhToan.html?orderId=${result.data._id}`; 
     } catch (error) {
         console.error("Lỗi đặt hàng:", error);
         alert("Đã xảy ra lỗi khi đặt hàng.");

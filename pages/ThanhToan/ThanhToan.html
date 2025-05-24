@@ -2,161 +2,103 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Trang Thanh Toán</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chi tiết đơn hàng - FamRice</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
   <style>
     body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      background-color: #f5f5f5;
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', sans-serif;
     }
-
-    .checkout-container {
-      max-width: 600px;
+    .invoice-box {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+      max-width: 900px;
       margin: auto;
-      background-color: white;
-      padding: 20px;
-      border-radius: 8px;
+      margin-top: 40px;
     }
-
-    form input, form select {
-      display: block;
-      margin-bottom: 10px;
-      width: 100%;
-      padding: 8px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
+    .section-title {
+      font-weight: 600;
+      color: #198754;
+      margin-bottom: 16px;
+      font-size: 1.2rem;
     }
-
-    fieldset {
-      border: 1px solid #ddd;
-      padding: 10px;
-      margin-bottom: 20px;
-    }
-
-    button {
-      padding: 10px 20px;
-      background-color: #2e8b57;
+    table th {
+      background-color: #198754;
       color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
     }
-
-    .item {
-      background: #f1f1f1;
-      padding: 10px;
-      margin-bottom: 5px;
+    .total-row td {
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    .btn-home {
+      margin-top: 30px;
+    }
+    .fw-bold {
+      font-weight: 600;
     }
   </style>
 </head>
 <body>
-  <div class="checkout-container">
-    <h1>Thanh Toán Đơn Hàng</h1>
-    <form id="checkout-form">
-      <!-- User -->
-      <input type="hidden" name="userId" value="665cb1f1f1a2345678901234" />
-      <label>Họ tên người nhận</label>
-      <input type="text" name="userName" required />
+  <div class="invoice-box">
+    <h2 class="text-center text-success mb-4">🧾 Chi Tiết Đơn Hàng</h2>
 
-      <!-- Địa chỉ -->
-      <fieldset>
-        <legend>Địa chỉ giao hàng</legend>
-        <input type="text" name="shippingAddress.houseNumber" placeholder="Số nhà" required />
-        <input type="text" name="shippingAddress.ward" placeholder="Phường" required />
-        <input type="text" name="shippingAddress.district" placeholder="Quận" required />
-        <input type="text" name="shippingAddress.city" placeholder="Thành phố" required />
-        <input type="text" name="shippingAddress.phoneNumber" placeholder="Số điện thoại" required />
-      </fieldset>
+    <div class="mb-4">
+      <div class="section-title">📌 Thông tin người nhận</div>
+      <p><span class="fw-bold">Họ tên:</span> <span id="userName"></span></p>
+      <p><span class="fw-bold">Số điện thoại:</span> <span id="phoneNumber"></span></p>
+      <p><span class="fw-bold">Địa chỉ:</span> <span id="address"></span></p>
+    </div>
 
-      <!-- Vận chuyển & thanh toán -->
-      <label>Phương thức vận chuyển</label>
-      <select name="shippingMethodId" required>
-        <option value="">-- Chọn --</option>
-        <option value="method1">Giao nhanh</option>
-        <option value="method2">Giao tiết kiệm</option>
-      </select>
+    <div class="mb-4">
+      <div class="section-title">📦 Thông tin đơn hàng</div>
+      <p><span class="fw-bold">Mã đơn hàng:</span> <span id="orderId"></span></p>
+      <p><span class="fw-bold">Ngày đặt:</span> <span id="createdAt"></span></p>
+      <p><span class="fw-bold">Phương thức thanh toán:</span> <span id="paymentMethod"></span></p>
+      <p><span class="fw-bold">Phương thức vận chuyển:</span> <span id="shippingMethod"></span></p>
+      <p><span class="fw-bold">Chương trình khuyến mãi:</span> <span id="promotionInfo"></span></p>
+      <p><span class="fw-bold">Mã giảm giá:</span> <span id="couponInfo"></span></p>
+    </div>
 
-      <label>Phương thức thanh toán</label>
-      <select name="paymentMethod" required>
-        <option value="COD">COD</option>
-        <option value="MOMO">MoMo</option>
-      </select>
+    <div class="mb-4">
+      <div class="section-title">📋 Danh sách sản phẩm</div>
+      <div class="table-responsive">
+        <table class="table table-bordered text-center">
+          <thead>
+            <tr>
+              <th>Sản phẩm</th>
+              <th>Số lượng</th>
+              <th>Đơn giá</th>
+              <th>Thành tiền</th>
+            </tr>
+          </thead>
+          <tbody id="items-body"></tbody>
+        </table>
+      </div>
+    </div>
 
-      <!-- Mã giảm giá -->
-      <label>Mã giảm giá (nếu có)</label>
-      <input type="text" name="couponId" />
+    <div class="mb-4">
+      <div class="section-title">💰 Tổng kết</div>
+      <p><span class="fw-bold">Tạm tính:</span> <span id="subtotal"></span></p>
+      <p><strong>Giảm khuyến mãi:</strong> <span id="discount"></span></p>
+      <p><span class="fw-bold">Phí vận chuyển:</span> <span id="shippingFee"></span></p>
+      <p class="text-success total-row"><span class="fw-bold">Tổng thanh toán:</span> <span id="totalAmount"></span></p>
+    </div>
 
-      <!-- Sản phẩm -->
-      <h3>Sản phẩm</h3>
-      <div id="items-container"></div>
+    <div class="mb-4">
+      <div class="section-title">📊 Trạng thái</div>
+      <p><span class="fw-bold">Trạng thái đơn hàng:</span> <span id="orderStatus"></span></p>
+      <p><span class="fw-bold">Trạng thái vận chuyển:</span> <span id="shippingStatus"></span></p>
+    </div>
 
-      <!-- Tổng tiền -->
-      <h3 id="total-amount">Tổng tiền: 0đ</h3>
-
-      <button type="submit">Đặt hàng</button>
-    </form>
+    <div class="text-center btn-home">
+      <a href="/pages/TrangChu/home.html" class="btn btn-primary px-4">← Về trang chủ</a>
+    </div>
   </div>
 
-  <script>
-    const cartItems = [
-      { productId: 'prod1', name: 'Gạo ST25', quantity: 2, price: 25000 },
-      { productId: 'prod2', name: 'Gạo lứt', quantity: 1, price: 30000 }
-    ];
-
-    const itemsContainer = document.getElementById('items-container');
-    const totalAmountEl = document.getElementById('total-amount');
-    const form = document.getElementById('checkout-form');
-
-    let totalAmount = 0;
-
-    // Hiển thị giỏ hàng
-    cartItems.forEach(item => {
-      const div = document.createElement('div');
-      const itemTotal = item.quantity * item.price;
-      totalAmount += itemTotal;
-
-      div.className = 'item';
-      div.innerHTML = `
-        <strong>${item.name}</strong> - SL: ${item.quantity} - Đơn giá: ${item.price}đ - Thành tiền: ${itemTotal}đ
-        <input type="hidden" name="items[]" value='${JSON.stringify(item)}' />
-      `;
-      itemsContainer.appendChild(div);
-    });
-
-    totalAmountEl.innerText = `Tổng tiền: ${totalAmount.toLocaleString()}đ`;
-
-    // Gửi đơn hàng
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const formData = new FormData(form);
-
-      const order = {
-        userId: formData.get('userId'),
-        userName: formData.get('userName'),
-        shippingAddress: {
-          houseNumber: formData.get('shippingAddress.houseNumber'),
-          ward: formData.get('shippingAddress.ward'),
-          district: formData.get('shippingAddress.district'),
-          city: formData.get('shippingAddress.city'),
-          phoneNumber: formData.get('shippingAddress.phoneNumber'),
-        },
-        shippingMethodId: formData.get('shippingMethodId'),
-        paymentMethod: formData.get('paymentMethod'),
-        couponId: formData.get('couponId') || null,
-        items: cartItems,
-      };
-
-      // Gửi về server (giả lập)
-      const response = await fetch('/api/orders', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(order)
-      });
-
-      const result = await response.json();
-      alert(result.message || "Đặt hàng thành công");
-    });
-  </script>
+  <script src="ThanhToan.js"></script>
 </body>
 </html>
