@@ -9,6 +9,24 @@ if (!token) {
   window.location.href = "/pages/DangNhap/DangNhap.html";
 }
 
+// --- Toastify thông báo nhỏ giống quản lý sản phẩm ---
+function showToast(message, type = "warning") {
+  Toastify({
+    text: message,
+    duration: 3000,
+    close: true,
+    gravity: "top",
+    position: "right",
+    style: {
+      background: type === "success" ? "#28a745"
+        : type === "error" ? "#dc3545"
+        : type === "warning" ? "#ffc107"
+        : "#6c757d"
+    },
+    stopOnFocus: true
+  }).showToast();
+}
+
 async function loadPromotions(page = 1) {
   const search = document.getElementById("searchInput").value;
   const status = document.getElementById("statusFilter").value;
@@ -34,11 +52,17 @@ async function loadPromotions(page = 1) {
     const row = document.createElement("tr");
     row.className = isDeleted ? "table-secondary text-muted" : "";
 
+    // Kiểm tra trạng thái thực tế dựa vào ngày hiện tại
+    const now = new Date();
+    const start = new Date(promo.startDate);
+    const end = new Date(promo.endDate);
+    const isActive = promo.status && now >= start && now <= end;
+
     row.innerHTML = `
-  <td>${promo.name}</td>
-  <td>${promo.discountType === "percentage" ? promo.discountValue + "%" : promo.discountValue.toLocaleString() + " đ"}</td>
-  <td>${new Date(promo.startDate).toLocaleDateString()} - ${new Date(promo.endDate).toLocaleDateString()}</td>
-  <td>${promo.status ? "Đang hoạt động" : "Không hoạt động"}</td>
+      <td>${promo.name}</td>
+      <td>${promo.discountType === "percentage" ? promo.discountValue + "%" : promo.discountValue.toLocaleString() + " đ"}</td>
+      <td>${new Date(promo.startDate).toLocaleDateString()} - ${new Date(promo.endDate).toLocaleDateString()}</td>
+      <td>${isActive ? "Đang hoạt động" : "Không hoạt động"}</td>
   <td>
     ${
       isDeleted
@@ -53,7 +77,6 @@ async function loadPromotions(page = 1) {
     }
   </td>
 `;
-
     tbody.appendChild(row);
     const editBtn = row.querySelector(".edit-btn");
 if (editBtn) {
@@ -86,13 +109,40 @@ document.getElementById("discountType").addEventListener("change", function () {
     valueInput.min = 0;
     valueInput.max = 100;
     valueInput.placeholder = "Giảm (%) từ 0 - 100";
+    if (parseFloat(valueInput.value) > 100) valueInput.value = 100;
+    if (parseFloat(valueInput.value) < 0) valueInput.value = 0;
   } else {
-    valueInput.min = 1000;
-    valueInput.removeAttribute("max");
-    valueInput.placeholder = "Giảm giá cố định (>= 1.000đ)";
+    valueInput.min = 0;
+    valueInput.max = 100000;
+    valueInput.placeholder = "Giảm giá cố định (0 - 100.000đ)";
+    if (parseFloat(valueInput.value) > 100000) valueInput.value = 100000;
+    if (parseFloat(valueInput.value) < 1000) valueInput.value = 1000;
   }
 });
 
+document.getElementById("discountValue").addEventListener("input", function () {
+  const type = document.getElementById("discountType").value;
+  let value = parseFloat(this.value) || 0;
+    if (type === "fixed") {
+    if (value > 100000) {
+      this.value = 100000;
+      showToast("⚠️ Số tiền giảm tối đa là 100.000 VND", "warning");
+    }
+    if (value < 0) {
+      this.value = 0;
+      showToast("⚠️ Số tiền giảm không được âm", "warning");
+    }
+  } else {
+    if (value > 100) {
+      this.value = 100;
+      showToast("⚠️ Giảm giá tối đa là 100%", "warning");
+    }
+    if (value < 0) {
+      this.value = 0;
+      showToast("⚠️ Giảm giá không được âm", "warning");
+    }
+  }
+});
 
 window.showCreateForm = function () {
   document.getElementById("formTitle").textContent = "Tạo khuyến mãi";
@@ -126,7 +176,12 @@ window.editPromotion = function (promo) {
   document.getElementById("discountValue").value = promo.discountValue;
   document.getElementById("startDate").value = promo.startDate.split("T")[0];
   document.getElementById("endDate").value = promo.endDate.split("T")[0];
-  document.getElementById("status").value = promo.status ? "true" : "false";
+  const now = new Date();
+  const start = new Date(promo.startDate);
+  const end = new Date(promo.endDate);
+  const isActive = promo.status && now >= start && now <= end;
+  document.getElementById("status").value = promo.status ? "true" : "false"; 
+
   document.getElementById("promotionForm").style.display = "block";
   document.getElementById("discountType").dispatchEvent(new Event("change"));
 
@@ -136,6 +191,17 @@ window.editPromotion = function (promo) {
 };
 
 window.submitForm = async function () {
+
+  const startDate = document.getElementById("startDate").value;
+  const endDate = document.getElementById("endDate").value;
+
+  // Thêm đoạn kiểm tra này
+  if (new Date(startDate) > new Date(endDate)) {
+    showToast("❌ Ngày bắt đầu không được lớn hơn ngày kết thúc!", "error");
+    document.getElementById("startDate").focus();
+    return;
+  }
+
   const id = document.getElementById("promotionId").value;
   const method = id ? "PUT" : "POST";
   const url = id ? `${API_BASE}/${id}` : API_BASE;
@@ -146,12 +212,14 @@ window.submitForm = async function () {
   // ✅ Ràng buộc đầu vào trước khi gửi
   if (discountType === "percentage") {
     if (discountValue < 0 || discountValue > 100) {
-      alert("Giá trị phần trăm chỉ được từ 0 đến 100%");
+      showToast("❌ Giá trị phần trăm chỉ từ 0 đến 100%", "error");
+      document.getElementById("discountValue").focus();
       return;
     }
   } else {
-    if (discountValue < 1000) {
-      alert("Giá trị giảm cố định phải từ 1.000đ trở lên");
+    if (discountValue < 0 || discountValue > 100000) {
+      showToast("❌ Số tiền giảm cố định chỉ từ 0 đến 100.000đ", "error");
+      document.getElementById("discountValue").focus();
       return;
     }
   }
@@ -176,19 +244,33 @@ window.submitForm = async function () {
   });
 
   const result = await res.json();
+
   if (!res.ok) {
-    alert("Lỗi: " + result.message);
+    Swal.fire("Lỗi!", result.message, "error");
     return;
   }
-
-  alert(id ? "Cập nhật thành công" : "Tạo mới thành công");
+  Swal.fire({
+    icon: "success",
+    title: id ? "Cập nhật khuyến mãi thành công" : "Tạo mới khuyến mãi thành công",
+    showConfirmButton: false,
+    timer: 1200
+  });
   hideForm();
   loadPromotions(currentPage);
 };
 
-
 window.deletePromotion = async function (id) {
-  if (!confirm("Bạn có chắc muốn xóa khuyến mãi này?")) return;
+  const confirmDelete = await Swal.fire({
+    title: "Xác nhận xoá?",
+    text: "Bạn có chắc muốn xoá khuyến mãi này?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Xoá",
+    cancelButtonText: "Huỷ",
+    confirmButtonColor: "#d33"
+  });
+
+  if (!confirmDelete.isConfirmed) return;
 
   const res = await fetch(`${API_BASE}/${id}`, {
     method: "DELETE",
@@ -197,16 +279,27 @@ window.deletePromotion = async function (id) {
 
   const result = await res.json();
   if (!res.ok) {
-    alert("Lỗi: " + result.message);
+    Swal.fire("Lỗi!", result.message, "error");
     return;
   }
 
-  alert("Đã xóa khuyến mãi");
+  Swal.fire("Đã xoá!", "Khuyến mãi đã được xoá.", "success");
   loadPromotions(currentPage);
 };
 
+
 window.restorePromotion = async function (id) {
-  if (!confirm("Bạn có chắc muốn khôi phục khuyến mãi này?")) return;
+  const confirmRestore = await Swal.fire({
+    title: "Khôi phục khuyến mãi?",
+    text: "Bạn có muốn khôi phục khuyến mãi này?",
+    icon: "question",
+    showCancelButton: true,
+    confirmButtonText: "Khôi phục",
+    cancelButtonText: "Huỷ",
+    confirmButtonColor: "#28a745"
+  });
+
+  if (!confirmRestore.isConfirmed) return;
 
   const res = await fetch(`${API_BASE}/${id}/restore`, {
     method: "PATCH",
@@ -215,16 +308,27 @@ window.restorePromotion = async function (id) {
 
   const result = await res.json();
   if (!res.ok) {
-    alert("Lỗi: " + result.message);
+    Swal.fire("Lỗi!", result.message, "error");
     return;
   }
 
-  alert("Đã khôi phục khuyến mãi");
+  Swal.fire("Đã khôi phục!", "Khuyến mãi đã được khôi phục.", "success");
   loadPromotions(currentPage);
 };
 
+
 window.deletePermanently = async function (id) {
-  if (!confirm("Bạn có chắc muốn xóa vĩnh viễn khuyến mãi này? Hành động này không thể hoàn tác.")) return;
+  const confirmDelete = await Swal.fire({
+    title: "Xoá vĩnh viễn?",
+    text: "Bạn có chắc muốn xoá vĩnh viễn khuyến mãi này? Hành động này không thể hoàn tác!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Xoá vĩnh viễn",
+    cancelButtonText: "Huỷ",
+    confirmButtonColor: "#d33"
+  });
+
+  if (!confirmDelete.isConfirmed) return;
 
   const res = await fetch(`${API_BASE}/delete/${id}`, {
     method: "DELETE",
@@ -233,13 +337,14 @@ window.deletePermanently = async function (id) {
 
   const result = await res.json();
   if (!res.ok) {
-    alert("Lỗi: " + result.message);
+    Swal.fire("Lỗi!", result.message, "error");
     return;
   }
 
-  alert("Đã xóa vĩnh viễn khuyến mãi");
-  loadPromotions(currentPage); // Reload lại danh sách
+  Swal.fire("Đã xoá vĩnh viễn!", "Khuyến mãi đã bị xoá khỏi hệ thống.", "success");
+  loadPromotions(currentPage);
 };
+
 
 
 // Nút xem đã xóa
@@ -308,4 +413,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         });
     }
+});
+
+document.getElementById("startDate").addEventListener("change", function () {
+  document.getElementById("endDate").min = this.value;
+});
+document.getElementById("endDate").addEventListener("change", function () {
+  document.getElementById("startDate").max = this.value;
 });

@@ -2,6 +2,26 @@ const API_PROMOTIONS = "http://localhost:3001/api/promotions";
 const token = localStorage.getItem("token");
 const userId = localStorage.getItem("userId");
 
+function showToast(message, type = "success") {
+  Toastify({
+    text: message,
+    duration: 2500,
+    close: true,
+    gravity: "top",
+    position: "right",
+    style: {
+      background: type === "success"
+        ? "#28a745"
+        : type === "error"
+        ? "#dc3545"
+        : type === "warning"
+        ? "#ffc107"
+        : "#6c757d"
+    },
+    stopOnFocus: true,
+  }).showToast();
+}
+
 function getCartKey() {
   return `cart_${userId}`;
 }
@@ -41,7 +61,7 @@ async function fetchPromotions() {
 function populatePromotionSelect(promotions) {
   const select = document.getElementById("promotionSelect");
   select.innerHTML = '<option value="">-- Không áp dụng khuyến mãi --</option>';
-  promotions.forEach(promo => {
+  promotions.filter(isPromotionActive).forEach(promo => {
     const discountText = promo.discountType === "percentage"
       ? `${promo.discountValue}%`
       : `${promo.discountValue.toLocaleString()} đ`;
@@ -110,7 +130,9 @@ async function updateTotalWithPromotion() {
   const totalEl = document.getElementById("cart-total");
 
   const promotions = await fetchPromotions();
-  const selectedPromo = promotions.find(p => p._id === selectedPromoId);
+  const validPromotions = promotions.filter(isPromotionActive);
+  const selectedPromo = validPromotions.find(p => p._id === selectedPromoId);
+
 
   let subtotal = 0;
   let promoDiscount = 0;
@@ -165,6 +187,7 @@ function changeQuantity(index, delta) {
   renderCartItems();
   updateTotalWithPromotion();
   updateCartCount();
+  showToast("Cập nhật số lượng thành công!", "success");
 }
 
 
@@ -175,6 +198,7 @@ function removeFromCart(index) {
   renderCartItems();
   updateTotalWithPromotion();
   updateCartCount();
+  showToast("Đã xóa sản phẩm khỏi giỏ hàng!", "warning");
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -205,7 +229,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     } else {
       localStorage.removeItem("selectedPromotionId");
     }
-    const promo = promotions.find(p => p._id === selectedPromoId);
+    const validPromotions = promotions.filter(isPromotionActive);
+    const promo = validPromotions.find(p => p._id === selectedPromoId);
     if (promo) {
       localStorage.setItem("selectedPromotionName", promo.name);
     } else {
@@ -247,10 +272,12 @@ window.onload = async function () {
   const promotions = await fetchPromotions();
   const cart = getCart();
 
+  const validPromotions = promotions.filter(isPromotionActive);
+
   let bestPromo = null;
   let bestDiscount = 0;
 
-  promotions.forEach(promo => {
+  validPromotions.forEach(promo => {
     const discount = calculatePromotionDiscount(promo, cart);
     if (discount > bestDiscount) {
       bestDiscount = discount;
@@ -258,7 +285,7 @@ window.onload = async function () {
     }
   });
 
-  populatePromotionSelect(promotions);
+  populatePromotionSelect(validPromotions);
   if (bestPromo) {
     document.getElementById("promotionSelect").value = bestPromo._id;
   }
@@ -284,12 +311,24 @@ if (loginLink) {
 }
 
 document.getElementById("clear-cart-btn")?.addEventListener("click", () => {
-  if (confirm("Bạn có chắc muốn xóa toàn bộ giỏ hàng?")) {
-    localStorage.removeItem(getCartKey());
-    localStorage.removeItem("cart");
-    location.reload();
-  }
+  Swal.fire({
+    title: "Bạn có chắc muốn xóa toàn bộ giỏ hàng?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "OK",
+    cancelButtonText: "Hủy",
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      localStorage.removeItem(getCartKey());
+      localStorage.removeItem("cart");
+      showToast("Đã xóa toàn bộ giỏ hàng!", "warning"); 
+      location.reload();
+    }
+  });
 });
+
 
 document.getElementById("search-form").addEventListener("submit", function (e) {
   e.preventDefault();
@@ -327,3 +366,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+function isPromotionActive(promo) {
+  const now = new Date();
+  const start = new Date(promo.startDate);
+  const end = new Date(promo.endDate);
+  return promo.status && now >= start && now <= end;
+}
