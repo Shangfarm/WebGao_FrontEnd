@@ -191,9 +191,6 @@ header.main-header {
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
     max-width: 900px;
     margin: 40px auto;
-    background-color: #f8f9fa;
-    background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)),
-    url('https://png.pngtree.com/background/20250123/original/pngtree-hand-drawn-rice-seamless-pattern-a-black-and-white-doodle-illustration-picture-image_15258957.jpg');
 }
 
 .section-title {
