@@ -1,0 +1,223 @@
+/* ===== Base Styles ===== */
+body {
+    font-family: "Source Sans Pro", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    height: 100vh;
+    width: 100%;
+
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: "Volkhov", serif;
+    margin: 0;
+    padding: 0;
+}
+
+button {
+    border: none;
+    background-color: transparent;
+}
+
+.fw-bold {
+    font-weight: 600;
+}
+
+/* ===== Header ===== */
+header.main-header {
+    background-color: white;
+    padding: 0;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.05);
+    transition: all 0.4s ease 0s;
+}
+
+.navbar {
+    justify-content: space-between;
+    padding: 0;
+}
+
+.navbar .navbar-brand {
+    font-size: 32px;
+    color: #fb811e;
+    padding: 0;
+    position: relative;
+}
+
+.navbar-brand,
+.menu-right {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar-brand a {
+    font-size: 32px;
+    position: relative;
+}
+
+.navbar-brand i {
+    position: absolute;
+    top: -10px;
+    left: 55px;
+    font-size: 20px;
+}
+
+.main-header a {
+    color: #fb811e;
+    transition: 0.5s all;
+}
+
+.main-header a:hover {
+    color: black;
+}
+
+/* ===== Layout Containers ===== */
+.container, .container-fluid {
+    width: 100%;
+    padding: 0 15px;
+    margin: 0 auto;
+}
+
+/* ===== Footer ===== */
+.footer-16 a.logo {
+    font-size: 32px;
+    color: #fb811e;
+    position: relative;
+    padding: 0;
+    text-decoration: none;
+    transition: 0.5s all;
+}
+
+.footer-16 a.logo i {
+    position: absolute;
+    top: -10px;
+    left: 55px;
+    font-size: 20px;
+}
+
+.footer-16 p.copy-text a {
+    color: #009f4d;
+}
+
+.footer-16 .footer-16-main h3 {
+    font-size: 20px;
+    line-height: 25px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #060606;
+    margin: 0 0 30px 0;
+    padding: 0;
+}
+
+.footer-16 .column-2 p,
+.footer-16 .footer-p p a {
+    line-height: 24px;
+    transition: 0.5s all;
+}
+
+.footer-16 .footer-p p a:hover {
+    color: #fb811e;
+}
+
+.footer-p a:not(.logo) {
+    color: #707070;
+    text-decoration: none;
+}
+
+.footer-16 .subscribe input[type="email"] {
+    width: 80%;
+    padding: 12px 20px;
+    border: 1px solid #eee;
+    border-radius: 30px 0 0 30px;
+    background: #f4f4f4;
+    font-size: 16px;
+    color: #707070;
+    outline: none;
+}
+
+.footer-16 .subscribe button {
+    width: 20%;
+    padding: 12px;
+    border-radius: 0 30px 30px 0;
+    background: #009f4d;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
+.footer-16 ul.social {
+    padding-left: 0;
+}
+
+.footer-16 ul.social li {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.footer-16 ul.social li a {
+    width: 35px;
+    height: 35px;
+    display: inline-block;
+    border-radius: 50%;
+    background: rgba(10, 191, 83, 0.08);
+    color: #009f4d;
+    text-align: center;
+}
+
+.footer-16 ul.social li a span {
+    font-size: 15px;
+    line-height: 35px;
+}
+
+.FooterContact {
+    padding-right: 15px;
+}
+
+.FooterFarm, .footer-16 .column {
+    padding: 0 15px;
+}
+
+/* ===== Thanh Toan ===== */
+.invoice-box {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+    max-width: 900px;
+    margin: 40px auto;
+    background-color: #f8f9fa;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)),
+    url('https://png.pngtree.com/background/20250123/original/pngtree-hand-drawn-rice-seamless-pattern-a-black-and-white-doodle-illustration-picture-image_15258957.jpg');
+}
+
+.section-title {
+    font-weight: 600;
+    color: #198754;
+    margin-bottom: 16px;
+    font-size: 1.7rem; /* tăng nhẹ từ 1.2rem */
+}
+
+table th {
+    background-color: #198754;
+    color: white;
+    font-size: 1.5rem; /* tăng nhẹ */
+}
+
+table td {
+    font-size: 1rem; /* thêm mới để đồng bộ */
+}
+
+.total-row td {
+    font-weight: 600;
+    font-size: 1.20rem; /* tăng nhẹ từ 1.1rem */
+}
+
+.btn-home {
+    margin-top: 30px;
+}
