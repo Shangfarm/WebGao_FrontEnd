@@ -41,7 +41,8 @@ async function loadDashboard() {
         });
 
         document.querySelector("#items-sales span").textContent = orderItems.totalSales || 0;
-        document.querySelector("#new-orders span").textContent = orders.length;
+        const newOrders = orders.filter(order => order.orderStatus === "PENDING" && !order.deletedAt);
+        document.querySelector("#new-orders span").textContent = newOrders.length;
         document.querySelector("#total-products span").textContent = products.length;
         document.querySelector("#new-visitors span").textContent = users.length;
 
@@ -50,37 +51,94 @@ async function loadDashboard() {
         new Chart(ctx, {
             type: "bar",
             data: {
-                labels: orderItems.data.map((item) => item.productName),
+                labels: orderItems.data.map(item => item.productName),
                 datasets: [{
                     label: "Số lượng đã bán",
-                    data: orderItems.data.map((item) => item.quantity),
-                    backgroundColor: "rgba(0, 196, 179, 0.6)",
+                    data: orderItems.data.map(item => item.totalQuantity),
+                    backgroundColor: "rgba(0, 196, 179, 0.7)",
                     borderColor: "#00c4b3",
                     borderWidth: 1,
-                }],
+                    borderRadius: 6,      // Bo góc cột
+                    barThickness: 40      // Độ dày cột
+                }]
             },
+            plugins: [ChartDataLabels],
             options: {
-                scales: {
-                y: { beginAtZero: true },
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    datalabels: {
+                        color: '#000',
+                        font: {
+                            weight: 'bold',
+                            size: 14
+                        },
+                        anchor: 'end',
+                        align: 'top',
+                        formatter: value => value
+                    },
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: (context) => `Đã bán: ${context.parsed.y}`
+                        }
+                    }
                 },
-            },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        suggestedMax: Math.max(...orderItems.data.map(item => item.quantity)) + 1,
+                        ticks: {
+                            stepSize: 1
+                        },
+                        title: {
+                            display: true,
+                            text: 'Số lượng'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            autoSkip: false,
+                            maxRotation: 45,
+                            minRotation: 0
+                        }
+                    }
+                },
+                layout: {
+                    padding: {
+                        top: 40
+                    }
+                }
+            }
         });
 
         // Biểu đồ tồn kho theo danh mục
-        console.log("Dữ liệu tồn kho theo danh mục:", stockStats);
+        const filteredProducts = products.filter(p => p.stock > 0);
 
+        // Gom nhóm số lượng tồn kho theo categoryId
+        const grouped = {};
+        filteredProducts.forEach(p => {
+            const category = categoryMap[p.categoryId] || "Không xác định";
+            if (!grouped[category]) grouped[category] = 0;
+            grouped[category] += p.stock;
+        });
+
+        // Chuyển sang mảng để vẽ biểu đồ
+        const stockLabels = Object.keys(grouped);
+        const stockData = Object.values(grouped);
+
+        // Biểu đồ tồn kho theo danh mục chính xác
         const ctxStock = document.getElementById("stockChart").getContext("2d");
         new Chart(ctxStock, {
             type: "pie",
             data: {
-                labels: stockStats.map(item => item.categoryName),
+                labels: stockLabels,
                 datasets: [{
                     label: "Tồn kho theo danh mục",
-                    data: stockStats.map(item => item.totalProducts),
-                    backgroundColor: [
-                        "#36A2EB", "#FF6384", "#FFCE56", "#4BC0C0", "#9966FF", "#FF9F40"
-                    ],
-                }]
+                    data: stockData,
+                }],
             },
             plugins: [ChartDataLabels],
             options: {
@@ -110,8 +168,8 @@ async function loadDashboard() {
         (orders.slice ? orders.slice(0, 5) : []).forEach((order) => {
             const row = document.createElement("tr");
             row.innerHTML = `
-                <td>${order.customerName || "Không rõ"}</td>
-                <td>${order.total ? `$${order.total}` : "0"}</td>
+                <td>${order.userName || "Không rõ"}</td>
+                <td>${order.totalAmount ? `${order.totalAmount.toLocaleString("vi-VN")} đ` : "0"}</td>
                 <td>${new Date(order.createdAt).toLocaleString("vi-VN")}</td>
             `;
             salesTable.appendChild(row);
@@ -213,6 +271,29 @@ document.getElementById("search-form").addEventListener("submit", function (e) {
 
     if (keyword) {
         window.location.href = `/pages/SanPham/SanPham.html?search=${encodeURIComponent(keyword)}`;
+    }
+});
+// <!-- Tùy chọn hiện/ẩn biểu đồ theo lựa chọn -->
+document.addEventListener("DOMContentLoaded", () => {
+    const chartSelector = document.getElementById("chartSelector");
+    const sections = ["sales-chart", "stock-chart", "product-table", "sales-table", "user-table"];
+
+    function updateVisibleSection(selectedId) {
+        sections.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.style.display = (selectedId === "all" || selectedId === id) ? "block" : "none";
+            }
+        });
+    }
+
+    if (chartSelector) {
+        chartSelector.addEventListener("change", (e) => {
+            updateVisibleSection(e.target.value);
+        });
+
+        // Mặc định hiển thị tất cả
+        updateVisibleSection("all");
     }
 });
 //--------Ẩn khi chưa dang nhập hoặc không phải admin-----
