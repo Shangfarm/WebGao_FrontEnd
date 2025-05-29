@@ -42,10 +42,10 @@ document.getElementById("auth-form").addEventListener("submit", async function (
 
     if (isSignUp) {
         if (!email || !username || !password || !confirmPassword) {
-         return Swal.fire({
-            icon: 'warning',
-            title: 'Thiếu thông tin!',
-            text: 'Vui lòng điền đầy đủ các trường.'
+            return Swal.fire({
+                icon: 'warning',
+                title: 'Thiếu thông tin!',
+                text: 'Vui lòng điền đầy đủ các trường.'
             });
         }
 
@@ -101,46 +101,46 @@ document.getElementById("auth-form").addEventListener("submit", async function (
 
     } else {
         try {
-        const res = await fetch(`${apiBaseUrl}/login`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-            username: username,    
-            email: username, //Sang sửa cái này Nhân nhớ nha, mấy chỗ khác cần sửa luôn
-            password
-            })
-        });
+            const res = await fetch(`${apiBaseUrl}/login`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                username: username,    
+                email: username, //Sang sửa cái này Nhân nhớ nha, mấy chỗ khác cần sửa luôn
+                password
+                })
+            });
 
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.message || "Đăng nhập thất bại");
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("userId", data.user._id);
-        localStorage.setItem("role", data.user.role);
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.message || "Đăng nhập thất bại");
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("userId", data.user._id);
+            localStorage.setItem("role", data.user.role);
 
-        localStorage.removeItem("cart");
+            localStorage.removeItem("cart");
 
-        // ✅ Gán cart mới tạm thời từ cart_userId nếu có
-        const userCartKey = `cart_${data.user._id}`;
-        const newCart = localStorage.getItem(userCartKey);
-        if (newCart) {
-            localStorage.setItem("cart", newCart);
+            // ✅ Gán cart mới tạm thời từ cart_userId nếu có
+            const userCartKey = `cart_${data.user._id}`;
+            const newCart = localStorage.getItem(userCartKey);
+            if (newCart) {
+                localStorage.setItem("cart", newCart);
+            }
+            Swal.fire({
+                icon: 'success',
+                title: 'Đăng nhập thành công!',
+                showConfirmButton: false,
+                timer: 1500
+            }).then(() => {
+                window.location.href = "/pages/TrangChu/home.html";
+            });
+        } catch (err) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi đăng nhập!',
+                    text: err.message
+                });
+            }
         }
-       Swal.fire({
-        icon: 'success',
-        title: 'Đăng nhập thành công!',
-        showConfirmButton: false,
-        timer: 1500
-      }).then(() => {
-        window.location.href = "/pages/TrangChu/home.html";
-      });
-    } catch (err) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Lỗi đăng nhập!',
-        text: err.message
-      });
-        }
-    }
     });
 
     // Khởi tạo ban đầu

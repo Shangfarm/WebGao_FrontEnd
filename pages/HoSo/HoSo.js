@@ -6,8 +6,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     profileForm.style.display = "none";
 
     if (!token) {
-        alert("Bạn chưa đăng nhập!");
-        window.location.href = "/pages/DangNhap/DangNhap.html"; // ✅ thêm dòng này
+        showToast("Bạn chưa đăng nhập!", "warning");
+        window.location.href = "/pages/DangNhap/DangNhap.html";
         return;
     }
 
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById("avatar-preview").src = data.avatar || "";
     } catch (err) {
         console.error("Lỗi xác thực:", err);
-        alert("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.");
+        showToast("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.", "error");
         localStorage.removeItem("token");
         window.location.href = "/pages/DangNhap/DangNhap.html";
         return;
@@ -72,13 +72,13 @@ document.addEventListener("DOMContentLoaded", async () => {
             const result = await res.json();
 
             if (res.ok) {
-                alert("✅ Cập nhật thành công!");
+                showToast("✅ Cập nhật thành công!", "success");
             } else {
-                alert("❌ Cập nhật thất bại: " + result.message);
+                showToast("❌ Cập nhật thất bại: " + result.message, "error");
             }
         } catch (error) {
             console.error("Lỗi khi cập nhật:", error);
-            alert("❌ Đã xảy ra lỗi khi gửi yêu cầu cập nhật");
+            showToast("❌ Đã xảy ra lỗi khi gửi yêu cầu cập nhật", "error");
         }
     });
 
@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         loginLink.addEventListener("click", function (e) {
             e.preventDefault();
             localStorage.removeItem("token");
-            alert("Bạn đã đăng xuất thành công!");
+            showToast("Bạn đã đăng xuất thành công!", "success");
             location.reload();
         });
     }
@@ -162,3 +162,18 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+function showToast(message, type = "info") {
+    let bg = "#198754"; // xanh lá
+    if (type === "error") bg = "#dc3545";
+    if (type === "warning") bg = "#ffc107";
+    if (type === "success") bg = "#28a745";
+    Toastify({
+        text: message,
+        duration: 2000,
+        close: true,
+        gravity: "top",
+        position: "right",
+        style: { background: bg, color: "#fff" }
+    }).showToast();
+}

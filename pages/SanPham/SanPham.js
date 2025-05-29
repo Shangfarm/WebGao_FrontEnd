@@ -58,7 +58,7 @@ function renderProducts(products) {
                 const userId = localStorage.getItem("userId");
 
                 if (!token || !userId) {
-                    alert("⚠️ Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.");
+                    showToast("⚠️ Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.", "warning");
                     return;
                 }
 
@@ -70,7 +70,7 @@ function renderProducts(products) {
                     if (existing.quantity < product.stock) {
                         existing.quantity += 1;
                     } else {
-                        alert("⚠️ Sản phẩm đã đạt tối đa tồn kho.");
+                        showToast("⚠️ Sản phẩm đã đạt tối đa tồn kho.", "warning");
                         return;
                     }
                 } else {
@@ -90,7 +90,7 @@ function renderProducts(products) {
                 // ✅ Lưu vào đúng giỏ hàng người dùng
                 localStorage.setItem(cartKey, JSON.stringify(cart));
                 localStorage.setItem("cart", JSON.stringify(cart));
-                alert(`✅ Đã thêm "${product.name}" vào giỏ hàng.`);
+                showToast(`✅ Đã thêm "${product.name}" vào giỏ hàng.`, "success");
             });
         }
     });
@@ -259,16 +259,30 @@ if (loginLink) {
             e.preventDefault();
             localStorage.removeItem("token");
             localStorage.removeItem("role");
-            alert("Bạn đã đăng xuất thành công!");
+            showToast("Bạn đã đăng xuất thành công!", "success");
             location.reload();
         });
     }
 }
 document.getElementById("search-form").addEventListener("submit", function (e) {
-    e.preventDefault(); // Không reload
+    e.preventDefault();
     const keyword = document.getElementById("search-input").value.trim();
 
     if (keyword) {
         window.location.href = `/pages/SanPham/SanPham.html?search=${encodeURIComponent(keyword)}`;
     }
 });
+function showToast(message, type = "info") {
+    let bg = "#198754"; // xanh lá info
+    if (type === "error") bg = "#dc3545";
+    if (type === "warning") bg = "#ffc107";
+    if (type === "success") bg = "#28a745";
+    Toastify({
+        text: message,
+        duration: 2000,
+        close: true,
+        gravity: "top",
+        position: "right",
+        style: { background: bg, color: "#fff" }
+    }).showToast();
+}

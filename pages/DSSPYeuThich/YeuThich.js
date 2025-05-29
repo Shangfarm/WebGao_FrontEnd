@@ -155,28 +155,54 @@ document.addEventListener("DOMContentLoaded", async () => {
                 });
 
                 if (res.ok) {
-                    location.reload();
+                    // Xóa khỏi giao diện luôn cho mượt
+                    button.closest('.col-md-4').remove();
+
+                    // Toast thông báo thành công
+                    Swal.fire({
+                        toast: true,
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Đã xóa khỏi danh sách yêu thích!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                 } else {
-                    alert("❌ Không thể xóa sản phẩm khỏi danh sách yêu thích.");
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi!',
+                        text: 'Không thể xóa sản phẩm khỏi danh sách yêu thích.',
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
                 }
             });
         });
 
         // ✅ Xóa tất cả (nếu có nút)
         document.getElementById("clear-wishlist-btn")?.addEventListener("click", async () => {
-            const confirmDelete = confirm("Bạn có chắc muốn xóa tất cả sản phẩm yêu thích?");
-            if (!confirmDelete) return;
-
-            for (let item of wishlist) {
-                await fetch(`http://localhost:3001/api/wishlist/${item._id}`, {
-                    method: "DELETE",
-                    headers: { Authorization: `Bearer ${token}` }
-                });
-            }
-
-            location.reload();
+            Swal.fire({
+                title: 'Xác nhận xoá?',
+                text: 'Bạn có chắc muốn xoá tất cả sản phẩm yêu thích không?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Xoá tất cả',
+                cancelButtonText: 'Huỷ'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    for (let item of wishlist) {
+                        await fetch(`http://localhost:3001/api/wishlist/${item._id}`, {
+                            method: "DELETE",
+                            headers: { Authorization: `Bearer ${token}` }
+                        });
+                    }
+                    Swal.fire('Đã xoá!', 'Toàn bộ sản phẩm yêu thích đã được xoá.', 'success');
+                    setTimeout(() => location.reload(), 700);
+                }
+            });
         });
-
     } catch (err) {
         console.error("Lỗi khi lấy danh sách yêu thích:", err);
         container.innerHTML = `<div class="col-12 text-center text-danger"><p>Lỗi khi tải dữ liệu.</p></div>`;

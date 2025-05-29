@@ -29,10 +29,10 @@ if (loginLink) {
         loginLink.textContent = "ĐĂNG XUẤT";
         loginLink.href = "#";
         loginLink.addEventListener("click", function (e) {
-        e.preventDefault();
-        localStorage.removeItem("token");
-        alert("Bạn đã đăng xuất thành công!");
-        location.reload(); // Reload trang
+            e.preventDefault();
+            localStorage.removeItem("token");
+            alert("Bạn đã đăng xuất thành công!");
+            location.reload(); // Reload trang
         });
     }
 }

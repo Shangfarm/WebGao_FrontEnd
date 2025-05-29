@@ -34,9 +34,9 @@ function renderCart() {
         itemsContainer.appendChild(div);
     });
 
-    localStorage.setItem("final_total", totalAmount); // ✅ lưu lại để cộng ship
+    localStorage.setItem("final_total", totalAmount);
 
-    updateTotalAmountWithShipping(); // ✅ luôn tính lại tổng sau khi render
+    updateTotalAmountWithShipping();
     addRemoveEvents();
 }
 
@@ -106,7 +106,7 @@ async function loadShippingMethods() {
         selectEl.addEventListener("change", updateTotalAmountWithShipping);
     } catch (err) {
         console.error("Không thể load phương thức vận chuyển:", err);
-        alert("Lỗi khi tải danh sách phương thức vận chuyển.");
+        showToast("Lỗi khi tải danh sách phương thức vận chuyển.", "error");
     }
 }
 
@@ -139,7 +139,7 @@ form.addEventListener("submit", async (e) => {
 
     // Kiểm tra xem giỏ hàng có sản phẩm không
     if (cart.length === 0) {
-        alert("Giỏ hàng trống. Vui lòng thêm sản phẩm trước khi đặt hàng.");
+        showToast("Giỏ hàng trống. Vui lòng thêm sản phẩm trước khi đặt hàng.", "warning");
         return;
     }
 
@@ -194,25 +194,33 @@ form.addEventListener("submit", async (e) => {
         if (!response.ok) {
             const errorText = await response.text();
             console.error("Lỗi từ backend:", errorText);
-            alert("Đặt hàng thất bại. Mã lỗi: " + response.status);
+            showToast("Đặt hàng thất bại. Mã lỗi: " + response.status, "error");
             return;
         }
 
         const result = await response.json();
-        alert(result.message || "Đặt hàng thành công");
-
+        Swal.fire({
+            icon: 'success',
+            title: 'Đặt hàng thành công!',
+            text: 'Cảm ơn bạn đã mua hàng tại FamRice.',
+            showConfirmButton: false,
+            timer: 1800, // Tự động đóng sau 1.8s
+            customClass: {
+            title: 'fs-2', // chữ lớn hơn (tuỳ css)
+            popup: 'swal2-popup-custom' // (nếu muốn thêm style riêng)
+            }
+        }).then(() => {
+            window.location.href = `/pages/ThanhToan/ThanhToan.html?orderId=${result.data._id}`;
+        });
         localStorage.removeItem("cart");
-        localStorage.removeItem("selectedPromotionId");        // ← thêm dòng này
-        localStorage.removeItem("selectedPromotionName"); 
+        localStorage.removeItem("selectedPromotionId");
+        localStorage.removeItem("selectedPromotionName");
         updateCartCount();
         renderCart();
-        //Xoá cart theo ID
         localStorage.removeItem(`cart_${localStorage.getItem("userId")}`);
-
-        window.location.href = `/pages/ThanhToan/ThanhToan.html?orderId=${result.data._id}`; 
     } catch (error) {
         console.error("Lỗi đặt hàng:", error);
-        alert("Đã xảy ra lỗi khi đặt hàng.");
+        showToast("Đã xảy ra lỗi khi đặt hàng.", "error");
     }
 });
 
@@ -256,7 +264,7 @@ if (loginLink) {
         loginLink.addEventListener("click", function (e) {
             e.preventDefault();
             localStorage.removeItem("token");
-            alert("Bạn đã đăng xuất thành công!");
+            showToast("Bạn đã đăng xuất thành công!", "success");
             location.reload();
         });
     }
@@ -269,3 +277,17 @@ document.getElementById("search-form").addEventListener("submit", function (e) {
         window.location.href = `/pages/SanPham/SanPham.html?search=${encodeURIComponent(keyword)}`;
     }
 });
+function showToast(message, type = "info") {
+    let bg = "#198754";
+    if (type === "error") bg = "#dc3545";
+    if (type === "warning") bg = "#ffc107";
+    if (type === "success") bg = "#28a745";
+    Toastify({
+        text: message,
+        duration: 2500,
+        close: true,
+        gravity: "top",
+        position: "right",
+        style: { background: bg, color: "#fff" }
+    }).showToast();
+}

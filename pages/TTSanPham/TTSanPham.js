@@ -116,7 +116,7 @@ function addReplyEvents() {
             const userId = localStorage.getItem("userId");
 
             if (!comment) return;
-            if (!token || !userId) return alert("⚠️ Bạn cần đăng nhập.");
+            if (!token || !userId) return showToast("⚠️ Bạn cần đăng nhập.", "warning");
 
             try {
                 const res = await fetch(`http://localhost:3001/api/reviews/${reviewId}/reply`, {
@@ -134,7 +134,7 @@ function addReplyEvents() {
                 input.value = "";
                 loadReviews(product._id);
             } catch (err) {
-                alert("❌ Lỗi khi gửi phản hồi.");
+                showToast("❌ Lỗi khi gửi phản hồi.", "error");
             }
         });
     });
@@ -168,7 +168,7 @@ function addReviewActions() {
                         stars.forEach((s, i) => {
                             s.classList[i <= idx ? "add" : "remove"]("text-warning");
                         });
-                        Swal.getPopup().dataset.rating = idx + 1; // ✅ đúng cú pháp
+                        Swal.getPopup().dataset.rating = idx + 1;
                         });
                     });
                 },
@@ -243,7 +243,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get("id");
     if (!productId) {
-        alert("Không tìm thấy sản phẩm.");
+        showToast("Không tìm thấy sản phẩm.", "error");
         return;
     }
 
@@ -305,7 +305,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 if (qty < product.stock) {
                 quantityInput.value = qty + 1;
                 } else {
-                alert(`⚠️ Chỉ còn ${product.stock} sản phẩm trong kho.`);
+                showToast(`⚠️ Chỉ còn ${product.stock} sản phẩm trong kho.`, "warning");
                 }
             });
         }
@@ -315,7 +315,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             const token = localStorage.getItem("token");
             const userId = localStorage.getItem("userId");
             if (!token || !userId) {
-                alert("⚠️ Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.");
+                showToast("⚠️ Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.", "warning");
                 return;
             }
             const quantity = parseInt(quantityInput.value) || 1;
@@ -324,7 +324,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             const existing = cart.find(item => item.id === product._id);
             if (existing) {
                 if (existing.quantity + quantity > product.stock) {
-                    alert(`⚠️ Không đủ hàng trong kho. Tổng tối đa là ${product.stock}.`);
+                    showToast(`⚠️ Không đủ hàng trong kho. Tổng tối đa là ${product.stock}.`, "warning");
                     return;
                 }
                 existing.quantity += quantity;
@@ -343,7 +343,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
             localStorage.setItem(cartKey, JSON.stringify(cart));
             localStorage.setItem("cart", JSON.stringify(cart));
-            alert(`✅ Đã thêm ${quantity} sản phẩm vào giỏ hàng.`);
+            showToast(`✅ Đã thêm ${quantity} sản phẩm vào giỏ hàng.`, "success");
         });
 
         // 👉 Khởi tạo giao diện đánh giá sao (1-5)
@@ -363,15 +363,14 @@ document.addEventListener("DOMContentLoaded", async () => {
             reviewStars.appendChild(star);
         }
 
-        // 👉 Gửi đánh giá mới
         document.getElementById("submit-review-btn").addEventListener("click", async () => {
             const userId = localStorage.getItem("userId");
             const token = localStorage.getItem("token");
             const comment = document.getElementById("review-comment").value.trim();
 
-            if (!userId || !token) return alert("⚠️ Bạn cần đăng nhập để đánh giá.");
-            if (!product || !product._id) return alert("⚠️ Không tìm thấy sản phẩm.");
-            if (selectedRating === 0) return alert("⚠️ Vui lòng chọn số sao.");
+            if (!userId || !token) return showToast("⚠️ Bạn cần đăng nhập để đánh giá.", "warning");
+            if (!product || !product._id) return showToast("⚠️ Không tìm thấy sản phẩm.", "error");
+            if (selectedRating === 0) return showToast("⚠️ Vui lòng chọn số sao.", "warning");
 
             try {
                 const res = await fetch("http://localhost:3001/api/reviews", {
@@ -387,25 +386,25 @@ document.addEventListener("DOMContentLoaded", async () => {
                         comment
                     })
                 });
-                const data = await res.json(); // 👈 nhận response chi tiết
+                const data = await res.json();
                 if (!res.ok) {
-                    console.log("❌ Server trả lỗi:", data); // 👈 log nguyên response
+                    console.log("❌ Server trả lỗi:", data);
                     const errorMsg = data?.error || data?.message || "Không rõ lỗi";
-                    return alert("❌ " + errorMsg);
+                    return showToast("❌ " + errorMsg, "error");
                 }
 
-                alert("✅ Đánh giá của bạn đã được gửi!");
+                showToast("✅ Đánh giá của bạn đã được gửi!", "success");
                 document.getElementById("review-comment").value = "";
                 selectedRating = 0;
                 [...reviewStars.children].forEach(star => star.className = "fa fa-star text-muted me-1");
                 loadReviews(product._id);
             } catch (err) {
-                alert("❌ " + err.message);
+                showToast("❌ " + err.message, "error");
             }
         });
     } catch (error) {
         console.error("Lỗi khi gọi API:", error);
-        alert("Đã xảy ra lỗi khi tải sản phẩm.");
+        showToast("Đã xảy ra lỗi khi tải sản phẩm.", "error");
     }
     // 👉 Load & xử lý đánh giá (bao gồm sửa/xóa)
         await loadReviews(product._id);
@@ -444,7 +443,7 @@ if (loginLink) {
         loginLink.addEventListener("click", function (e) {
             e.preventDefault();
             localStorage.removeItem("token");
-            alert("Bạn đã đăng xuất thành công!");
+            showToast("Bạn đã đăng xuất thành công!", "success");
             location.reload();
         });
     }
@@ -535,12 +534,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // 👉 Sự kiện nhấn nút ❤️
     wishlistBtn.addEventListener("click", async () => {
         if (!userId || !token) {
-            alert("⚠️ Bạn cần đăng nhập để sử dụng tính năng này.");
+            showToast("⚠️ Bạn cần đăng nhập để sử dụng tính năng này.", "warning");
             return;
         }
 
         if (!productId) {
-            alert("❌ Không tìm thấy sản phẩm.");
+            showToast("❌ Không tìm thấy sản phẩm.", "error");
             return;
         }
 
@@ -555,9 +554,9 @@ document.addEventListener("DOMContentLoaded", () => {
             if (res.ok) {
                 heartIcon.classList.remove("text-danger");
                 delete wishlistBtn.dataset.inWishlist;
-                alert("❌ Đã xóa khỏi danh sách yêu thích.");
+                showToast("Đã xóa khỏi danh sách yêu thích.", "info");
             } else {
-                alert("⚠️ Xóa thất bại.");
+                showToast("Xóa thất bại!", "error");
             }
         } else {
             // Nếu chưa có → thêm mới
@@ -573,10 +572,23 @@ document.addEventListener("DOMContentLoaded", () => {
             if (res.ok) {
                 heartIcon.classList.add("text-danger");
                 wishlistBtn.dataset.inWishlist = result.data._id;
-                alert("✅ Đã thêm vào danh sách yêu thích.");
+                showToast("Đã thêm vào danh sách yêu thích!", "success");
             } else {
-                alert("⚠️ " + result.message || "Thêm vào wishlist thất bại.");
+                showToast(result.message || "Thêm vào wishlist thất bại.", "error");
             }
         }
     });
 });
+function showToast(message, type = "success") {
+    Toastify({
+        text: message,
+        duration: 1700,
+        gravity: "top", // hoặc "bottom"
+        position: "right",
+        backgroundColor: type === "success" ? "#16a34a"
+            : type === "info" ? "#3b82f6"
+            : type === "error" ? "#dc2626"
+            : "#444",
+        stopOnFocus: true
+    }).showToast();
+}

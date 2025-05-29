@@ -26,7 +26,7 @@ async function loadDashboard() {
             fetchData("/users"),
             fetchData("/order-items/top-selling-products"),
             fetchData("/products/category"),
-            fetchData("/categories?limit=1000")  // ✅ thêm dòng này
+            fetchData("/categories?limit=1000")
         ]);
 
         const orders = ordersRes.data || ordersRes || [];
@@ -46,7 +46,7 @@ async function loadDashboard() {
         document.querySelector("#total-products span").textContent = products.length;
         document.querySelector("#new-visitors span").textContent = users.length;
 
-        // Biểu đồ sản phẩm bán chạy
+        // Biểu đồ sản phẩm đã bán
         const ctx = document.getElementById("salesChart").getContext("2d");
         new Chart(ctx, {
             type: "bar",
@@ -58,8 +58,8 @@ async function loadDashboard() {
                     backgroundColor: "rgba(0, 196, 179, 0.7)",
                     borderColor: "#00c4b3",
                     borderWidth: 1,
-                    borderRadius: 6,      // Bo góc cột
-                    barThickness: 40      // Độ dày cột
+                    borderRadius: 6,
+                    barThickness: 40
                 }]
             },
             plugins: [ChartDataLabels],
@@ -165,7 +165,7 @@ async function loadDashboard() {
 
         // Đơn hàng gần đây
         const salesTable = document.getElementById("sales-table-body");
-        (orders.slice ? orders.slice(0, 5) : []).forEach((order) => {
+        (orders || []).forEach((order) => {
             const row = document.createElement("tr");
             row.innerHTML = `
                 <td>${order.userName || "Không rõ"}</td>
