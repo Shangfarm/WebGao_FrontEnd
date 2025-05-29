@@ -144,36 +144,48 @@ function fetchAndRender(page = 1, categoryId = "") {
 
 function loadCategoriesToSidebar() {
     fetch("http://localhost:3001/api/categories")
-        .then(res => res.json())
-        .then(result => {
-            const data = result.data || [];
-            const ul = document.getElementById("category-sidebar");
-            ul.innerHTML = "";
+    .then(res => res.json())
+    .then(result => {
+        const data = result.data || [];
+        const ul = document.getElementById("category-sidebar");
+        ul.innerHTML = "";
 
-            data.forEach(cat => {
-                if (cat.deletedAt || cat.status === false) return;
-                const li = document.createElement("li");
-                li.innerHTML = `<a href="#" data-category-id="${cat._id}">${cat.name}</a>`;
-                li.querySelector("a").addEventListener("click", (e) => {
-                    e.preventDefault();
-                    const categoryId = e.target.dataset.categoryId;
-                    const categoryName = e.target.textContent;
-                    fetchAndRender(1, categoryId);
-
-                    const pageTitle = document.getElementById("page-title");
-                    if (pageTitle) {
-                        pageTitle.textContent = `SẢN PHẨM – ${categoryName}`;
-                    }
-                });
-
-                ul.appendChild(li);
-            });
-        })
-        .catch(err => {
-            console.error("Lỗi khi tải danh mục:", err);
-            const ul = document.getElementById("category-sidebar");
-            ul.innerHTML = `<li class="text-danger">Không thể tải danh mục</li>`;
+        // Thêm mục "Tất cả sản phẩm"
+        const allItem = document.createElement("li");
+        allItem.innerHTML = `<a href="#" data-category-id="">Tất cả sản phẩm</a>`;
+        allItem.querySelector("a").addEventListener("click", (e) => {
+            e.preventDefault();
+            fetchAndRender(1, "");
+            const pageTitle = document.getElementById("page-title");
+            if (pageTitle) {
+                pageTitle.textContent = `SẢN PHẨM`;
+            }
         });
+        ul.appendChild(allItem);
+
+        // Thêm các danh mục từ API
+        data.forEach(cat => {
+            if (cat.deletedAt || cat.status === false) return;
+            const li = document.createElement("li");
+            li.innerHTML = `<a href="#" data-category-id="${cat._id}">${cat.name}</a>`;
+            li.querySelector("a").addEventListener("click", (e) => {
+                e.preventDefault();
+                const categoryId = e.target.dataset.categoryId;
+                const categoryName = e.target.textContent;
+                fetchAndRender(1, categoryId);
+                const pageTitle = document.getElementById("page-title");
+                if (pageTitle) {
+                    pageTitle.textContent = `SẢN PHẨM – ${categoryName}`;
+                }
+            });
+            ul.appendChild(li);
+        });
+    })
+    .catch(err => {
+        console.error("Lỗi khi tải danh mục:", err);
+        const ul = document.getElementById("category-sidebar");
+        ul.innerHTML = `<li class="text-danger">Không thể tải danh mục</li>`;
+    });
 }
 
 // ----------------- Sự kiện khi DOM sẵn sàng -----------------
