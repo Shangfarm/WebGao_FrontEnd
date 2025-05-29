@@ -8,7 +8,7 @@ if (loginLink) {
         loginLink.addEventListener("click", function (e) {
         e.preventDefault();
         localStorage.clear();
-        alert("Bạn đã đăng xuất thành công!");
+        showToast("Bạn đã đăng xuất thành công!", "success");
         location.reload();
         });
     }
@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const userId = localStorage.getItem("userId");
 
     if (!token || !userId) {
-        container.innerHTML = `<div class="col-12 text-center text-danger"><p>⚠️ Bạn cần đăng nhập để xem danh sách yêu thích.</p></div>`;
+        container.innerHTML = `<div class="col-12 text-center text-danger"><p>⚠️ Bạn cần đăng nhập để xem danh sách yêu thích của mình.</p></div>`;
         return;
     }
 

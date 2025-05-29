@@ -177,7 +177,7 @@ function changeQuantity(index, delta) {
   const newQuantity = product.quantity + delta;
   if (newQuantity < 1) return; // Không cho phép số lượng < 1
   if (newQuantity > stock) {
-    alert(`Số lượng yêu cầu vượt quá tồn kho! Chỉ còn ${stock} sản phẩm.`);
+    alert(`Số lượng yêu cầu vượt quá tồn kho! Chỉ còn ${stock} sản phẩm.`, "warning");
     return;
   }
 
@@ -205,8 +205,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   updateCartCount();
 
   if (!token || !userId) {
-    localStorage.removeItem("cart"); // ✅ xóa cart tạm
-    alert("⚠️ Vui lòng đăng nhập để xem và sử dụng giỏ hàng.");
+    localStorage.removeItem("cart");
+    showToast("⚠️ Vui lòng đăng nhập để xem và sử dụng giỏ hàng.", "warning");
     window.location.href = "/pages/DangNhap/DangNhap.html";
     return;
   }
@@ -218,7 +218,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   document.querySelector(".btn-success").addEventListener("click", function () {
     if (!token || !userId) {
-      alert("⚠️ Vui lòng đăng nhập trước khi thanh toán.");
+      showToast("⚠️ Vui lòng đăng nhập trước khi thanh toán.", "warning");
       window.location.href = "/pages/DangNhap/DangNhap.html";
       return;
     }
@@ -303,8 +303,8 @@ if (loginLink) {
       e.preventDefault();
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
-      localStorage.removeItem("cart"); // ✅ xóa giỏ tạm
-      alert("Bạn đã đăng xuất thành công!");
+      localStorage.removeItem("cart");
+      showToast("Bạn đã đăng xuất thành công!", "success");
       location.reload();
     });
   }
