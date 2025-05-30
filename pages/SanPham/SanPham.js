@@ -217,6 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Xử lý hiển thị các nút admin trong dropdown
     const adminOnlyMenus = [
+        "menu-productManagement",
         "menu-discount",
         "menu-stats",
         "menu-shipping",

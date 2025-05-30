@@ -26,7 +26,8 @@ async function loadDashboard() {
             fetchData("/users"),
             fetchData("/order-items/top-selling-products"),
             fetchData("/products/category"),
-            fetchData("/categories?limit=1000")
+            fetchData("/categories?limit=1000"),
+            fetchData("/order-items/total-sold") // ✅ Thêm API tổng sản phẩm đã bán
         ]);
 
         const orders = ordersRes.data || ordersRes || [];
@@ -40,7 +41,8 @@ async function loadDashboard() {
             categoryMap[cat._id] = cat.name;
         });
 
-        document.querySelector("#items-sales span").textContent = orderItems.totalSales || 0;
+        const totalSoldRes = await fetchData("/order-items/total-sold");
+        document.querySelector("#items-sales span").textContent = totalSoldRes.total || 0;
         const newOrders = orders.filter(order => order.orderStatus === "PENDING" && !order.deletedAt);
         document.querySelector("#new-orders span").textContent = newOrders.length;
         document.querySelector("#total-products span").textContent = products.length;

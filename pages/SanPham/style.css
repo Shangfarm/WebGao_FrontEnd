@@ -32,7 +32,6 @@ header.main-header {
     padding-right: 15px;
     padding-left: 15px;
     width: 100%;
-    /* overflow: hidden; */
 }
 .main-header a {
     color: #fb811e;
@@ -130,7 +129,7 @@ button {
     justify-content: space-between;
 }
 .dropdown .dropdown-content a {
-    padding: 7px;
+    padding: 6px;
 }
 .dropdown-content a:hover {
     color: #fb811e;
