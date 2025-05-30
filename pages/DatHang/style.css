@@ -636,6 +636,25 @@ body {
 .search-button:hover {
     background-color: #009f4d;
 }
+.toast-logout {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #198754;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    font-weight: 500;
+    display: none;
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+.toast-logout.show {
+    display: block;
+    opacity: 1;
+}
 main {
     font-family: 'Source Sans Pro', sans-serif;
     background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)),

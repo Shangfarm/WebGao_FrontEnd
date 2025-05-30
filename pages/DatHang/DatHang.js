@@ -263,9 +263,19 @@ if (loginLink) {
         loginLink.href = "#";
         loginLink.addEventListener("click", function (e) {
             e.preventDefault();
-            localStorage.removeItem("token");
-            showToast("Bạn đã đăng xuất thành công!", "success");
-            location.reload();
+            localStorage.clear();
+
+            const toast = document.getElementById("logout-toast");
+            if (toast) {
+                toast.classList.add("show");
+                setTimeout(() => {
+                    toast.classList.remove("show");
+                    setTimeout(() => {
+                        toast.style.display = "none";
+                        location.reload();
+                    }, 500);
+                }, 2000);
+            }
         });
     }
 }

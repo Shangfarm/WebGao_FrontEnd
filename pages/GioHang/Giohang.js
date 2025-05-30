@@ -296,18 +296,27 @@ window.onload = async function () {
 
 const loginLink = document.getElementById("login-link");
 if (loginLink) {
-  if (token) {
-    loginLink.textContent = "ĐĂNG XUẤT";
-    loginLink.href = "#";
-    loginLink.addEventListener("click", function (e) {
-      e.preventDefault();
-      localStorage.removeItem("token");
-      localStorage.removeItem("userId");
-      localStorage.removeItem("cart");
-      showToast("Bạn đã đăng xuất thành công!", "success");
-      location.reload();
-    });
-  }
+    const token = localStorage.getItem("token");
+    if (token) {
+        loginLink.textContent = "ĐĂNG XUẤT";
+        loginLink.href = "#";
+        loginLink.addEventListener("click", function (e) {
+            e.preventDefault();
+            localStorage.clear();
+
+            const toast = document.getElementById("logout-toast");
+            if (toast) {
+                toast.classList.add("show");
+                setTimeout(() => {
+                    toast.classList.remove("show");
+                    setTimeout(() => {
+                        toast.style.display = "none";
+                        location.reload();
+                    }, 500);
+                }, 2000);
+            }
+        });
+    }
 }
 
 document.getElementById("clear-cart-btn")?.addEventListener("click", () => {

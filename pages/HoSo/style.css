@@ -590,7 +590,25 @@ body {
     margin: 0;
     padding: 0;
 }
-
+.toast-logout {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #198754;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    font-weight: 500;
+    display: none;
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+.toast-logout.show {
+    display: block;
+    opacity: 1;
+}
 .profile-container {
     background-image: url(https://media.istockphoto.com/id/1333130405/vector/golden-rice-background.jpg?s=1024x1024&w=is&k=20&c=-oEt1wdozLqTGX018IxtZol9P-5F8-5Cmt-k9T3OY4k=);
     background-size: cover;
