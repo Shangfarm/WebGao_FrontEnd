@@ -123,7 +123,6 @@ async function syncCartToBackend(userId) {
                     "Authorization": `Bearer ${token}`
                 },
                 body: JSON.stringify({
-                    userId: userId,
                     productId: item.id || item.productId,
                     quantity: item.quantity
                 })
