@@ -105,34 +105,39 @@ function renderPagination(totalPages) {
         li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
         li.addEventListener('click', e => {
             e.preventDefault();
+            // --- Thêm đoạn này để luôn giữ searchKeyword khi đổi trang
+            const searchKeyword = getSearchKeyword();
+            if (searchKeyword) {
+                // Đảm bảo khi đổi trang thì URL giữ tham số search và fetch lại đúng trang search
+                window.location.href = `/pages/SanPham/SanPham.html?search=${encodeURIComponent(searchKeyword)}&page=${i}`;
+            } else {
             fetchAndRender(i);
+            }
         });
         pagination.appendChild(li);
     }
 }
 
 function fetchAndRender(page = 1, categoryId = "") {
-    currentPage = page;
-    const searchKeyword = getSearchKeyword();
-    let url = `http://localhost:3001/api/products?page=${page}&limit=${PRODUCTS_PER_PAGE}`;
+    // Luôn đọc page và search từ URL nếu có (ưu tiên page trên URL)
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchKeyword = urlParams.get("search")?.toLowerCase().trim() || "";
+    const urlPage = parseInt(urlParams.get("page")) || page;
+    currentPage = urlPage;
+
+    let url = `http://localhost:3001/api/products?page=${urlPage}&limit=${PRODUCTS_PER_PAGE}`;
     if (categoryId) url += `&categoryId=${categoryId}`;
+    if (searchKeyword) url += `&search=${encodeURIComponent(searchKeyword)}`;
 
     fetch(url)
         .then(res => res.json())
         .then(res => {
-            let products = res.data;
-
-            if (searchKeyword) {
-                products = products.filter(product =>
-                    product.name.toLowerCase().includes(searchKeyword)
-                );
-
-                const pageTitle = document.getElementById("page-title");
-                if (pageTitle) {
-                    pageTitle.textContent = `Kết Quả Cho "${searchKeyword}"`;
-                }
+            const products = res.data;
+            // Cập nhật tiêu đề trang nếu đang search
+            const pageTitle = document.getElementById("page-title");
+            if (searchKeyword && pageTitle) {
+                pageTitle.textContent = `Kết Quả Cho "${searchKeyword}"`;
             }
-
             renderProducts(products);
             renderPagination(res.pagination.totalPages);
         })
@@ -141,6 +146,7 @@ function fetchAndRender(page = 1, categoryId = "") {
             console.error(err);
         });
 }
+
 
 function loadCategoriesToSidebar() {
     fetch("http://localhost:3001/api/categories")
@@ -155,6 +161,11 @@ function loadCategoriesToSidebar() {
         allItem.innerHTML = `<a href="#" data-category-id="">Tất cả sản phẩm</a>`;
         allItem.querySelector("a").addEventListener("click", (e) => {
             e.preventDefault();
+            // Xóa search trên URL
+            if (window.history.pushState) {
+                const newUrl = window.location.pathname;
+                window.history.pushState({path: newUrl}, '', newUrl);
+            }
             fetchAndRender(1, "");
             const pageTitle = document.getElementById("page-title");
             if (pageTitle) {
