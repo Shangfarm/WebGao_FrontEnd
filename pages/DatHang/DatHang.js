@@ -136,7 +136,6 @@ async function syncCartToBackend(userId) {
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    // Kiểm tra xem giỏ hàng có sản phẩm không
     if (cart.length === 0) {
         showToast("Giỏ hàng trống. Vui lòng thêm sản phẩm trước khi đặt hàng.", "warning");
         return;
@@ -147,81 +146,113 @@ form.addEventListener("submit", async (e) => {
 
     let promotionId = localStorage.getItem("selectedPromotionId");
     if (!promotionId || promotionId === "null" || promotionId === "" || promotionId === undefined) {
-    promotionId = null;
-    localStorage.removeItem("selectedPromotionId");
-    localStorage.removeItem("selectedPromotionName");
-}
+        promotionId = null;
+        localStorage.removeItem("selectedPromotionId");
+        localStorage.removeItem("selectedPromotionName");
+    }
 
     const order = {
         userId: formData.get("userId"),
         userName: formData.get("userName"),
         shippingAddress: {
-            houseNumber: formData.get("shippingAddress.houseNumber"),
-            ward: formData.get("shippingAddress.ward"),
-            district: formData.get("shippingAddress.district"),
-            city: formData.get("shippingAddress.city"),
-            phoneNumber: formData.get("shippingAddress.phoneNumber"),
+        houseNumber: formData.get("shippingAddress.houseNumber"),
+        ward: formData.get("shippingAddress.ward"),
+        district: formData.get("shippingAddress.district"),
+        city: formData.get("shippingAddress.city"),
+        phoneNumber: formData.get("shippingAddress.phoneNumber"),
         },
         shippingMethodId: formData.get("shippingMethodId"),
         paymentMethod: formData.get("paymentMethod"),
         couponId: formData.get("couponId") || null,
-        //promotionId: promotionId,
-        totalAmount: parseInt(localStorage.getItem("final_total_with_shipping")) || 0, // Tổng số tiền sau khi cộng phí vận chuyển
+        totalAmount: parseInt(localStorage.getItem("final_total_with_shipping")) || 0,
         items: cart.map(item => ({
         productId: item.id || item.productId,
         quantity: item.quantity,
-        price: item.price
-    }))
+        price: Math.round(item.price * (1 - (item.discount || 0) / 100))
+        }))
     };
     if (promotionId) {
-    order.promotionId = promotionId;
-}
+        order.promotionId = promotionId;
+    }
 
     try {
-        // Đồng bộ giỏ hàng với backend
         await syncCartToBackend(order.userId);
 
-        const response = await fetch("http://localhost:3001/api/orders", {
+        // 👉 Nếu chọn MoMo thì gọi API tạo thanh toán MoMo
+        if (order.paymentMethod === "MOMO") {
+            localStorage.setItem("momo_temp_order", JSON.stringify(order));
+
+        const momoRes = await fetch("http://localhost:3001/api/payment/create", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
             },
-            body: JSON.stringify(order),
+            body: JSON.stringify({
+            userId: order.userId,
+            amount: order.totalAmount,
+            shippingMethodId: order.shippingMethodId
+            })
         });
 
-        if (!response.ok) {
-            const errorText = await response.text();
-            console.error("Lỗi từ backend:", errorText);
-            showToast("Đặt hàng thất bại. Mã lỗi: " + response.status, "error");
+        const momoResult = await momoRes.json();
+
+        if (!momoRes.ok || !momoResult.data?.payUrl) {
+            showToast("Không thể tạo thanh toán MoMo.", "error");
             return;
         }
 
-        const result = await response.json();
-        Swal.fire({
-            icon: 'success',
-            title: 'Đặt hàng thành công!',
-            text: 'Cảm ơn bạn đã mua hàng tại FamRice.',
-            showConfirmButton: false,
-            timer: 1800, // Tự động đóng sau 1.8s
-            customClass: {
-            title: 'fs-2', // chữ lớn hơn (tuỳ css)
-            popup: 'swal2-popup-custom' // (nếu muốn thêm style riêng)
-            }
-        }).then(() => {
-            window.location.href = `/pages/ThanhToan/ThanhToan.html?orderId=${result.data._id}`;
+        // ✅ Chuyển hướng sang trang quét mã MoMo
+        window.location.href = momoResult.data.payUrl;
+        return;
+        }
+
+        // Nếu không phải MoMo thì xử lý như cũ
+        const response = await fetch("http://localhost:3001/api/orders", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(order),
         });
+
+        if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Lỗi từ backend:", errorText);
+        showToast("Đặt hàng thất bại. Mã lỗi: " + response.status, "error");
+        return;
+        }
+
+        const result = await response.json();
+
+        Swal.fire({
+        icon: 'success',
+        title: 'Đặt hàng thành công!',
+        text: 'Cảm ơn bạn đã mua hàng tại FamRice.',
+        showConfirmButton: false,
+        timer: 1800,
+        customClass: {
+            title: 'fs-2',
+            popup: 'swal2-popup-custom'
+        }
+        }).then(() => {
+        window.location.href = `/pages/ThanhToan/ThanhToan.html?orderId=${result.data._id}`;
+        });
+
         localStorage.removeItem("cart");
         localStorage.removeItem("selectedPromotionId");
         localStorage.removeItem("selectedPromotionName");
         updateCartCount();
         renderCart();
         localStorage.removeItem(`cart_${localStorage.getItem("userId")}`);
+
     } catch (error) {
         console.error("Lỗi đặt hàng:", error);
         showToast("Đã xảy ra lỗi khi đặt hàng.", "error");
     }
 });
+
 
 function setupSearchToggle() {
     const searchToggle = document.querySelector(".search-toggle");
