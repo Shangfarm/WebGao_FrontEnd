@@ -135,7 +135,7 @@ button {
     justify-content: space-between;
 }
 .dropdown .dropdown-content a {
-    padding: 7px;
+    padding: 6px;
 }
 .dropdown-content a:hover {
     color: #fb811e;

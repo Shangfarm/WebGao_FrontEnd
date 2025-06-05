@@ -659,3 +659,8 @@ li {
     display: block;
     opacity: 1;
 }
+.product-image {
+    height: 250px;
+    object-fit: contain;
+    background-color: #fff;
+}

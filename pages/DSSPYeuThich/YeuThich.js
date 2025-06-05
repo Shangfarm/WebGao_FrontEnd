@@ -116,10 +116,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         wishlist.forEach(item => {
             const product = item.productId;
+            if (!product) return;
             const originalPrice = product.original_price || product.price;
             const discount = product.discount || 0;
 
-            // ✅ Tính giá sau giảm
             const salePrice = discount > 0
                 ? Math.round(originalPrice * (1 - discount / 100))
                 : originalPrice;
@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             col.className = "col-md-4 mb-4";
             col.innerHTML = `
                 <div class="card shadow-sm h-100">
-                    <img src="${product.image}" class="card-img-top" alt="${product.name}" style="height: 250px; object-fit: cover;">
+                    <img src="${product.image}" class="card-img-top product-image" alt="${product.name}">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">${product.name}</h5>
                         <p class="card-text text-muted">${product.description?.substring(0, 70) || ""}...</p>
