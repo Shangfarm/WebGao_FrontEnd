@@ -77,7 +77,7 @@
                             <!--Các nút sẽ ẩn khi chưa đăng nhập hoặc không phải admin-->
                             <li id="menu-discount"><a href="/pages/CTGiamGia/CTGiamGia.html">CHƯƠNG TRÌNH GIẢM GIÁ</a></li>
                             <li id="menu-stats"><a href="/pages/ThongKe/ThongKe.html">THỐNG KÊ</a></li>
-                            <li id="menu-coupon"><a href="/pages/QuanLyDonHang/QuanLyDonHang.html">QUẢN LÝ ĐƠN HÀNG</a></li>
+                            <li id="menu-order"><a href="/pages/QuanLyDonHang/QuanLyDonHang.html">QUẢN LÝ ĐƠN HÀNG</a></li>
                             <li id="menu-shipping"><a href="/pages/PTVanChuyen/PTVanChuyen.html">PHƯƠNG THỨC VẬN CHUYỂN</a></li>
                             <a href="/pages/DangNhap/DangNhap.html" id="login-link">ĐĂNG NHẬP/ĐĂNG KÝ</a>
                         </div>
@@ -86,16 +86,36 @@
             </nav>
         </div>
     </header>
-<main style="margin-top: 7rem;">
-  <div class="text-center my-5">
-    <h1 class="fw-bold text-success" style="font-size: 2.2rem;">
-      🧾 Quản Lý Đơn Hàng <span class="text-dark">(Admin)</span>
-    </h1>
-    <hr class="w-25 mx-auto" style="opacity: 0.4;">
-  </div>
-
-
+    <main style="margin-top: 7rem;">
+    <div class="text-center my-5">
+        <h1 class="fw-bold text-success" style="font-size: 2.2rem;">
+        🧾 Quản Lý Đơn Hàng <span class="text-dark">(Admin)</span>
+        </h1>
+        <hr class="w-25 mx-auto" style="opacity: 0.4;">
+    </div>
     <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <!-- Ô tìm kiếm theo mã đơn hoặc tên người đặt -->
+            <input
+                type="text"
+                id="search-order"
+                class="form-control me-3"
+                placeholder="🔍 Tìm theo mã đơn hoặc tên người đặt..."
+                style="max-width: 350px;"
+            />
+
+            <!-- Lọc trạng thái đơn hàng -->
+            <select
+                id="filter-status"
+                class="form-select"
+                style="max-width: 200px;"
+            >
+                <option value="ALL">Tất cả trạng thái</option>
+                <option value="PENDING">Đơn chưa xác nhận</option>
+                <option value="CONFIRMED">Đơn đã xác nhận</option>
+                <option value="CANCELLED">Đơn đã huỷ</option>
+            </select>
+        </div>
         <table class="table table-bordered text-center">
         <thead class="table-light">
             <tr>
@@ -106,6 +126,8 @@
             <th>Thanh toán</th>
             <th>Trạng thái</th>
             <th>Xác nhận</th>
+            <th>Xác nhận đơn</th>
+            <th>Huỷ đơn</th>
             </tr>
         </thead>
         <tbody id="order-body"></tbody>
