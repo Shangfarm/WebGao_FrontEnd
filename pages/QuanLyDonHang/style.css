@@ -7,6 +7,11 @@ body {
     height: 100vh;
     width: 100%;
     transition: 0.5s all;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)),
+    url('https://png.pngtree.com/background/20250123/original/pngtree-hand-drawn-rice-seamless-pattern-a-black-and-white-doodle-illustration-picture-image_15258957.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
 }
 header.main-header {
     background-color: white;
