@@ -772,3 +772,21 @@ li {
     display: block;
     opacity: 1;
 }
+
+/* Màu nền xen kẽ đẹp mắt cho bảng */
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f5fdf6; /* xanh lá rất nhạt */
+}
+.table-striped tbody tr:nth-of-type(even) {
+    background-color: #ffffff; /* trắng */
+}
+
+/* Khi hover */
+.table tbody tr:hover {
+    background-color: #e2f0d9; /* xanh lá sáng hơn */
+    transition: background-color 0.3s ease;
+}
+
+.btn {
+    border-radius: 6px;
+}
