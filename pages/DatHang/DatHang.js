@@ -114,6 +114,14 @@ async function syncCartToBackend(userId) {
     const token = localStorage.getItem("token");
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
+        // ✅ Xoá hết cart-items cũ của user trước khi sync mới
+    await fetch(`http://localhost:3001/api/cart-items/user/${userId}`, {
+    method: "DELETE",
+    headers: {
+        "Authorization": `Bearer ${token}`
+    }
+    });
+
     for (const item of cart) {
         try {
             await fetch("http://localhost:3001/api/cart-items", {
@@ -155,103 +163,108 @@ form.addEventListener("submit", async (e) => {
         userId: formData.get("userId"),
         userName: formData.get("userName"),
         shippingAddress: {
-        houseNumber: formData.get("shippingAddress.houseNumber"),
-        ward: formData.get("shippingAddress.ward"),
-        district: formData.get("shippingAddress.district"),
-        city: formData.get("shippingAddress.city"),
-        phoneNumber: formData.get("shippingAddress.phoneNumber"),
+            houseNumber: formData.get("shippingAddress.houseNumber"),
+            ward: formData.get("shippingAddress.ward"),
+            district: formData.get("shippingAddress.district"),
+            city: formData.get("shippingAddress.city"),
+            phoneNumber: formData.get("shippingAddress.phoneNumber"),
         },
         shippingMethodId: formData.get("shippingMethodId"),
         paymentMethod: formData.get("paymentMethod"),
         couponId: formData.get("couponId") || null,
         totalAmount: parseInt(localStorage.getItem("final_total_with_shipping")) || 0,
         items: cart.map(item => ({
-        productId: item.id || item.productId,
-        quantity: item.quantity,
-        price: Math.round(item.price * (1 - (item.discount || 0) / 100))
+            productId: item.id || item.productId,
+            quantity: item.quantity,
+            price: Math.round(item.price * (1 - (item.discount || 0) / 100))
         }))
     };
+
     if (promotionId) {
         order.promotionId = promotionId;
     }
 
     try {
-        await syncCartToBackend(order.userId);
-
-        // 👉 Nếu chọn MoMo thì gọi API tạo thanh toán MoMo
+        // ✅ Nếu là MoMo: KHÔNG sync cart, chỉ lưu localStorage và gọi API tạo thanh toán
         if (order.paymentMethod === "MOMO") {
             localStorage.setItem("momo_temp_order", JSON.stringify(order));
 
-        const momoRes = await fetch("http://localhost:3001/api/payment/create", {
+            const momoRes = await fetch("http://localhost:3001/api/payment/create", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    userId: order.userId,
+                    amount: order.totalAmount,
+                    shippingMethodId: order.shippingMethodId
+                })
+            });
+
+            const momoResult = await momoRes.json();
+
+            if (!momoRes.ok || !momoResult.data?.payUrl) {
+                showToast("Không thể tạo thanh toán MoMo.", "error");
+                return;
+            }
+
+            window.location.href = momoResult.data.payUrl;
+            return; // ✅ KHÔNG đi tiếp xuống gọi syncCart
+        }
+
+        // ✅ Chỉ gọi sync cart khi KHÔNG phải MoMo
+        await syncCartToBackend(order.userId);
+
+        // ✅ Gọi API tạo đơn hàng COD
+        const response = await fetch("http://localhost:3001/api/orders", {
             method: "POST",
             headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
             },
-            body: JSON.stringify({
-            userId: order.userId,
-            amount: order.totalAmount,
-            shippingMethodId: order.shippingMethodId
-            })
-        });
-
-        const momoResult = await momoRes.json();
-
-        if (!momoRes.ok || !momoResult.data?.payUrl) {
-            showToast("Không thể tạo thanh toán MoMo.", "error");
-            return;
-        }
-
-        // ✅ Chuyển hướng sang trang quét mã MoMo
-        window.location.href = momoResult.data.payUrl;
-        return;
-        }
-
-        // Nếu không phải MoMo thì xử lý như cũ
-        const response = await fetch("http://localhost:3001/api/orders", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify(order),
+            body: JSON.stringify(order),
         });
 
         if (!response.ok) {
-        const errorText = await response.text();
-        console.error("Lỗi từ backend:", errorText);
-        showToast("Đặt hàng thất bại. Mã lỗi: " + response.status, "error");
-        return;
+            const errorText = await response.text();
+            console.error("Lỗi từ backend:", errorText);
+            showToast("Đặt hàng thất bại. Mã lỗi: " + response.status, "error");
+            return;
         }
 
         const result = await response.json();
 
         Swal.fire({
-        icon: 'success',
-        title: 'Đặt hàng thành công!',
-        text: 'Cảm ơn bạn đã mua hàng tại FamRice.',
-        showConfirmButton: false,
-        timer: 1800,
-        customClass: {
-            title: 'fs-2',
-            popup: 'swal2-popup-custom'
-        }
+            icon: 'success',
+            title: 'Đặt hàng thành công!',
+            text: 'Cảm ơn bạn đã mua hàng tại FamRice.',
+            showConfirmButton: false,
+            timer: 1800,
+            customClass: {
+                title: 'fs-2',
+                popup: 'swal2-popup-custom'
+            }
         }).then(() => {
-        window.location.href = `/pages/ThanhToan/ThanhToan.html?orderId=${result.data._id}`;
+            window.location.href = `/pages/ThanhToan/ThanhToan.html?orderId=${result.data._id}`;
         });
 
+        // ✅ Dọn sạch localStorage
+        localStorage.removeItem("momo_temp_order");
         localStorage.removeItem("cart");
+        localStorage.removeItem(`cart_${localStorage.getItem("userId")}`);
         localStorage.removeItem("selectedPromotionId");
         localStorage.removeItem("selectedPromotionName");
+
         updateCartCount();
         renderCart();
-        localStorage.removeItem(`cart_${localStorage.getItem("userId")}`);
 
     } catch (error) {
         console.error("Lỗi đặt hàng:", error);
         showToast("Đã xảy ra lỗi khi đặt hàng.", "error");
     }
 });
+
 
 
 function setupSearchToggle() {
