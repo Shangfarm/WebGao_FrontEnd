@@ -145,6 +145,8 @@ async function fetchOrderDetails() {
 
     document.getElementById("orderStatus").textContent = order.orderStatus;
     document.getElementById("shippingStatus").textContent = order.shippingStatus || "PROCESSING";
+    document.getElementById("paymentStatus").textContent = order.paymentStatus || "PENDING";
+
 
   } catch (err) {
     console.error("Lỗi khi lấy chi tiết đơn hàng:", err);
