@@ -47,6 +47,11 @@ async function loadDashboard() {
         document.querySelector("#new-orders span").textContent = newOrders.length;
         document.querySelector("#total-products span").textContent = products.length;
         document.querySelector("#new-visitors span").textContent = users.length;
+        const confirmedOrders = orders.filter(order => order.orderStatus === "CONFIRMED" && !order.deletedAt);
+        document.querySelector("#confirmed-orders span").textContent = confirmedOrders.length;
+        const cancelledOrders = orders.filter(order => order.orderStatus === "CANCELLED" && !order.deletedAt);
+        document.querySelector("#cancelled-orders span").textContent = cancelledOrders.length;
+
 
         // Biểu đồ sản phẩm đã bán
         const ctx = document.getElementById("salesChart").getContext("2d");
