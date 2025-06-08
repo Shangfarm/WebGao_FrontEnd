@@ -344,6 +344,19 @@ document.getElementById("btnBangGia")?.addEventListener("click", async () => {
     }
 });
 
+document.getElementById("btnExportPDF")?.addEventListener("click", () => {
+    const element = document.getElementById("pdfContent");
+    const opt = {
+    margin:       [5, 10, 5, 10], // giảm top/bottom xuống để tránh trắng dư
+    filename:     'BangGiaGao-Thang6.pdf',
+    image:        { type: 'jpeg', quality: 1 },
+    html2canvas:  { scale: 3, useCORS: true },
+    jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+    };
+    html2pdf().set(opt).from(element).save();
+});
+
 // Sự kiện đóng
 document.getElementById("closeBangGia")?.addEventListener("click", () => {
     document.getElementById("bangGiaModal").style.display = "none";

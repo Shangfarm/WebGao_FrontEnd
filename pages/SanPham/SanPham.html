@@ -109,25 +109,31 @@
                     <div id="product-list" class="product-list"></div> 
                     <!-- Modal Bảng giá -->
                     <div id="bangGiaModal" class="modal" style="display: none;">
-                        <div class="modal-overlay" id="modalOverlay"></div>
-                            <div class="modal-content">
-                                <span id="closeBangGia" class="close">&times;</span>
-                                <h4 class="text-center fw-bold mb-3">📋 BẢNG GIÁ GẠO – THÁNG 6 NĂM 2025</h4>
-                                <table class="table table-bordered">
-                                <thead class="table-light">
-                                    <tr>
-                                    <th>STT</th>
-                                    <th>Tên sản phẩm</th>
-                                    <th>Giá (VNĐ/kg)</th>
-                                    <th>Danh mục</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="bangGiaBody"></tbody>
-                                </table>
-                                <div class="text-end">
-                                <button class="btn btn-secondary mt-2" id="closeBangGiaBtn">Đóng</button>
-                            </div>
+                    <div class="modal-overlay" id="modalOverlay"></div>
+                    <div class="modal-content">
+                        <span id="closeBangGia" class="close">&times;</span>
+
+                        <!-- ✅ Phần này sẽ được export ra PDF -->
+                        <div id="pdfContent">
+                        <h4 class="text-center fw-bold mb-3">📋 BẢNG GIÁ GẠO - THÁNG 6 NĂM 2025</h4>
+                        <table class="table table-bordered">
+                            <thead class="table-light">
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Giá (VNĐ/kg)</th>
+                                <th>Danh mục</th>
+                            </tr>
+                            </thead>
+                            <tbody id="bangGiaBody"></tbody>
+                        </table>
                         </div>
+                        <!-- ✅ Kết thúc phần in ra PDF -->
+                        <div class="d-flex justify-content-end gap-2 mt-3">
+                        <button class="btn btn-success btn-sm" id="btnExportPDF">📥 Xuất PDF</button>
+                        <button class="btn btn-secondary btn-sm" id="closeBangGiaBtn">Đóng</button>
+                        </div>
+                    </div>
                     </div>
                     <!-- Phân trang -->
                     <nav class="d-flex justify-content-center mt-4">
@@ -238,6 +244,7 @@
         <script src="SanPham.js" defer></script>
         <script src="/js/DangKyTinTuc.js" defer></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
         <div id="logout-toast" class="toast-logout">Bạn đã đăng xuất thành công!</div>
     </body>
 </html>

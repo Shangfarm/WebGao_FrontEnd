@@ -1303,3 +1303,8 @@ main {
     cursor: pointer;
 }
 
+#pdfContent table tr {
+    page-break-inside: avoid;
+}
+
+
