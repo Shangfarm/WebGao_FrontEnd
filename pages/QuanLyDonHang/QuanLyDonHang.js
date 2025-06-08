@@ -49,6 +49,7 @@ async function fetchOrders() {
 
             const isCash = order.paymentMethod === "COD";
             const isPaid = order.paymentStatus === "PAID";
+            const isCancelled = order.orderStatus === "CANCELLED";
 
             tr.innerHTML = `
                 <td>${order._id}</td>
@@ -58,14 +59,24 @@ async function fetchOrders() {
                 <td>${getShortPaymentStatus(order.paymentStatus)}</td>
                 <td>${order.orderStatus}</td>
                 <td>
-                    ${isCash && !isPaid
-                        ? `<button class="btn btn-sm btn-success" onclick="markAsPaid('${order._id}')">Đã thanh toán</button>`
-                        : `<span class="text-muted">✔</span>`}
+                ${
+                    isCancelled
+                        ? (order.paymentStatus === "PAID"
+                            ? `<span class="text-success">✔</span>`
+                            : `<span class="text-danger">✘</span>`)
+                        : (isCash && !isPaid
+                            ? `<button class="btn btn-sm btn-success" onclick="markAsPaid('${order._id}')">Đã thanh toán</button>`
+                            : `<span class="text-muted">✔</span>`)
+                }
                 </td>
                 <td>
-                    ${order.orderStatus === "PENDING"
-                        ? `<button class="btn btn-sm btn-primary" onclick="markAsConfirmed('${order._id}')">Xác nhận đơn</button>`
-                        : `<span class="text-muted">✔</span>`}
+                ${
+                    isCancelled
+                        ? `<span class="text-danger">✘</span>`
+                        : (order.orderStatus === "PENDING"
+                            ? `<button class="btn btn-sm btn-primary" onclick="markAsConfirmed('${order._id}')">Xác nhận đơn</button>`
+                            : `<span class="text-muted">✔</span>`)
+                }
                 </td>
                 <td>
                     ${["CONFIRMED", "SHIPPING"].includes(order.orderStatus)
@@ -240,17 +251,30 @@ function filterAndRenderOrders(orders) {
         const matchesKeyword =
             order.userName?.toLowerCase().includes(keyword) ||
             order._id?.toLowerCase().includes(keyword);
-        const matchesStatus =
-            statusFilter === "ALL" || order.orderStatus === statusFilter;
+        let matchesStatus = false;
+        if (statusFilter === "ALL") {
+            matchesStatus = true;
+        } else if (statusFilter === "LATEST") {
+            matchesStatus = true; // cho hiển thị hết, sau sẽ cắt lại 10 đơn mới nhất phía dưới
+        } else {
+            matchesStatus = order.orderStatus === statusFilter;
+        }
+
 
         return matchesKeyword && matchesStatus;
     });
+
+    if (statusFilter === "LATEST") {
+    filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); // sắp xếp lại
+    filtered.splice(10); // chỉ giữ 10 đơn mới nhất
+    }
 
     filtered.forEach((order) => {
         const tr = document.createElement("tr");
 
         const isCash = order.paymentMethod === "COD";
         const isPaid = order.paymentStatus === "PAID";
+        const isCancelled = order.orderStatus === "CANCELLED";
 
         tr.innerHTML = `
             <td>${order._id}</td>
@@ -259,22 +283,31 @@ function filterAndRenderOrders(orders) {
             <td>${order.paymentMethod}</td>
             <td>${getShortPaymentStatus(order.paymentStatus)}</td>
             <td>${order.orderStatus}</td>
+                <td>
+                ${
+                    isCancelled
+                        ? (order.paymentStatus === "PAID"
+                            ? `<span class="text-success">✔</span>`
+                            : `<span class="text-danger">✘</span>`)
+                        : (isCash && !isPaid
+                            ? `<button class="btn btn-sm btn-success" onclick="markAsPaid('${order._id}')">Đã thanh toán</button>`
+                            : `<span class="text-muted">✔</span>`)
+                }
+                </td>
+                <td>
+                ${
+                    isCancelled
+                        ? `<span class="text-danger">✘</span>`
+                        : (order.orderStatus === "PENDING"
+                            ? `<button class="btn btn-sm btn-primary" onclick="markAsConfirmed('${order._id}')">Xác nhận đơn</button>`
+                            : `<span class="text-muted">✔</span>`)
+                }
+                </td>
             <td>
-                ${isCash && !isPaid
-                    ? `<button class="btn btn-sm btn-success" onclick="markAsPaid('${order._id}')">Đã thanh toán</button>`
-                    : `<span class="text-muted">✔</span>`}
-            </td>
-            <td>
-                ${order.orderStatus === "PENDING"
-                    ? `<button class="btn btn-sm btn-primary" onclick="markAsConfirmed('${order._id}')">Xác nhận đơn</button>`
-                    : `<span class="text-muted">✔</span>`}
-            </td>
-            <td>
-                ${["CONFIRMED", "SHIPPING"].includes(order.orderStatus)
+                ${order.orderStatus !== "CANCELLED"
                     ? `<button class="btn btn-sm btn-danger" onclick="cancelOrder('${order._id}')">Huỷ</button>`
                     : `<span class="text-muted">–</span>`}
             </td>
-
         `;
 
         tbody.appendChild(tr);
@@ -292,6 +325,8 @@ async function fetchOrders() {
         });
 
         const { data: orders } = await res.json();
+        // Sắp xếp từ mới nhất đến cũ nhất theo thời gian tạo
+        orders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         allOrdersCache = orders;
         filterAndRenderOrders(allOrdersCache); // Gọi render có lọc
 

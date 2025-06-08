@@ -76,6 +76,14 @@
             <h1 class="mb-4 text-center text-success">
                 <i class="fa-solid fa-clock-rotate-left"></i> Lịch sử mua hàng
             </h1>
+            <select id="filter-status" class="form-select w-auto mb-3 ms-auto">
+                <option value="ALL">Tất cả đơn hàng</option>
+                <option value="PENDING">Đơn hàng chờ xác nhận</option>
+                <option value="LATEST">Đơn hàng mới nhất</option>
+                <option value="CONFIRMED">Đơn hàng thành công</option>
+                <option value="CANCELLED">Đơn hàng thất bại</option>
+                </select>
+
             <div class="card shadow-lg p-4">
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover align-middle mb-0" id="orders-table">

@@ -1,3 +1,6 @@
+let allOrders = [];
+let currentFilterStatus = "ALL";
+
 // Hàm Toastify
 function showToast(message, type = "info") {
   let bg = "#198754";
@@ -37,6 +40,10 @@ async function fetchOrders() {
     if (!res.ok) throw new Error("Không thể lấy dữ liệu");
 
     const { data: orders } = await res.json();
+    orders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    allOrders = orders;
+    renderOrders();
+    showToast("✅ Tải đơn hàng thành công", "success");
     const tbody = document.getElementById("orders-body");
     tbody.innerHTML = "";
 
@@ -141,6 +148,52 @@ document.getElementById("search-form").addEventListener("submit", function (e) {
     window.location.href = `/pages/SanPham/SanPham.html?search=${encodeURIComponent(keyword)}`;
   }
 });
+
+// Lọc đơn hàng
+function renderOrders() {
+  const tbody = document.getElementById("orders-body");
+  tbody.innerHTML = "";
+
+  let filtered = [...allOrders];
+
+  if (currentFilterStatus === "LATEST") {
+    filtered = filtered.slice(0, 10);
+  } else if (currentFilterStatus !== "ALL") {
+    filtered = filtered.filter(order => order.orderStatus === currentFilterStatus);
+  }
+
+  if (filtered.length === 0) {
+    document.getElementById("no-orders").style.display = "block";
+    return;
+  } else {
+    document.getElementById("no-orders").style.display = "none";
+  }
+
+  filtered.forEach(order => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${order._id}</td>
+      <td>${new Date(order.createdAt).toLocaleString()}</td>
+      <td>${order.totalAmount.toLocaleString()} đ</td>
+      <td>${order.orderStatus || "PROCESSING"}</td>
+      <td>
+        <a href="/pages/ThanhToan/ThanhToan.html?orderId=${order._id}" class="btn btn-sm btn-primary">Xem chi tiết</a>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const filterSelect = document.getElementById("filter-status");
+  if (filterSelect) {
+    filterSelect.addEventListener("change", (e) => {
+      currentFilterStatus = e.target.value;
+      renderOrders();
+    });
+  }
+});
+
 //--------Ẩn khi chưa dang nhập hoặc không phải admin-----
 document.addEventListener("DOMContentLoaded", () => {
   const role = localStorage.getItem("role");

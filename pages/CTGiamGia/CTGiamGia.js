@@ -1,6 +1,6 @@
 const API_BASE = "http://localhost:3001/api/promotions";
 let currentPage = 1;
-let currentLimit = 5;
+let currentLimit = 8;
 let showDeletedOnly = false;
 
 const token = localStorage.getItem("token");
