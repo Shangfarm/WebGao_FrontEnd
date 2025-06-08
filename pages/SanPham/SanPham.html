@@ -1,216 +1,243 @@
 <!DOCTYPE html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GẠO VIỆT</title>
-    <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-    crossorigin="anonymous"
-    />
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>GẠO VIỆT</title>
+        <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+        crossorigin="anonymous"
+        />
 
-    <!-- CSS here -->
-    <link rel="stylesheet" href="style.css" />
-    <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-    <link
-    href="https://fonts.googleapis.com/css2?family=Volkhov&display=swap"
-    rel="stylesheet"
-    />
-    <link
-    href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap"
-    rel="stylesheet"
-    />
-</head>
-<body>
-    <header class="main-header fixed-top">
-        <div class="container logo">
-            <nav class="navbar navbar-expand-lg stroke">
-                <h1>
-                    <a class="navbar-brand index-responsive-color d-flex align-items-center" href="/pages/TrangChu/home.html">
-                    FamRice
-                    <i class="fa fa-leaf" aria-hidden="true"></i>
-                    </a>
-                </h1>
-                <div class="navbar-right ms-auto d-flex align-items-center gap-3">
-                    <!-- Ô tìm kiếm -->
-                    <div class="search-box-container">
-                        <form id="search-form" class="search-box-form d-flex align-items-center shadow-sm rounded-pill px-2" style="background: #fff;">
-                            <input id="search-input" type="text" class="form-control border-0 rounded-pill" placeholder="Tìm kiếm..." style="width: 160px; outline: none; box-shadow: none;" />
-                            <button type="submit" class="btn search-button d-flex align-items-center justify-content-center rounded-pill">
-                                <i class="fa fa-search text-white"></i>
-                            </button>
-                        </form>
-                    </div>
-                    <!-- Giỏ hàng -->
-                    <div class="cart-icon position-relative">
-                        <a href="/pages/GioHang/GioHang.html">
-                            <i class="fa fa-shopping-cart fa-lg icon-colored"></i>
-                            <span id="cart-count"
-                            class="badge bg-danger rounded-pill position-absolute top-0 start-100 translate-middle"
-                            style="font-size: 12px; display: none;">
-                            0
-                            </span>
+        <!-- CSS here -->
+        <link rel="stylesheet" href="style.css" />
+        <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        />
+        <link
+        href="https://fonts.googleapis.com/css2?family=Volkhov&display=swap"
+        rel="stylesheet"
+        />
+        <link
+        href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap"
+        rel="stylesheet"
+        />
+    </head>
+    <body>
+        <header class="main-header fixed-top">
+            <div class="container logo">
+                <nav class="navbar navbar-expand-lg stroke">
+                    <h1>
+                        <a class="navbar-brand index-responsive-color d-flex align-items-center" href="/pages/TrangChu/home.html">
+                        FamRice
+                        <i class="fa fa-leaf" aria-hidden="true"></i>
                         </a>
-                    </div>
-                    <!-- Dark Mode -->
-                    <button class="btn-theme bg-transparent border-0">
-                        <i class="fa-regular fa-moon fa-lg icon-colored"></i>
-                    </button>
-                    <!-- Menu -->
-                    <div class="dropdown">
-                        <input type="checkbox" id="dropdown-toggle" hidden />
-                            <label for="dropdown-toggle" class="dropbtn">
-                                <i class="fa fa-bars fa-lg icon-colored"></i>
-                            </label>
-                        <div class="dropdown-content">
-                            <a href="/pages/TrangChu/home.html">TRANG CHỦ</a>
-                            <a href="/pages/GioiThieu/GioiThieu.html">GIỚI THIỆU</a>
-                            <a href="/pages/SanPham/SanPham.html">SẢN PHẨM</a>
-                            <a href="/pages/DSSPYeuThich/YeuThich.html">SẢN PHẨM YÊU THÍCH</a>
-                            <a href="/pages/LichSuMuaHang/LichSuMuaHang.html">LỊCH SỬ MUA HÀNG</a>
-                            <a href="/pages/ThongTin/ThongTin.html">THÔNG TIN</a>
-                            <a href="/pages/LienHe/LienHe.html">LIÊN HỆ</a>
-                            <a href="/pages/HoSo/HoSo.html">HỒ SƠ</a>
-                            <a href="/pages/GioHang/GioHang.html">GIỎ HÀNG</a>
-                            <!--Các nút sẽ ẩn khi chưa đăng nhập hoặc không phải admin-->
-                            <li id="menu-productManagement"><a href="/pages/SanPham/QLSanPham.html">QUẢN LÝ SẢN PHẨM</a></li>
-                            <li id="menu-discount"><a href="/pages/CTGiamGia/CTGiamGia.html">CHƯƠNG TRÌNH GIẢM GIÁ</a></li>
-                            <li id="menu-order"><a href="/pages/QuanLyDonHang/QuanLyDonHang.html">QUẢN LÝ ĐƠN HÀNG</a></li>
-                            <li id="menu-stats"><a href="/pages/ThongKe/ThongKe.html">THỐNG KÊ</a></li>
-                            <li id="menu-shipping"><a href="/pages/PTVanChuyen/PTVanChuyen.html">PHƯƠNG THỨC VẬN CHUYỂN</a></li>
-                            <a href="/pages/DangNhap/DangNhap.html" id="login-link">ĐĂNG NHẬP/ĐĂNG KÝ</a>
+                    </h1>
+                    <div class="navbar-right ms-auto d-flex align-items-center gap-3">
+                        <!-- Ô tìm kiếm -->
+                        <div class="search-box-container">
+                            <form id="search-form" class="search-box-form d-flex align-items-center shadow-sm rounded-pill px-2" style="background: #fff;">
+                                <input id="search-input" type="text" class="form-control border-0 rounded-pill" placeholder="Tìm kiếm..." style="width: 160px; outline: none; box-shadow: none;" />
+                                <button type="submit" class="btn search-button d-flex align-items-center justify-content-center rounded-pill">
+                                    <i class="fa fa-search text-white"></i>
+                                </button>
+                            </form>
+                        </div>
+                        <!-- Giỏ hàng -->
+                        <div class="cart-icon position-relative">
+                            <a href="/pages/GioHang/GioHang.html">
+                                <i class="fa fa-shopping-cart fa-lg icon-colored"></i>
+                                <span id="cart-count"
+                                class="badge bg-danger rounded-pill position-absolute top-0 start-100 translate-middle"
+                                style="font-size: 12px; display: none;">
+                                0
+                                </span>
+                            </a>
+                        </div>
+                        <!-- Dark Mode -->
+                        <button class="btn-theme bg-transparent border-0">
+                            <i class="fa-regular fa-moon fa-lg icon-colored"></i>
+                        </button>
+                        <!-- Menu -->
+                        <div class="dropdown">
+                            <input type="checkbox" id="dropdown-toggle" hidden />
+                                <label for="dropdown-toggle" class="dropbtn">
+                                    <i class="fa fa-bars fa-lg icon-colored"></i>
+                                </label>
+                            <div class="dropdown-content">
+                                <a href="/pages/TrangChu/home.html">TRANG CHỦ</a>
+                                <a href="/pages/GioiThieu/GioiThieu.html">GIỚI THIỆU</a>
+                                <a href="/pages/SanPham/SanPham.html">SẢN PHẨM</a>
+                                <a href="/pages/DSSPYeuThich/YeuThich.html">SẢN PHẨM YÊU THÍCH</a>
+                                <a href="/pages/LichSuMuaHang/LichSuMuaHang.html">LỊCH SỬ MUA HÀNG</a>
+                                <a href="/pages/ThongTin/ThongTin.html">THÔNG TIN</a>
+                                <a href="/pages/LienHe/LienHe.html">LIÊN HỆ</a>
+                                <a href="/pages/HoSo/HoSo.html">HỒ SƠ</a>
+                                <a href="/pages/GioHang/GioHang.html">GIỎ HÀNG</a>
+                                <!--Các nút sẽ ẩn khi chưa đăng nhập hoặc không phải admin-->
+                                <li id="menu-productManagement"><a href="/pages/SanPham/QLSanPham.html">QUẢN LÝ SẢN PHẨM</a></li>
+                                <li id="menu-discount"><a href="/pages/CTGiamGia/CTGiamGia.html">CHƯƠNG TRÌNH GIẢM GIÁ</a></li>
+                                <li id="menu-order"><a href="/pages/QuanLyDonHang/QuanLyDonHang.html">QUẢN LÝ ĐƠN HÀNG</a></li>
+                                <li id="menu-stats"><a href="/pages/ThongKe/ThongKe.html">THỐNG KÊ</a></li>
+                                <li id="menu-shipping"><a href="/pages/PTVanChuyen/PTVanChuyen.html">PHƯƠNG THỨC VẬN CHUYỂN</a></li>
+                                <a href="/pages/DangNhap/DangNhap.html" id="login-link">ĐĂNG NHẬP/ĐĂNG KÝ</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </nav>
-        </div>
-    </header>
-    <main class="container">
-        <div class="row">
-            <!-- Sidebar danh mục -->
-            <aside class="col-md-3" style="margin-top: 120px;">
-                <div class="category-sidebar p-3 border rounded">
-                    <h4 class="fw-bold text-uppercase">Danh Mục</h4>
-                    <ul id="category-sidebar" class="list-unstyled mt-3"></ul>
-                </div>
-            </aside>    
-            <!-- Danh sách sản phẩm -->
-            <section class="col-md-9" style="margin-top: 120px;">
-                <h1 id="page-title" class="text-center text-success fw-bold mb-5">SẢN PHẨM</h1>
-                <div id="product-list" class="product-list"></div>  
-                <!-- Phân trang -->
-                <nav class="d-flex justify-content-center mt-4">
-                    <ul class="pagination" id="pagination"></ul>
                 </nav>
-            </section>
-        </div>
-    </main>
-    <footer>
-        <section class="footer-16">
-            <div class="footer-16-main py-5">
-                <div class="container py-4">
-                    <div class="row footer-p">
-                        <div class="col-lg-4 order-lg-1 order-3 mt-lg-0 mt-5 FooterFarm">
-                            <h4 class="FooterLogo">
-                                <a class="Logo" asp-controller="Home" asp-action="Index" style="color: orange; font-size: 32px">
-                                    FamRice
-                                    <i class="fa fa-leaf" aria-hidden="true"></i></a>
-                            </h4>
-                            <p class="mt-4">
-                                Chúng tôi cung cấp gạo chất lượng cao, được chọn lọc kỹ càng,
-                                đảm bảo phù hợp với mọi nhu cầu của khách hàng.
-                            </p>
-    
-                            <!-- copyright -->
-                            <p class="copy-text mt-5 CopyRights">
-                                © 2025 FamRice. All Rights Reserved | WordPress Theme by
-                                <a href="https://w3layouts.com/">FamRice. </a>
-                            </p>
-                            <!-- //copyright -->
-                        </div>
-    
-                        <div class="col-lg-4 pl-lg-5 FooterContact">
-                            <h3>Liên hệ</h3>
-                            <div class="column-2">
-                                <p>
-                                    Địa chỉ: 34 đường số 14, phường Bình Hưng Hòa A, quận Bình Tân, thành phố Hồ Chí Minh.
-                                </p>
-    
-                                <p class="mt-3">
-                                    Phone: <a href="tel:+84 904522077">+84 904522077</a>
-                                </p>
-    
-                                <p class="mt-3">
-                                    Email:
-                                    <a href="mailto:nguyenthanhsang@gmail.com">nguyenthanhsang22012004@gmail.com</a>
-                                </p>
-    
-                                <p class="mt-3">
-                                    Fax: <a href="tel:+84 793939399">+84 793939399</a>
-                                </p>
+            </div>
+        </header>
+        <main class="container">
+            <div class="row">
+                <!-- Sidebar danh mục -->
+                <aside class="col-md-3" style="margin-top: 120px;">
+                    <div class="category-sidebar p-3 border rounded">
+                        <h4 class="fw-bold text-uppercase">Danh Mục</h4>
+                        <ul id="category-sidebar" class="list-unstyled mt-3"></ul>
+                    </div>
+                    <div>
+                    <button id="btnBangGia" class="btn btn-outline-dark w-100 mt-3">
+                        📄 BẢNG GIÁ GẠO
+                    </button>
+                    </div>
+                </aside>    
+                <!-- Danh sách sản phẩm -->
+                <section class="col-md-9" style="margin-top: 120px;">
+                    <h1 id="page-title" class="text-center text-success fw-bold mb-5">SẢN PHẨM</h1>
+                    <div id="product-list" class="product-list"></div> 
+                    <!-- Modal Bảng giá -->
+                    <div id="bangGiaModal" class="modal" style="display: none;">
+                        <div class="modal-overlay" id="modalOverlay"></div>
+                            <div class="modal-content">
+                                <span id="closeBangGia" class="close">&times;</span>
+                                <h4 class="text-center fw-bold mb-3">📋 BẢNG GIÁ GẠO – THÁNG 6 NĂM 2025</h4>
+                                <table class="table table-bordered">
+                                <thead class="table-light">
+                                    <tr>
+                                    <th>STT</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Giá (VNĐ/kg)</th>
+                                    <th>Danh mục</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bangGiaBody"></tbody>
+                                </table>
+                                <div class="text-end">
+                                <button class="btn btn-secondary mt-2" id="closeBangGiaBtn">Đóng</button>
                             </div>
                         </div>
-    
-                        <div class="col-lg-4 col-md-7 order-lg-3 order-1 column mt-lg-0 mt-5">
-                            <h3>Tin mới</h3>
-                            <div class="end-column FooterSubscribe">
-                                <p>
-                                    Đăng ký nhận bản tin của chúng tôi và nhận cập nhật mới nhất vào hộp thư email của bạn.
+                    </div>
+                    <!-- Phân trang -->
+                    <nav class="d-flex justify-content-center mt-4">
+                        <ul class="pagination" id="pagination"></ul>
+                    </nav>
+                </section>
+            </div>
+        </main>
+        <footer>
+            <section class="footer-16">
+                <div class="footer-16-main py-5">
+                    <div class="container py-4">
+                        <div class="row footer-p">
+                            <div class="col-lg-4 order-lg-1 order-3 mt-lg-0 mt-5 FooterFarm">
+                                <h4 class="FooterLogo">
+                                    <a class="Logo" asp-controller="Home" asp-action="Index" style="color: orange; font-size: 32px">
+                                        FamRice
+                                        <i class="fa fa-leaf" aria-hidden="true"></i></a>
+                                </h4>
+                                <p class="mt-4">
+                                    Chúng tôi cung cấp gạo chất lượng cao, được chọn lọc kỹ càng,
+                                    đảm bảo phù hợp với mọi nhu cầu của khách hàng.
                                 </p>
-                                <form id="form-dang-ky-tin-tuc" class="subscribe d-flex mt-3">
-                                    <input type="email" id="email-dang-ky" placeholder="Email Address" required />
-                                        <button type="submit">
-                                            <span class="fa fa-paper-plane" aria-hidden="true"></span>
-                                        </button>
-                                </form>
+        
+                                <!-- copyright -->
+                                <p class="copy-text mt-5 CopyRights">
+                                    © 2025 FamRice. All Rights Reserved | WordPress Theme by
+                                    <a href="https://w3layouts.com/">FamRice. </a>
+                                </p>
+                                <!-- //copyright -->
                             </div>
-    
-                            <ul class="social mt-4 pt-2 FooterSocial">
-                                <li>
-                                    <a href="https://www.facebook.com/share/1BobmyTQUj/?mibextid=wwXIfr">
-                                        <span class="fab fa-facebook-f" aria-hidden="true"></span>
-                                    </a>
-                                </li>
-    
-                                <li>
-                                    <a href="https://in.linkedin.com/company/w3layouts">
-                                        <span class="fab fa-linkedin-in" aria-hidden="true"></span>
-                                    </a>
-                                </li>
-    
-                                <li>
-                                    <a href="https://twitter.com/W3layouts">
-                                        <span class="fab fa-twitter" aria-hidden="true"></span>
-                                    </a>
-                                </li>
-    
-                                <li>
-                                    <a href="https://w3layouts.com/tag/email-templates/">
-                                        <span class="fab fa-google" aria-hidden="true"></span>
-                                    </a>
-                                </li>
-    
-                                <li>
-                                    <a href="https://github.com/Shangfarm">
-                                        <span class="fab fa-github" aria-hidden="true"></span>
-                                    </a>
-                                </li>
-                            </ul>
+        
+                            <div class="col-lg-4 pl-lg-5 FooterContact">
+                                <h3>Liên hệ</h3>
+                                <div class="column-2">
+                                    <p>
+                                        Địa chỉ: 34 đường số 14, phường Bình Hưng Hòa A, quận Bình Tân, thành phố Hồ Chí Minh.
+                                    </p>
+        
+                                    <p class="mt-3">
+                                        Phone: <a href="tel:+84 904522077">+84 904522077</a>
+                                    </p>
+        
+                                    <p class="mt-3">
+                                        Email:
+                                        <a href="mailto:nguyenthanhsang@gmail.com">nguyenthanhsang22012004@gmail.com</a>
+                                    </p>
+        
+                                    <p class="mt-3">
+                                        Fax: <a href="tel:+84 793939399">+84 793939399</a>
+                                    </p>
+                                </div>
+                            </div>
+        
+                            <div class="col-lg-4 col-md-7 order-lg-3 order-1 column mt-lg-0 mt-5">
+                                <h3>Tin mới</h3>
+                                <div class="end-column FooterSubscribe">
+                                    <p>
+                                        Đăng ký nhận bản tin của chúng tôi và nhận cập nhật mới nhất vào hộp thư email của bạn.
+                                    </p>
+                                    <form id="form-dang-ky-tin-tuc" class="subscribe d-flex mt-3">
+                                        <input type="email" id="email-dang-ky" placeholder="Email Address" required />
+                                            <button type="submit">
+                                                <span class="fa fa-paper-plane" aria-hidden="true"></span>
+                                            </button>
+                                    </form>
+                                </div>
+        
+                                <ul class="social mt-4 pt-2 FooterSocial">
+                                    <li>
+                                        <a href="https://www.facebook.com/share/1BobmyTQUj/?mibextid=wwXIfr">
+                                            <span class="fab fa-facebook-f" aria-hidden="true"></span>
+                                        </a>
+                                    </li>
+        
+                                    <li>
+                                        <a href="https://in.linkedin.com/company/w3layouts">
+                                            <span class="fab fa-linkedin-in" aria-hidden="true"></span>
+                                        </a>
+                                    </li>
+        
+                                    <li>
+                                        <a href="https://twitter.com/W3layouts">
+                                            <span class="fab fa-twitter" aria-hidden="true"></span>
+                                        </a>
+                                    </li>
+        
+                                    <li>
+                                        <a href="https://w3layouts.com/tag/email-templates/">
+                                            <span class="fab fa-google" aria-hidden="true"></span>
+                                        </a>
+                                    </li>
+        
+                                    <li>
+                                        <a href="https://github.com/Shangfarm">
+                                            <span class="fab fa-github" aria-hidden="true"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-    </footer>
-    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-    <script src="SanPham.js" defer></script>
-    <script src="/js/DangKyTinTuc.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <div id="logout-toast" class="toast-logout">Bạn đã đăng xuất thành công!</div>
-</body>
+            </section>
+        </footer>
+        <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+        <script src="SanPham.js" defer></script>
+        <script src="/js/DangKyTinTuc.js" defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <div id="logout-toast" class="toast-logout">Bạn đã đăng xuất thành công!</div>
+    </body>
 </html>

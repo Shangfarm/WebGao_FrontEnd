@@ -1,0 +1,266 @@
+[
+  {
+    "STT": 1.0,
+    "TenSanPham": "Gạo ST25 ",
+    "GiaKgVND": 48000.0,
+    "TenDanhMuc": "Gạo thơm"
+  },
+  {
+    "STT": 2.0,
+    "TenSanPham": "Gạo Jasmine ",
+    "GiaKgVND": 38000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 3.0,
+    "TenSanPham": "Gạo Tám Thơm Hải Hậu ",
+    "GiaKgVND": 41000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 4.0,
+    "TenSanPham": "Gạo Đài Thơm 8 ",
+    "GiaKgVND": 28000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 5.0,
+    "TenSanPham": "Gạo Hương Sữa ",
+    "GiaKgVND": 27000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 6.0,
+    "TenSanPham": "Gạo Lài Miên ",
+    "GiaKgVND": 49000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 7.0,
+    "TenSanPham": "Gạo Thơm Thái ",
+    "GiaKgVND": 36000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 8.0,
+    "TenSanPham": "Gạo Thơm Campuchia ",
+    "GiaKgVND": 35000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 9.0,
+    "TenSanPham": "Gạo Thơm Sữa ",
+    "GiaKgVND": 16000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 10.0,
+    "TenSanPham": "Gạo Nàng Hoa ",
+    "GiaKgVND": 28000.0,
+    "TenDanhMuc": "Gạo dẻo nhiều"
+  },
+  {
+    "STT": 11.0,
+    "TenSanPham": "Gạo ST24 Dẻo ",
+    "GiaKgVND": 21000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 12.0,
+    "TenSanPham": "Gạo Dẻo Sóc Trăng ",
+    "GiaKgVND": 41000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 13.0,
+    "TenSanPham": "Gạo ST25 Trạng Nguyên ",
+    "GiaKgVND": 23000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 15.0,
+    "TenSanPham": "Gạo Dẻo Hương Sen ",
+    "GiaKgVND": 29000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 16.0,
+    "TenSanPham": "Gạo Phù Sa ",
+    "GiaKgVND": 44000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 17.0,
+    "TenSanPham": "Gạo Dẻo Ngọc Nữ ",
+    "GiaKgVND": 33000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 18.0,
+    "TenSanPham": "Gạo Dẻo Hương Lài ",
+    "GiaKgVND": 16000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 19.0,
+    "TenSanPham": "Gạo Thơm Lài ",
+    "GiaKgVND": 28000.0,
+    "TenDanhMuc": "Gạo dẻo vừa"
+  },
+  {
+    "STT": 20.0,
+    "TenSanPham": "Gạo Bắc Hương ",
+    "GiaKgVND": 40000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 21.0,
+    "TenSanPham": "Gạo Tài Nguyên ",
+    "GiaKgVND": 41000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 22.0,
+    "TenSanPham": "Gạo Nàng Thơm ",
+    "GiaKgVND": 35000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 24.0,
+    "TenSanPham": "Gạo Nếp Gia Lai ",
+    "GiaKgVND": 27000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 25.0,
+    "TenSanPham": "Gạo Bông Sen ",
+    "GiaKgVND": 29000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 27.0,
+    "TenSanPham": "Gạo Hương Cốm ",
+    "GiaKgVND": 43000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 28.0,
+    "TenSanPham": "Gạo Tấm Thơm Hải Hậu ",
+    "GiaKgVND": 15000.0,
+    "TenDanhMuc": "Gạo tấm"
+  },
+  {
+    "STT": 29.0,
+    "TenSanPham": "Gạo Tấm Thơm ",
+    "GiaKgVND": 16000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 30.0,
+    "TenSanPham": "Gạo Tấm Dẻo ",
+    "GiaKgVND": 48000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 31.0,
+    "TenSanPham": "Gạo Tấm Phước Ngọc ",
+    "GiaKgVND": 49000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 32.0,
+    "TenSanPham": "Gạo Tấm Thái Đỏ ",
+    "GiaKgVND": 42000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 33.0,
+    "TenSanPham": "Gạo Tấm Việt ",
+    "GiaKgVND": 38000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 37.0,
+    "TenSanPham": "Gạo Nếp Cẩm ",
+    "GiaKgVND": 30000.0,
+    "TenDanhMuc": "Gạo nếp"
+  },
+  {
+    "STT": 38.0,
+    "TenSanPham": "Gạo Nếp Cái Hoa Vàng ",
+    "GiaKgVND": 19000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 39.0,
+    "TenSanPham": "Gạo Nếp Thái ",
+    "GiaKgVND": 21000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 40.0,
+    "TenSanPham": "Gạo Nếp Sáp ",
+    "GiaKgVND": 32000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 41.0,
+    "TenSanPham": "Gạo Nếp Bắc ",
+    "GiaKgVND": 44000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 43.0,
+    "TenSanPham": "Gạo Nếp Ngỗng ",
+    "GiaKgVND": 26000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 45.0,
+    "TenSanPham": "Gạo Nếp Lào ",
+    "GiaKgVND": 40000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 46.0,
+    "TenSanPham": "Gạo Lứt Đỏ ",
+    "GiaKgVND": 44000.0,
+    "TenDanhMuc": "Gạo lứt"
+  },
+  {
+    "STT": 47.0,
+    "TenSanPham": "Gạo Lứt Tím Than ",
+    "GiaKgVND": 21000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 48.0,
+    "TenSanPham": "Gạo Lứt Đen ",
+    "GiaKgVND": 35000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 51.0,
+    "TenSanPham": "Gạo Lứt Tam Sắc ",
+    "GiaKgVND": 37000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 52.0,
+    "TenSanPham": "Gạo Lứt Bắc ",
+    "GiaKgVND": 21000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 53.0,
+    "TenSanPham": "Gạo Lứt Huyết Rồng ",
+    "GiaKgVND": 32000.0,
+    "TenDanhMuc": null
+  },
+  {
+    "STT": 54.0,
+    "TenSanPham": "Gạo Lứt Nhật ",
+    "GiaKgVND": 27000.0,
+    "TenDanhMuc": null
+  }
+]

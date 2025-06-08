@@ -1,4 +1,3 @@
-// ----------------- Cấu hình -----------------
 const PRODUCTS_PER_PAGE = 15;
 let currentPage = 1;
 
@@ -86,8 +85,7 @@ function renderProducts(products) {
                         category_id: product.category_id || null
                     });
                 }
-
-                // ✅ Lưu vào đúng giỏ hàng người dùng
+                // Lưu vào đúng giỏ hàng người dùng
                 localStorage.setItem(cartKey, JSON.stringify(cart));
                 localStorage.setItem("cart", JSON.stringify(cart));
                 showToast(`✅ Đã thêm "${product.name}" vào giỏ hàng.`, "success");
@@ -119,7 +117,7 @@ function renderPagination(totalPages) {
 }
 
 function fetchAndRender(page = 1, categoryId = "") {
-    // Luôn đọc page và search từ URL nếu có (ưu tiên page trên URL)
+    // Luôn đọc page và search
     const urlParams = new URLSearchParams(window.location.search);
     const searchKeyword = urlParams.get("search")?.toLowerCase().trim() || "";
     const urlPage = parseInt(urlParams.get("page")) || page;
@@ -319,3 +317,41 @@ function showToast(message, type = "info") {
         style: { background: bg, color: "#fff" }
     }).showToast();
 }
+
+document.getElementById("btnBangGia")?.addEventListener("click", async () => {
+    try {
+        const res = await fetch("/data/BangGiaGao-Thang6.json");
+        const data = await res.json();
+
+        const tbody = document.getElementById("bangGiaBody");
+        tbody.innerHTML = "";
+
+        data.forEach((item, index) => {
+        tbody.innerHTML += `
+            <tr>
+            <td>${index + 1}</td>
+            <td>${item.TenSanPham}</td>
+            <td>${parseInt(item.GiaKgVND).toLocaleString()} VND</td>
+            <td>${item.TenDanhMuc || "-"}</td>
+            </tr>
+        `;
+        });
+
+        document.getElementById("bangGiaModal").style.display = "flex";
+    } catch (err) {
+        showToast("❌ Không thể tải bảng giá gạo", "error");
+        console.error("Lỗi bảng giá:", err);
+    }
+});
+
+// Sự kiện đóng
+document.getElementById("closeBangGia")?.addEventListener("click", () => {
+    document.getElementById("bangGiaModal").style.display = "none";
+});
+document.getElementById("closeBangGiaBtn")?.addEventListener("click", () => {
+    document.getElementById("bangGiaModal").style.display = "none";
+});
+document.getElementById("modalOverlay")?.addEventListener("click", () => {
+    document.getElementById("bangGiaModal").style.display = "none";
+});
+
