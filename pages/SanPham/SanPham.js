@@ -368,3 +368,21 @@ document.getElementById("modalOverlay")?.addEventListener("click", () => {
     document.getElementById("bangGiaModal").style.display = "none";
 });
 
+// --------Nút cuộn lên đầu trang--------
+document.addEventListener("DOMContentLoaded", function () {
+    const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+    // Hiện nút khi scroll xuống
+    window.addEventListener("scroll", () => {
+        if (window.scrollY > 200) {
+        scrollToTopBtn.style.display = "block";
+        } else {
+        scrollToTopBtn.style.display = "none";
+        }
+    });
+
+    // Xử lý khi click vào nút
+    scrollToTopBtn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+});
