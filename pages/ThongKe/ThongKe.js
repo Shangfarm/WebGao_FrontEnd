@@ -335,3 +335,127 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 loadDashboard();
+
+// Thống kê doanh thu
+async function fetchRevenueStats() {
+    try {
+        const token = localStorage.getItem("token");
+        const res = await fetch("http://localhost:3001/api/orders/revenue-stats?groupBy=month", {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+    if (!res.ok) throw new Error("Invalid response");
+    const result = await res.json();
+    const data = result.data;
+    // Render biểu đồ
+    renderRevenueChart(data); 
+    } catch (err) {
+        console.error("❌ Lỗi khi lấy thống kê doanh thu:", err);
+        showToast("Lỗi khi lấy thống kê doanh thu", "error");
+    }
+}
+
+// Gọi khi trang load
+document.addEventListener("DOMContentLoaded", () => {
+    fetchRevenueStats();
+});
+
+function renderRevenueChart(data) {
+    const ctx = document.getElementById("revenueChart")?.getContext("2d");
+    if (!ctx) return;
+
+        // Tính tổng doanh thu từ tất cả các tháng
+    const totalRevenue = data.reduce((sum, item) => sum + (item.totalRevenue || 0), 0);
+
+    // Hiển thị tổng doanh thu lên HTML
+    const totalRevenueEl = document.querySelector("#total-revenue span");
+    if (totalRevenueEl) {
+        totalRevenueEl.textContent = totalRevenue.toLocaleString("vi-VN") + " đ";
+    }
+
+    // Tạo mảng 12 tháng mặc định (thay đổi format thành MM-YYYY)
+    const months = Array.from({ length: 12 }, (_, i) => {
+        const month = String(i + 1).padStart(2, '0');
+        return `${month}-2025`; // 👉 Định dạng lại
+    });
+
+    const revenueMap = data.reduce((acc, item) => {
+        const [year, month] = item._id.split("-");
+        acc[`${month}-${year}`] = item.totalRevenue;
+        return acc;
+    }, {});
+
+    const values = months.map(m => revenueMap[m] || 0);
+
+    new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: months,
+            datasets: [{
+                label: "Doanh thu theo tháng (VNĐ)",
+                data: values,
+                borderColor: "#00c4b3",
+                backgroundColor: "rgba(0, 196, 179, 0.2)",
+                tension: 0.4,
+                fill: true,
+                pointRadius: 4,
+                pointHoverRadius: 6
+            }]
+        },
+        plugins: [ChartDataLabels],
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                datalabels: {
+                    display: true,
+                    align: 'top',
+                    anchor: 'end',
+                    font: {
+                        weight: 'bold',
+                        size: 12
+                    },
+                    formatter: value => value ? value.toLocaleString("vi-VN") + " đ" : ''
+                },
+                legend: {
+                    display: true,
+                    position: 'top',   // mặc định là top vẫn OK
+                    align: 'end',      // ✅ Căn phải
+                    labels: {
+                        boxWidth: 20,
+                        padding: 10
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: context => `${context.parsed.y.toLocaleString("vi-VN")} đ`
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: value => value.toLocaleString("vi-VN") + " đ"
+                    },
+                    title: {
+                        display: true,
+                        text: "Tổng doanh thu"
+                    }
+                },
+                x: {
+                    title: {
+                        display: false,
+                        text: "Tháng"
+                    }
+                }
+            }
+        }
+    });
+}
+
+
+function showToast(message, type = "info") {
+    alert(message); // hoặc dùng toast riêng nếu đã có
+}

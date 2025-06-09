@@ -779,3 +779,18 @@ li {
     padding: 1rem;
     margin-top: 1rem;
 }
+
+/* Cố định chiều rộng của biểu đồ doanh thu và đảm bảo responsive */
+.chart-revenue {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    padding: 1rem;
+}
+
+#revenueChart {
+    width: 100% !important;
+    height: auto !important;
+    max-width: 100%;
+    display: block;
+}
