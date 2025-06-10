@@ -78,6 +78,7 @@
                 <option value="all">Tất cả</option>
                 <option value="sales-chart">Biểu đồ sản phẩm bán chạy</option>
                 <option value="stock-chart">Biểu đồ sản phẩm tồn kho</option>
+                <option value="revenue-chart">Biểu đồ doanh thu theo tháng</option>
                 <option value="product-table">Danh sách sản phẩm</option>
                 <option value="sales-table">Đơn hàng gần đây</option>
                 <option value="user-table">Tài khoản người dùng</option>
@@ -109,15 +110,15 @@
                 </div>
             </div>
         </section>
-        <!-- ✅ Biểu đồ doanh thu theo tháng: TÁCH RA KHỎI KHỐI TRÊN -->
-<section class="charts-row">
-    <div id="revenue-chart" class="chart-full mt-4">
-        <h2>📈 Biểu đồ doanh thu theo tháng</h2>
-        <div class="chart-container chart-revenue">
-            <canvas id="revenueChart"></canvas>
-        </div>
-    </div>
-</section>
+        
+        <section class="charts-row">
+            <div id="revenue-chart" class="chart-full mt-4">
+                <h2>📈 Biểu đồ doanh thu theo tháng</h2>
+                <div class="chart-container chart-revenue">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </div>
+        </section>
         <section id="product-table" class="charts-row">
             <div class="chart-full">
                 <h2>Danh sách sản phẩm</h2>
