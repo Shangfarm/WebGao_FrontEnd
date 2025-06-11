@@ -88,7 +88,7 @@ function renderProducts(products) {
                 // Lưu vào đúng giỏ hàng người dùng
                 localStorage.setItem(cartKey, JSON.stringify(cart));
                 localStorage.setItem("cart", JSON.stringify(cart));
-                showToast(`✅ Đã thêm "${product.name}" vào giỏ hàng.`, "success");
+                showToast(`Thêm thành công.`, "success");
             });
         }
     });

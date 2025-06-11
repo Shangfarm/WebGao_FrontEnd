@@ -122,17 +122,18 @@ window.submitForm = async function () {
 
     const result = await res.json();
     if (!res.ok) {
-        alert("Lỗi: " + result.message);
+        showAlert("Lỗi: " + result.message, "error");
         return;
     }
 
-    alert(id ? "Cập nhật thành công" : "Tạo mới thành công");
+    showAlert(id ? "Cập nhật thành công" : "Tạo mới thành công");
     hideForm();
     loadShippingMethods(currentPage);
 };
 
 window.deleteShippingMethod = async function (id) {
-    if (!confirm("Bạn có chắc muốn xóa phương thức này không?")) return;
+    const confirmResult = await showConfirmDialog("Bạn có chắc muốn xóa phương thức này không?");
+    if (!confirmResult.isConfirmed) return;
 
     const res = await fetch(`${API_BASE}/${id}`, {
         method: "DELETE",
@@ -141,16 +142,17 @@ window.deleteShippingMethod = async function (id) {
 
     const result = await res.json();
     if (!res.ok) {
-        alert("Lỗi: " + result.message);
+        showAlert("Lỗi: " + result.message, "error");
         return;
     }
 
-    alert("Đã chuyển vào mục đã xóa");
+    showAlert("Đã chuyển vào mục đã xóa");
     loadShippingMethods(currentPage);
 };
 
 window.restoreShippingMethod = async function (id) {
-    if (!confirm("Bạn có chắc muốn khôi phục phương thức này?")) return;
+    const confirmResult = await showConfirmDialog("Bạn có chắc muốn khôi phục phương thức này?");
+    if (!confirmResult.isConfirmed) return;
 
     const res = await fetch(`${API_BASE}/${id}/restore`, {
         method: "PATCH",
@@ -159,17 +161,18 @@ window.restoreShippingMethod = async function (id) {
 
     const result = await res.json();
     if (!res.ok) {
-        alert("Lỗi: " + result.message);
+        showAlert("Lỗi: " + result.message, "error");
         return;
     }
 
-    alert("Đã khôi phục thành công");
+    showAlert("Đã khôi phục thành công");
     showDeletedOnly = false;
     loadShippingMethods(1);
 };
 
 window.deletePermanently = async function (id) {
-    if (!confirm("Bạn có chắc muốn xóa vĩnh viễn phương thức này? Hành động này không thể hoàn tác.")) return;
+    const confirmResult = await showConfirmDialog("Bạn có chắc muốn xóa vĩnh viễn phương thức này? Hành động này không thể hoàn tác.");
+    if (!confirmResult.isConfirmed) return;
 
     const res = await fetch(`${API_BASE}/delete/${id}`, {
         method: "DELETE",
@@ -178,11 +181,11 @@ window.deletePermanently = async function (id) {
 
     const result = await res.json();
     if (!res.ok) {
-        alert("Lỗi: " + result.message);
+        showAlert("Lỗi: " + result.message, "error");
         return;
     }
 
-    alert("Đã xóa vĩnh viễn");
+    showAlert("Đã xóa vĩnh viễn");
     loadShippingMethods(currentPage);
 };
 
@@ -238,4 +241,27 @@ function renderPagination(totalPages, currentPage) {
         paginationContainer.appendChild(label);
     }
 }
+// thông báo
+function showAlert(title, icon = "success", timer = 2000) {
+    Swal.fire({
+        icon,
+        title,
+        showConfirmButton: false,
+        timer,
+        timerProgressBar: true,
+        toast: true,
+        position: "top-end"
+    });
+}
 
+function showConfirmDialog(message) {
+    return Swal.fire({
+        title: message,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Đồng ý",
+        cancelButtonText: "Hủy"
+    });
+}

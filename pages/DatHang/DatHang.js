@@ -46,8 +46,21 @@ function addRemoveEvents() {
             const index = e.target.getAttribute("data-index");
             cart.splice(index, 1);
             localStorage.setItem("cart", JSON.stringify(cart));
+
+            const userId = localStorage.getItem("userId");
+            if (userId) {
+                localStorage.setItem(`cart_${userId}`, JSON.stringify(cart));
+            }
+
             renderCart();
             updateCartCount();
+            recalculateFinalTotal();
+
+            // Nếu không còn sản phẩm, xoá khuyến mãi
+            if (cart.length === 0) {
+                localStorage.removeItem("selectedPromotionId");
+                localStorage.removeItem("selectedPromotionName");
+            }
         });
     });
 }
@@ -343,4 +356,15 @@ function showToast(message, type = "info") {
         position: "right",
         style: { background: bg, color: "#fff" }
     }).showToast();
+}
+function recalculateFinalTotal() {
+    let total = 0;
+    cart.forEach((item) => {
+        const discount = item.discount || 0;
+        const priceAfterDiscount = item.price * (1 - discount / 100);
+        total += priceAfterDiscount * item.quantity;
+    });
+
+    localStorage.setItem("finalTotal", total);
+    updateTotalAmountWithShipping();
 }
