@@ -122,9 +122,9 @@ body {
 }
 
 .auth-background {
-  background-image: url('https://luatsux.vn/wp-content/uploads/2022/09/quy-trinh-chuyen-doi-dat-lua-nhu-the-nao.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+    background-image: url('https://luatsux.vn/wp-content/uploads/2022/09/quy-trinh-chuyen-doi-dat-lua-nhu-the-nao.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }

@@ -201,13 +201,6 @@ h1 {
     line-height: inherit;
     white-space: nowrap;
 }
-h1,
-h2,
-h3,
-h4,
-h5 {
-    font-family: "Volkhov", serif;
-}
 button {
     border: none;
     background-color: transparent;
@@ -230,25 +223,7 @@ h5,
 h6 {
     margin: 0;
     padding: 0;
-    color: #060606;
-    font-family: "Volkhov", serif;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
     clear: both;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    margin: 0;
-    padding: 0;
 }
 ul.breadcrumbs-custom-path {
     line-height: 1.5;
